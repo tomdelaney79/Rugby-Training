@@ -648,29 +648,35 @@
 <div id="toast">Done! 💪</div>
 
 <script>
+<script>
 // ==================== SUPABASE ====================
-const SUPABASE_URL = 'https://jamdzb qubvqolgkbkpyj.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImphbWR6YnF1YnZxb2xna2JrcHlqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2NDE3NjAsImV4cCI6MjA5NjIxNzc2MH0.8OefwA1Jf82pSnnmwUyPZW-MzwsLJmpWLMLZUGG0kHM';
+const SUPABASE_URL = 'https://jamdzbqubvqolgkbkpyj.supabase.co';
+const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';
 
 async function sbFetch(path, options = {}) {
   const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
+    ...options,
     headers: {
-      'apikey': SUPABASE_KEY,
-      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      apikey: SUPABASE_KEY,
+      Authorization: 'Bearer ' + SUPABASE_KEY,
       'Content-Type': 'application/json',
-      'Prefer': options.prefer || 'return=representation',
-      ...options.headers
-    },
-    ...options
+      Prefer: options.prefer || 'return=representation',
+      ...(options.headers || {})
+    }
   });
-  if (!res.ok) { const err = await res.text(); console.error('Supabase error:', err); return null; }
+
+  if (!res.ok) {
+    console.error('Supabase error:', await res.text());
+    showToast('Database error');
+    return null;
+  }
+
   const text = await res.text();
-  return text ? JSON.parse(text) : null;
+  return text ? JSON.parse(text) : [];
 }
 
 async function getSessions() {
-  const data = await sbFetch('sessions?order=created_at.desc');
-  return data || [];
+  return await sbFetch('sessions?select=*&order=created_at.desc') || [];
 }
 
 async function insertSession(entry) {
@@ -681,12 +687,15 @@ async function insertSession(entry) {
 }
 
 async function deleteAllSessions() {
-  return await sbFetch('sessions?id=gt.0', { method: 'DELETE', prefer: 'return=minimal', headers: {} });
+  return await sbFetch('sessions?id=gt.0', {
+    method: 'DELETE',
+    prefer: 'return=minimal'
+  });
 }
 
 async function getChallenges() {
-  const data = await sbFetch('challenge?order=day_index.asc');
-  return (data || []).map(r => r.day_index);
+  const data = await sbFetch('challenge?select=day_index&order=day_index.asc') || [];
+  return data.map(r => r.day_index);
 }
 
 async function insertChallenge(dayIndex) {
@@ -697,52 +706,54 @@ async function insertChallenge(dayIndex) {
 }
 
 async function deleteChallenge(dayIndex) {
-  return await sbFetch(`challenge?day_index=eq.${dayIndex}`, { method: 'DELETE', prefer: 'return=minimal', headers: {} });
+  return await sbFetch(`challenge?day_index=eq.${dayIndex}`, {
+    method: 'DELETE',
+    prefer: 'return=minimal'
+  });
 }
 
 // ==================== DATA ====================
-
 const SPRINT_EXERCISES = [
-  { name: 'A-Skips',          section: 'Technique' },
-  { name: 'B-Skips',          section: 'Technique' },
-  { name: 'High Knees',       section: 'Technique' },
-  { name: 'Fast Feet',        section: 'Technique' },
-  { name: 'Wall Drives',      section: 'Technique' },
-  { name: 'Wall Switches',    section: 'Technique' },
-  { name: 'Falling Starts',   section: 'Starts' },
-  { name: 'Belly Starts',     section: 'Starts' },
-  { name: 'Kneeling Starts',  section: 'Starts' },
-  { name: 'Lunge Starts',     section: 'Starts' },
-  { name: 'Seated Starts',    section: 'Starts' },
-  { name: '10m Sprint',       section: 'Acceleration' },
-  { name: '15m Falling Start',section: 'Acceleration' },
-  { name: '20m Sprint',       section: 'Acceleration' },
+  { name: 'A-Skips', section: 'Technique' },
+  { name: 'B-Skips', section: 'Technique' },
+  { name: 'High Knees', section: 'Technique' },
+  { name: 'Fast Feet', section: 'Technique' },
+  { name: 'Wall Drives', section: 'Technique' },
+  { name: 'Wall Switches', section: 'Technique' },
+  { name: 'Falling Starts', section: 'Starts' },
+  { name: 'Belly Starts', section: 'Starts' },
+  { name: 'Kneeling Starts', section: 'Starts' },
+  { name: 'Lunge Starts', section: 'Starts' },
+  { name: 'Seated Starts', section: 'Starts' },
+  { name: '10m Sprint', section: 'Acceleration' },
+  { name: '15m Falling Start', section: 'Acceleration' },
+  { name: '20m Sprint', section: 'Acceleration' },
 ];
 
 const PLYO_EXERCISES = [
-  { name: 'Broad Jump',               section: 'Lower Body Power' },
-  { name: 'Standing Long Jump',       section: 'Lower Body Power' },
-  { name: 'Triple Broad Jump',        section: 'Lower Body Power' },
-  { name: 'Vertical Jump',            section: 'Lower Body Power' },
-  { name: 'Box Jump',                 section: 'Lower Body Power' },
-  { name: 'Depth Jump',               section: 'Lower Body Power' },
-  { name: 'Squat Jump',               section: 'Lower Body Power' },
-  { name: 'Tuck Jump',                section: 'Lower Body Power' },
-  { name: 'Split Squat Jump',         section: 'Lower Body Power' },
-  { name: 'Lateral Bounds',           section: 'Lower Body Power' },
-  { name: 'Single Leg Bounds',        section: 'Lower Body Power' },
-  { name: 'Pogo Jumps',               section: 'Lower Body Power' },
-  { name: 'Skater Jumps',             section: 'Lower Body Power' },
-  { name: 'Hurdle Hops',              section: 'Lower Body Power' },
-  { name: 'Single Leg Hurdle Hops',   section: 'Lower Body Power' },
-  { name: 'Belly to Sprint',          section: 'Rugby Specific' },
-  { name: 'Front Roll to Sprint',     section: 'Rugby Specific' },
-  { name: 'Down-Up Sprint',           section: 'Rugby Specific' },
-  { name: 'Reaction Sprint',          section: 'Rugby Specific' },
-  { name: 'Partner Call Sprint',      section: 'Rugby Specific' },
-  { name: 'Explosive Press Ups',      section: 'Upper Body Power' },
-  { name: 'Clap Press Ups',           section: 'Upper Body Power' },
-  { name: 'Shoulder Tap Press Ups',   section: 'Upper Body Power' },
+  { name: 'Broad Jump', section: 'Lower Body Power' },
+  { name: 'Standing Long Jump', section: 'Lower Body Power' },
+  { name: 'Triple Broad Jump', section: 'Lower Body Power' },
+  { name: 'Vertical Jump', section: 'Lower Body Power' },
+  { name: 'Box Jump', section: 'Lower Body Power' },
+  { name: 'Depth Jump', section: 'Lower Body Power' },
+  { name: 'Squat Jump', section: 'Lower Body Power' },
+  { name: 'Tuck Jump', section: 'Lower Body Power' },
+  { name: 'Split Squat Jump', section: 'Lower Body Power' },
+  { name: 'Lateral Bounds', section: 'Lower Body Power' },
+  { name: 'Single Leg Bounds', section: 'Lower Body Power' },
+  { name: 'Pogo Jumps', section: 'Lower Body Power' },
+  { name: 'Skater Jumps', section: 'Lower Body Power' },
+  { name: 'Hurdle Hops', section: 'Lower Body Power' },
+  { name: 'Single Leg Hurdle Hops', section: 'Lower Body Power' },
+  { name: 'Belly to Sprint', section: 'Rugby Specific' },
+  { name: 'Front Roll to Sprint', section: 'Rugby Specific' },
+  { name: 'Down-Up Sprint', section: 'Rugby Specific' },
+  { name: 'Reaction Sprint', section: 'Rugby Specific' },
+  { name: 'Partner Call Sprint', section: 'Rugby Specific' },
+  { name: 'Explosive Press Ups', section: 'Upper Body Power' },
+  { name: 'Clap Press Ups', section: 'Upper Body Power' },
+  { name: 'Shoulder Tap Press Ups', section: 'Upper Body Power' },
 ];
 
 const CS_EXERCISES = ['Press Ups','Bench Press (Dumbbells)','Shoulder Press','Fly','Reverse Fly'];
@@ -754,6 +765,7 @@ const CAT_COLORS = {
   'str-cs': '#2980b9',
   'str-bb': '#16a085'
 };
+
 const CAT_LABELS = {
   sprint: 'Sprint',
   plyo: 'Plyometrics',
@@ -761,56 +773,53 @@ const CAT_LABELS = {
   'str-bb': 'Back & Biceps'
 };
 
-// (data stored in Supabase)
-
 // ==================== NAV ====================
 function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
   document.getElementById('page-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
+
   if (id === 'dashboard') renderDashboard();
   if (id === 'history') renderHistory();
   if (id === 'challenge') renderChallenge();
 }
 
 // ==================== CATEGORY SELECT ====================
-let currentCat = 'sprint';
-
 function selectCat(cat, btn) {
-  currentCat = cat;
   document.querySelectorAll('#cat-btns .sub-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+
   ['sprint','plyo','str-cs','str-bb'].forEach(c => {
-    const panel = document.getElementById('panel-' + c);
-    if (panel) panel.style.display = (c === cat) ? 'block' : 'none';
+    document.getElementById('panel-' + c).style.display = c === cat ? 'block' : 'none';
   });
 }
 
-// ==================== BUILD EXERCISE PANELS ====================
-
-// Sprint & Plyo — tick-off 3 sets
+// ==================== EXERCISE PANELS ====================
 function buildCheckList(exercises, containerId) {
   const container = document.getElementById(containerId);
   let html = '';
   let lastSection = '';
+
   exercises.forEach((ex, i) => {
     if (ex.section !== lastSection) {
       html += `<div class="ex-section-label">${ex.section}</div>`;
       lastSection = ex.section;
     }
+
     html += `<div class="ex-check-row" id="chk-${containerId}-${i}" onclick="toggleCheck('${containerId}',${i})">
       <div class="ex-check-box">✓</div>
       <div class="ex-name">${ex.name}</div>
       <div class="ex-sets-badge">3 SETS</div>
     </div>`;
   });
+
   container.innerHTML = html;
 }
 
 function toggleCheck(containerId, i) {
-  const el = document.getElementById(`chk-${containerId}-${i}`);
-  el.classList.toggle('done');
+  document.getElementById(`chk-${containerId}-${i}`).classList.toggle('done');
 }
 
 function getChecked(containerId, exercises) {
@@ -821,170 +830,181 @@ function getChecked(containerId, exercises) {
 
 function resetChecks(containerId, exercises) {
   exercises.forEach((_, i) => {
-    const el = document.getElementById(`chk-${containerId}-${i}`);
-    if (el) el.classList.remove('done');
+    document.getElementById(`chk-${containerId}-${i}`)?.classList.remove('done');
   });
 }
 
-// Strength — reps/sets/kg inputs
 function buildStrengthPanel(exercises, containerId) {
   const container = document.getElementById(containerId);
+
   container.innerHTML = exercises.map(ex => `
     <div class="strength-ex">
       <div class="strength-ex-name">${ex}</div>
       <div class="strength-fields">
         <div class="strength-field">
           <label>Sets</label>
-          <input type="number" id="${containerId}-${slugify(ex)}-sets" value="3" min="1" onchange="markChanged(this)">
+          <input type="number" id="${containerId}-${slugify(ex)}-sets" value="3" min="1">
         </div>
         <div class="strength-field">
           <label>Reps</label>
-          <input type="number" id="${containerId}-${slugify(ex)}-reps" value="8" min="1" onchange="markChanged(this)">
+          <input type="number" id="${containerId}-${slugify(ex)}-reps" value="8" min="1">
         </div>
         <div class="strength-field">
-          <label>Weight (kg)</label>
-          <input type="number" id="${containerId}-${slugify(ex)}-kg" value="" placeholder="kg" step="0.5" onchange="markChanged(this)">
+          <label>Weight kg</label>
+          <input type="number" id="${containerId}-${slugify(ex)}-kg" value="" placeholder="kg" step="0.5">
         </div>
       </div>
     </div>
   `).join('');
 }
 
-function slugify(s) { return s.replace(/[^a-z0-9]/gi,'').toLowerCase(); }
-
-function markChanged(input) { input.classList.add('changed'); }
+function slugify(s) {
+  return s.replace(/[^a-z0-9]/gi,'').toLowerCase();
+}
 
 function getStrengthData(exercises, containerId) {
   return exercises.map(ex => {
     const s = slugify(ex);
-    const sets = document.getElementById(`${containerId}-${s}-sets`)?.value;
-    const reps = document.getElementById(`${containerId}-${s}-reps`)?.value;
-    const kg   = document.getElementById(`${containerId}-${s}-kg`)?.value;
-    const setsChanged = document.getElementById(`${containerId}-${s}-sets`)?.classList.contains('changed');
-    const repsChanged = document.getElementById(`${containerId}-${s}-reps`)?.classList.contains('changed');
-    const kgChanged   = document.getElementById(`${containerId}-${s}-kg`)?.classList.contains('changed');
-    return { name: ex, sets, reps, kg, setsChanged, repsChanged, kgChanged };
+    return {
+      name: ex,
+      sets: document.getElementById(`${containerId}-${s}-sets`).value,
+      reps: document.getElementById(`${containerId}-${s}-reps`).value,
+      kg: document.getElementById(`${containerId}-${s}-kg`).value
+    };
   });
 }
 
 function resetStrengthPanel(exercises, containerId) {
   exercises.forEach(ex => {
     const s = slugify(ex);
-    const setsEl = document.getElementById(`${containerId}-${s}-sets`);
-    const repsEl = document.getElementById(`${containerId}-${s}-reps`);
-    const kgEl   = document.getElementById(`${containerId}-${s}-kg`);
-    if (setsEl) { setsEl.value = 3; setsEl.classList.remove('changed'); }
-    if (repsEl) { repsEl.value = 8; repsEl.classList.remove('changed'); }
-    if (kgEl)   { kgEl.value = ''; kgEl.classList.remove('changed'); }
+    document.getElementById(`${containerId}-${s}-sets`).value = 3;
+    document.getElementById(`${containerId}-${s}-reps`).value = 8;
+    document.getElementById(`${containerId}-${s}-kg`).value = '';
   });
 }
 
-// ==================== LOG FUNCTIONS ====================
-
+// ==================== LOGGING ====================
 async function logSprint() {
   const checked = getChecked('sprint-exercises', SPRINT_EXERCISES);
-  if (!checked.length) { showToast('Tick at least one exercise!'); return; }
-  showToast('Saving... ⏳');
+  if (!checked.length) return showToast('Tick at least one exercise');
+
   await insertSession({
     category: 'sprint',
     exercises: checked,
     sets: 3,
-    rpe: parseInt(document.getElementById('sprint-rpe').value),
+    rpe: Number(document.getElementById('sprint-rpe').value),
     notes: document.getElementById('sprint-notes').value || null
   });
+
   resetChecks('sprint-exercises', SPRINT_EXERCISES);
   document.getElementById('sprint-notes').value = '';
-  document.getElementById('sprint-rpe').value = 7;
-  document.getElementById('sprint-rpe-val').textContent = '7';
-  showToast('Sprint session logged! 🏃');
-  renderDashboard();
+  await renderDashboard();
+  showToast('Sprint logged');
 }
 
 async function logPlyo() {
   const checked = getChecked('plyo-exercises', PLYO_EXERCISES);
-  if (!checked.length) { showToast('Tick at least one exercise!'); return; }
-  showToast('Saving... ⏳');
+  if (!checked.length) return showToast('Tick at least one exercise');
+
   await insertSession({
     category: 'plyo',
     exercises: checked,
     sets: 3,
-    rpe: parseInt(document.getElementById('plyo-rpe').value),
+    rpe: Number(document.getElementById('plyo-rpe').value),
     notes: document.getElementById('plyo-notes').value || null
   });
+
   resetChecks('plyo-exercises', PLYO_EXERCISES);
   document.getElementById('plyo-notes').value = '';
-  document.getElementById('plyo-rpe').value = 7;
-  document.getElementById('plyo-rpe-val').textContent = '7';
-  showToast('Plyometrics logged! ⚡');
-  renderDashboard();
+  await renderDashboard();
+  showToast('Plyo logged');
 }
 
 async function logStrength(type) {
   const exercises = type === 'cs' ? CS_EXERCISES : BB_EXERCISES;
   const containerId = type === 'cs' ? 'cs-exercises' : 'bb-exercises';
   const cat = 'str-' + type;
-  const data = getStrengthData(exercises, containerId);
-  const rpe = parseInt(document.getElementById(`${type}-rpe`).value);
-  const notes = document.getElementById(`${type}-notes`).value || null;
-  showToast('Saving... ⏳');
-  await insertSession({ category: cat, exercises: data, rpe, notes });
+
+  await insertSession({
+    category: cat,
+    exercises: getStrengthData(exercises, containerId),
+    rpe: Number(document.getElementById(`${type}-rpe`).value),
+    notes: document.getElementById(`${type}-notes`).value || null
+  });
+
   resetStrengthPanel(exercises, containerId);
   document.getElementById(`${type}-notes`).value = '';
-  document.getElementById(`${type}-rpe`).value = 7;
-  document.getElementById(`${type}-rpe-val`).textContent = '7';
-  showToast(`${CAT_LABELS[cat]} logged! 💪`);
-  renderDashboard();
+  await renderDashboard();
+  showToast(`${CAT_LABELS[cat]} logged`);
 }
 
 // ==================== DASHBOARD ====================
 async function renderDashboard() {
-  const [log, done] = await Promise.all([getSessions(), getChallenges()]);
+  const [log, done] = await Promise.all([
+    getSessions(),
+    getChallenges()
+  ]);
 
-  const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate()-7);
-  const recent = log.filter(e => new Date(e.created_at) > weekAgo);
-  const count = cat => recent.filter(e => e.category === cat).length;
-  document.getElementById('stat-sprint').textContent = count('sprint');
-  document.getElementById('stat-plyo').textContent = count('plyo');
-  document.getElementById('stat-strength').textContent = recent.filter(e => e.category && e.category.startsWith('str-')).length;
+  const weekAgo = new Date();
+  weekAgo.setDate(weekAgo.getDate() - 7);
+
+  const recent = log.filter(e => new Date(e.created_at) >= weekAgo);
+
+  document.getElementById('stat-sprint').textContent =
+    recent.filter(e => e.category === 'sprint').length;
+
+  document.getElementById('stat-plyo').textContent =
+    recent.filter(e => e.category === 'plyo').length;
+
+  document.getElementById('stat-strength').textContent =
+    recent.filter(e => e.category && e.category.startsWith('str-')).length;
 
   const streak = done.length;
+
   document.getElementById('core-streak-num').textContent = streak;
-  document.getElementById('core-prog').style.width = (streak/28*100) + '%';
+  document.getElementById('core-prog').style.width = `${Math.min(streak / 28 * 100, 100)}%`;
   document.getElementById('core-prog-label').textContent = `Day ${streak} of 28`;
   document.getElementById('headerStreak').textContent = `🔥 ${streak} DAYS`;
 
   const el = document.getElementById('recent-log');
+
   if (!log.length) {
     el.innerHTML = '<div class="empty"><div class="empty-icon">🏉</div><p>No sessions yet — tap Log to get started!</p></div>';
     return;
   }
-  el.innerHTML = log.slice(0,6).map(e => buildLogCard(e)).join('');
+
+  el.innerHTML = log.slice(0, 6).map(e => buildLogCard(e)).join('');
 }
 
+// ==================== LOG CARD ====================
 function buildLogCard(e) {
-  const dateStr = new Date(e.date).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
-  const timeStr = new Date(e.date).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  const dateValue = e.created_at || e.date;
+  const d = new Date(dateValue);
+
+  const dateStr = d.toLocaleDateString('en-GB', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short'
+  });
+
+  const timeStr = d.toLocaleTimeString('en-GB', {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
   const color = CAT_COLORS[e.category] || '#888';
   const label = CAT_LABELS[e.category] || e.category;
+
   let detail = '';
 
   if (e.category === 'sprint' || e.category === 'plyo') {
-    const exList = Array.isArray(e.exercises) ? e.exercises.join(', ') : '';
-    detail = `<div class="log-meta">${exList}</div>`;
+    detail = `<div class="log-meta">${Array.isArray(e.exercises) ? e.exercises.join(', ') : ''}</div>`;
   } else if (e.category && e.category.startsWith('str-')) {
-    if (Array.isArray(e.exercises)) {
-      const parts = e.exercises.map(ex => {
-        let s = `${ex.name}: ${ex.sets}×${ex.reps}`;
-        if (ex.kg) s += ` @ ${ex.kg}kg`;
-        const changes = [];
-        if (ex.setsChanged) changes.push('sets edited');
-        if (ex.repsChanged) changes.push('reps edited');
-        if (ex.kgChanged) changes.push('weight updated');
-        if (changes.length) s += ` <span style="color:var(--amber);font-size:11px">(${changes.join(', ')})</span>`;
-        return s;
-      }).join(' · ');
-      detail = `<div class="log-meta" style="line-height:1.6">${parts}</div>`;
-    }
+    detail = `<div class="log-meta" style="line-height:1.6">${
+      Array.isArray(e.exercises)
+        ? e.exercises.map(ex => `${ex.name}: ${ex.sets}×${ex.reps}${ex.kg ? ` @ ${ex.kg}kg` : ''}`).join(' · ')
+        : ''
+    }</div>`;
   }
 
   return `<div class="log-entry">
@@ -994,74 +1014,87 @@ function buildLogCard(e) {
       ${detail}
       <div class="log-date">${dateStr} at ${timeStr}${e.notes ? ' · ' + e.notes : ''}</div>
     </div>
-    <div class="log-rpe">${e.rpe}<span>RPE</span></div>
+    <div class="log-rpe">${e.rpe || '-'}<span>RPE</span></div>
   </div>`;
 }
 
 // ==================== HISTORY ====================
-function renderHistory() {
-  const d = getData();
+async function renderHistory() {
+  const log = await getSessions();
   const cat = document.getElementById('filter-cat').value;
-  const logs = cat === 'all' ? d.log : d.log.filter(e => e.category === cat);
+  const logs = cat === 'all' ? log : log.filter(e => e.category === cat);
+
   const el = document.getElementById('history-list');
+
   if (!logs.length) {
     el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><p>No sessions found.</p></div>';
     return;
   }
 
-  // Group by date
   const groups = {};
+
   logs.forEach(e => {
-    const key = new Date(e.date).toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+    const key = new Date(e.created_at).toLocaleDateString('en-GB', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+
     if (!groups[key]) groups[key] = [];
     groups[key].push(e);
   });
 
   let html = '';
+
   Object.entries(groups).forEach(([date, entries]) => {
     html += `<div class="hist-date-header">${date}</div>`;
     html += entries.map(e => buildLogCard(e)).join('');
   });
+
   el.innerHTML = html;
 }
 
-function clearHistory() {
+async function clearHistory() {
   if (!confirm('Clear all session history?')) return;
-  const d = getData(); d.log = []; saveData(d);
-  renderHistory(); renderDashboard();
+
+  await deleteAllSessions();
+  await renderHistory();
+  await renderDashboard();
+
   showToast('History cleared');
 }
 
 // ==================== CHALLENGE ====================
-
-// Day 1: 5 sit-ups, 3 crunches, 3 leg raises, 5s plank
-// +5 sit-ups/day, +2 crunches/day, +2 leg raises/day, +3s plank/day
 function getChallengeDay(dayIndex) {
-  const d = dayIndex; // 0-indexed
-  const situps   = 5 + d * 5;
-  const crunches = 3 + d * 2;
-  const legRaise = 3 + d * 2;
-  const plank    = 5 + d * 3;
-  return { situps, crunches, legRaise, plank };
+  return {
+    situps: 5 + dayIndex * 5,
+    crunches: 3 + dayIndex * 2,
+    legRaise: 3 + dayIndex * 2,
+    plank: 5 + dayIndex * 3
+  };
 }
 
-function renderChallenge() {
-  const d = getData();
-  const done = d.challenge || [];
+async function renderChallenge() {
+  const done = await getChallenges();
+
   let html = '';
   let lastWeek = -1;
 
   for (let i = 0; i < 28; i++) {
     const week = Math.floor(i / 7) + 1;
+
     if (week !== lastWeek) {
       html += `<div class="week-title">WEEK ${week}</div>`;
       lastWeek = week;
     }
+
     const { situps, crunches, legRaise, plank } = getChallengeDay(i);
     const isDone = done.includes(i);
+
     html += `<div class="challenge-day ${isDone ? 'done' : ''}" id="cd-${i}" onclick="toggleChallenge(${i})">
       <div class="check">✓</div>
-      <div class="challenge-day-label"><strong>Day ${i+1}</strong></div>
+      <div class="challenge-day-label"><strong>Day ${i + 1}</strong></div>
       <div class="challenge-targets">
         ${situps} sit-ups<br>
         ${crunches} crunches<br>
@@ -1070,36 +1103,51 @@ function renderChallenge() {
       </div>
     </div>`;
   }
+
   document.getElementById('challenge-days').innerHTML = html;
 }
 
-function toggleChallenge(i) {
-  const d = getData();
-  if (!d.challenge) d.challenge = [];
-  const idx = d.challenge.indexOf(i);
-  if (idx === -1) { d.challenge.push(i); showToast(`Day ${i+1} done! 🔥`); }
-  else d.challenge.splice(idx, 1);
-  saveData(d);
-  renderChallenge();
-  renderDashboard();
+async function toggleChallenge(i) {
+  const done = await getChallenges();
+
+  if (done.includes(i)) {
+    await deleteChallenge(i);
+  } else {
+    await insertChallenge(i);
+    showToast(`Day ${i + 1} done`);
+  }
+
+  await renderChallenge();
+  await renderDashboard();
 }
 
 // ==================== TIMER ====================
-let timerInterval = null, timerSeconds = 0, timerRunning = false, timerCountdown = 0;
+let timerInterval = null;
+let timerSeconds = 0;
+let timerRunning = false;
+let timerCountdown = 0;
 
 function formatTime(s) {
-  const m = Math.floor(s/60), sec = s%60;
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
   return String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
 }
+
 function startTimer() {
   if (timerRunning) return;
+
   timerRunning = true;
+
   if (timerCountdown > 0) {
     timerInterval = setInterval(() => {
       timerCountdown--;
       document.getElementById('timer-display').textContent = formatTime(timerCountdown);
       document.getElementById('timer-label').textContent = 'Counting down...';
-      if (timerCountdown <= 0) { stopTimer(); showToast('Rest done — GO! 🏃'); }
+
+      if (timerCountdown <= 0) {
+        stopTimer();
+        showToast('Rest done — GO!');
+      }
     }, 1000);
   } else {
     timerInterval = setInterval(() => {
@@ -1109,9 +1157,28 @@ function startTimer() {
     }, 1000);
   }
 }
-function stopTimer() { clearInterval(timerInterval); timerRunning = false; document.getElementById('timer-label').textContent = 'Stopped'; }
-function resetTimer() { stopTimer(); timerSeconds = 0; timerCountdown = 0; document.getElementById('timer-display').textContent = '00:00'; document.getElementById('timer-label').textContent = 'Ready'; }
-function setPreset(s) { stopTimer(); timerCountdown = s; timerSeconds = 0; document.getElementById('timer-display').textContent = formatTime(s); document.getElementById('timer-label').textContent = 'Ready — tap Start'; }
+
+function stopTimer() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  document.getElementById('timer-label').textContent = 'Stopped';
+}
+
+function resetTimer() {
+  stopTimer();
+  timerSeconds = 0;
+  timerCountdown = 0;
+  document.getElementById('timer-display').textContent = '00:00';
+  document.getElementById('timer-label').textContent = 'Ready';
+}
+
+function setPreset(s) {
+  stopTimer();
+  timerCountdown = s;
+  timerSeconds = 0;
+  document.getElementById('timer-display').textContent = formatTime(s);
+  document.getElementById('timer-label').textContent = 'Ready — tap Start';
+}
 
 // ==================== TOAST ====================
 function showToast(msg) {
@@ -1122,11 +1189,15 @@ function showToast(msg) {
 }
 
 // ==================== INIT ====================
-buildCheckList(SPRINT_EXERCISES, 'sprint-exercises');
-buildCheckList(PLYO_EXERCISES, 'plyo-exercises');
-buildStrengthPanel(CS_EXERCISES, 'cs-exercises');
-buildStrengthPanel(BB_EXERCISES, 'bb-exercises');
-renderDashboard();
+document.addEventListener('DOMContentLoaded', async () => {
+  buildCheckList(SPRINT_EXERCISES, 'sprint-exercises');
+  buildCheckList(PLYO_EXERCISES, 'plyo-exercises');
+  buildStrengthPanel(CS_EXERCISES, 'cs-exercises');
+  buildStrengthPanel(BB_EXERCISES, 'bb-exercises');
+
+  await renderDashboard();
+});
+</script>
 </script>
 </body>
 </html>
