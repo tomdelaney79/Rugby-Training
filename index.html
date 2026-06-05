@@ -1197,7 +1197,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   await renderDashboard();
 });
-</script>
+// Make functions available to HTML onclick buttons
+window.showPage = showPage;
+window.selectCat = selectCat;
+window.toggleCheck = toggleCheck;
+window.logSprint = logSprint;
+window.logPlyo = logPlyo;
+window.logStrength = logStrength;
+window.renderHistory = renderHistory;
+window.clearHistory = clearHistory;
+window.toggleChallenge = toggleChallenge;
+window.startTimer = startTimer;
+window.stopTimer = stopTimer;
+window.resetTimer = resetTimer;
+window.setPreset = setPreset;
 </script>
 </body>
 </html>
