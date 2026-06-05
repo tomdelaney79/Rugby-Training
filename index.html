@@ -30,7 +30,6 @@
       repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(255,255,255,0.02) 60px);
   }
 
-  /* HEADER */
   .header {
     background: linear-gradient(135deg, var(--pitch) 0%, #0d2010 100%);
     border-bottom: 3px solid var(--gold);
@@ -80,7 +79,6 @@
     letter-spacing: 1px;
   }
 
-  /* NAV */
   .nav {
     display: flex;
     background: var(--pitch);
@@ -114,11 +112,9 @@
   }
   .nav-btn .nav-icon { font-size: 17px; display: block; margin-bottom: 2px; }
 
-  /* PAGES */
   .page { display: none; padding: 18px; max-width: 600px; margin: 0 auto; }
   .page.active { display: block; }
 
-  /* SECTION TITLE */
   .section-title {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 20px;
@@ -131,7 +127,6 @@
   }
   .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-  /* CARDS */
   .card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -140,7 +135,6 @@
     margin-bottom: 12px;
   }
 
-  /* DASHBOARD */
   .stat-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -165,7 +159,6 @@
   .prog-bar-wrap { background: var(--border); border-radius: 3px; height: 6px; margin-top: 6px; }
   .prog-bar { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--gold), var(--amber)); transition: width 0.5s; }
 
-  /* LOG FORM */
   .form-group { margin-bottom: 12px; }
   .form-group label {
     display: block;
@@ -193,7 +186,6 @@
   .form-group input:focus,
   .form-group textarea:focus { border-color: var(--gold); }
   .form-group textarea { resize: none; height: 66px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
   .btn-primary {
     width: 100%;
@@ -212,7 +204,6 @@
   .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(212,160,23,0.3); }
   .btn-primary:active { transform: translateY(0); }
 
-  /* EXERCISE CHECKLIST (Sprint & Plyo) */
   .ex-section-label {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 12px;
@@ -257,7 +248,6 @@
     letter-spacing: 1px;
   }
 
-  /* STRENGTH FORM */
   .strength-ex {
     background: var(--pitch);
     border: 1px solid var(--border);
@@ -296,9 +286,7 @@
     transition: border-color 0.2s;
   }
   .strength-field input:focus { border-color: var(--gold); }
-  .strength-field input.changed { border-color: var(--amber); }
 
-  /* LOG ENTRIES */
   .log-entry {
     background: var(--pitch);
     border: 1px solid var(--border);
@@ -324,7 +312,6 @@
   }
   .log-rpe span { display: block; font-size: 9px; color: var(--muted); font-family: 'Barlow', sans-serif; font-weight: 400; }
 
-  /* HISTORY date groups */
   .hist-date-header {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 14px;
@@ -335,7 +322,6 @@
     margin-bottom: 8px;
   }
 
-  /* CHALLENGE */
   .week-title {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 17px;
@@ -354,9 +340,11 @@
     margin-bottom: 6px;
     cursor: pointer;
     transition: all 0.15s;
+    touch-action: manipulation;
   }
   .challenge-day:hover { border-color: var(--gold); }
   .challenge-day.done { border-color: var(--grass); background: rgba(45,90,39,0.2); }
+  .challenge-day.saving { opacity: 0.65; pointer-events: none; }
   .challenge-day .check {
     width: 22px; height: 22px;
     border: 2px solid var(--muted);
@@ -379,7 +367,6 @@
     flex-shrink: 0;
   }
 
-  /* TIMER */
   .timer-display { text-align: center; padding: 22px 0; }
   .timer-time { font-family: 'Bebas Neue', sans-serif; font-size: 70px; color: var(--gold); letter-spacing: 4px; line-height: 1; }
   .timer-label { font-size: 11px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
@@ -392,24 +379,13 @@
   .btn-stop { background: var(--red); color: white; }
   .btn-reset { background: var(--pitch); color: var(--muted); border: 1px solid var(--border); }
 
-  /* EMPTY STATE */
   .empty { text-align: center; padding: 36px 20px; color: var(--muted); }
   .empty-icon { font-size: 38px; margin-bottom: 10px; }
   .empty p { font-size: 13px; }
 
-  /* RPE */
   input[type="range"] { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 3px; background: var(--border); outline: none; }
   input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--gold); cursor: pointer; }
 
-  /* CAT COLORS */
-  .c-sprint { background: #e84393; }
-  .c-plyo   { background: #9b59b6; }
-  .c-str-cs { background: #2980b9; }
-  .c-str-bb { background: #16a085; }
-  .c-core   { background: #27ae60; }
-
-  /* SUB CAT TABS */
-  .sub-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
   .sub-tab {
     flex: 1; padding: 10px 8px; text-align: center;
     background: var(--pitch); border: 2px solid var(--border);
@@ -421,7 +397,6 @@
   }
   .sub-tab.active { border-color: var(--gold); color: var(--gold); background: rgba(212,160,23,0.08); }
 
-  /* TOAST */
   #toast {
     position: fixed;
     bottom: 20px; left: 50%; transform: translateX(-50%) translateY(80px);
@@ -432,10 +407,6 @@
     z-index: 999; transition: transform 0.3s; white-space: nowrap;
   }
   #toast.show { transform: translateX(-50%) translateY(0); }
-
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: var(--dark); }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 </style>
 </head>
 <body>
@@ -448,43 +419,23 @@
       <div class="header-sub">Off-Season Athletic Development</div>
     </div>
   </div>
-  <div class="streak-badge" id="headerStreak">🔥 0 DAYS</div>
+  <div class="streak-badge" id="headerStreak">ð¥ 0 DAYS</div>
 </div>
 
 <nav class="nav">
-  <button class="nav-btn active" onclick="showPage('dashboard',this)">
-    <span class="nav-icon">📊</span>Dashboard
-  </button>
-  <button class="nav-btn" onclick="showPage('log',this)">
-    <span class="nav-icon">➕</span>Log
-  </button>
-  <button class="nav-btn" onclick="showPage('history',this)">
-    <span class="nav-icon">📋</span>History
-  </button>
-  <button class="nav-btn" onclick="showPage('challenge',this)">
-    <span class="nav-icon">🏆</span>Challenge
-  </button>
-  <button class="nav-btn" onclick="showPage('timer',this)">
-    <span class="nav-icon">⏱️</span>Timer
-  </button>
+  <button class="nav-btn active" onclick="showPage('dashboard',this)"><span class="nav-icon">ð</span>Dashboard</button>
+  <button class="nav-btn" onclick="showPage('log',this)"><span class="nav-icon">â</span>Log</button>
+  <button class="nav-btn" onclick="showPage('history',this)"><span class="nav-icon">ð</span>History</button>
+  <button class="nav-btn" onclick="showPage('challenge',this)"><span class="nav-icon">ð</span>Challenge</button>
+  <button class="nav-btn" onclick="showPage('timer',this)"><span class="nav-icon">â±ï¸</span>Timer</button>
 </nav>
 
-<!-- =================== DASHBOARD =================== -->
 <div id="page-dashboard" class="page active">
   <div class="section-title">This Week</div>
   <div class="stat-row">
-    <div class="stat-item">
-      <div class="stat-num" id="stat-sprint">0</div>
-      <div class="stat-label">Sprint</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num" id="stat-plyo">0</div>
-      <div class="stat-label">Plyo</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num" id="stat-strength">0</div>
-      <div class="stat-label">Strength</div>
-    </div>
+    <div class="stat-item"><div class="stat-num" id="stat-sprint">0</div><div class="stat-label">Sprint</div></div>
+    <div class="stat-item"><div class="stat-num" id="stat-plyo">0</div><div class="stat-label">Plyo</div></div>
+    <div class="stat-item"><div class="stat-num" id="stat-strength">0</div><div class="stat-label">Strength</div></div>
   </div>
 
   <div class="section-title">Core Streak</div>
@@ -499,26 +450,23 @@
 
   <div class="section-title">Recent Sessions</div>
   <div id="recent-log">
-    <div class="empty"><div class="empty-icon">🏉</div><p>No sessions yet — tap Log to get started!</p></div>
+    <div class="empty"><div class="empty-icon">ð</div><p>No sessions yet â tap Log to get started!</p></div>
   </div>
 </div>
 
-<!-- =================== LOG =================== -->
 <div id="page-log" class="page">
   <div class="section-title">Log Session</div>
 
-  <!-- Category picker -->
   <div class="card" style="padding:12px;">
     <div style="font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">Select Category</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;" id="cat-btns">
-      <button class="sub-tab active" onclick="selectCat('sprint',this)">🏃 Sprint</button>
-      <button class="sub-tab" onclick="selectCat('plyo',this)">⚡ Plyometrics</button>
-      <button class="sub-tab" onclick="selectCat('str-cs',this)">💪 Chest &amp; Shoulders</button>
-      <button class="sub-tab" onclick="selectCat('str-bb',this)">🦾 Back &amp; Biceps</button>
+      <button class="sub-tab active" onclick="selectCat('sprint',this)">ð Sprint</button>
+      <button class="sub-tab" onclick="selectCat('plyo',this)">â¡ Plyometrics</button>
+      <button class="sub-tab" onclick="selectCat('str-cs',this)">ðª Chest &amp; Shoulders</button>
+      <button class="sub-tab" onclick="selectCat('str-bb',this)">ð¦¾ Back &amp; Biceps</button>
     </div>
   </div>
 
-  <!-- SPRINT panel -->
   <div id="panel-sprint" class="card">
     <div style="font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">Tick off each set of 3</div>
     <div id="sprint-exercises"></div>
@@ -526,14 +474,10 @@
       <label>Effort (RPE): <span id="sprint-rpe-val">7</span>/10</label>
       <input type="range" id="sprint-rpe" min="1" max="10" value="7" oninput="document.getElementById('sprint-rpe-val').textContent=this.value">
     </div>
-    <div class="form-group">
-      <label>Notes</label>
-      <textarea id="sprint-notes" placeholder="How did it feel?"></textarea>
-    </div>
-    <button class="btn-primary" onclick="logSprint()">✓ LOG SPRINT SESSION</button>
+    <div class="form-group"><label>Notes</label><textarea id="sprint-notes" placeholder="How did it feel?"></textarea></div>
+    <button class="btn-primary" onclick="logSprint()">â LOG SPRINT SESSION</button>
   </div>
 
-  <!-- PLYO panel -->
   <div id="panel-plyo" class="card" style="display:none;">
     <div style="font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">Tick off 3 sets of each exercise</div>
     <div id="plyo-exercises"></div>
@@ -541,45 +485,33 @@
       <label>Effort (RPE): <span id="plyo-rpe-val">7</span>/10</label>
       <input type="range" id="plyo-rpe" min="1" max="10" value="7" oninput="document.getElementById('plyo-rpe-val').textContent=this.value">
     </div>
-    <div class="form-group">
-      <label>Notes</label>
-      <textarea id="plyo-notes" placeholder="How did it feel?"></textarea>
-    </div>
-    <button class="btn-primary" onclick="logPlyo()">✓ LOG PLYO SESSION</button>
+    <div class="form-group"><label>Notes</label><textarea id="plyo-notes" placeholder="How did it feel?"></textarea></div>
+    <button class="btn-primary" onclick="logPlyo()">â LOG PLYO SESSION</button>
   </div>
 
-  <!-- CHEST & SHOULDERS panel -->
   <div id="panel-str-cs" class="card" style="display:none;">
-    <div style="font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">3 Sets each — edit reps &amp; weight as needed</div>
+    <div style="font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">3 Sets each â edit reps &amp; weight as needed</div>
     <div id="cs-exercises"></div>
     <div class="form-group" style="margin-top:12px;">
       <label>Effort (RPE): <span id="cs-rpe-val">7</span>/10</label>
       <input type="range" id="cs-rpe" min="1" max="10" value="7" oninput="document.getElementById('cs-rpe-val').textContent=this.value">
     </div>
-    <div class="form-group">
-      <label>Notes</label>
-      <textarea id="cs-notes" placeholder="Any observations..."></textarea>
-    </div>
-    <button class="btn-primary" onclick="logStrength('cs')">✓ LOG CHEST &amp; SHOULDERS</button>
+    <div class="form-group"><label>Notes</label><textarea id="cs-notes" placeholder="Any observations..."></textarea></div>
+    <button class="btn-primary" onclick="logStrength('cs')">â LOG CHEST &amp; SHOULDERS</button>
   </div>
 
-  <!-- BACK & BICEPS panel -->
   <div id="panel-str-bb" class="card" style="display:none;">
-    <div style="font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">3 Sets each — edit reps &amp; weight as needed</div>
+    <div style="font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">3 Sets each â edit reps &amp; weight as needed</div>
     <div id="bb-exercises"></div>
     <div class="form-group" style="margin-top:12px;">
       <label>Effort (RPE): <span id="bb-rpe-val">7</span>/10</label>
       <input type="range" id="bb-rpe" min="1" max="10" value="7" oninput="document.getElementById('bb-rpe-val').textContent=this.value">
     </div>
-    <div class="form-group">
-      <label>Notes</label>
-      <textarea id="bb-notes" placeholder="Any observations..."></textarea>
-    </div>
-    <button class="btn-primary" onclick="logStrength('bb')">✓ LOG BACK &amp; BICEPS</button>
+    <div class="form-group"><label>Notes</label><textarea id="bb-notes" placeholder="Any observations..."></textarea></div>
+    <button class="btn-primary" onclick="logStrength('bb')">â LOG BACK &amp; BICEPS</button>
   </div>
 </div>
 
-<!-- =================== HISTORY =================== -->
 <div id="page-history" class="page">
   <div class="section-title">Session History</div>
   <div style="display:flex;gap:8px;margin-bottom:14px;">
@@ -595,22 +527,20 @@
   <div id="history-list"></div>
 </div>
 
-<!-- =================== CHALLENGE =================== -->
 <div id="page-challenge" class="page">
   <div class="section-title">Daily Ab Challenge</div>
   <div class="card" style="background:linear-gradient(135deg,#1a3a1a,#0d2010);border-color:var(--gold);margin-bottom:16px;">
     <div style="display:flex;align-items:center;gap:12px;">
-      <div style="font-size:34px">🏆</div>
+      <div style="font-size:34px">ð</div>
       <div>
         <div style="font-family:'Bebas Neue';font-size:19px;color:var(--gold);letter-spacing:2px">28-DAY CORE PROGRAMME</div>
-        <div style="font-size:12px;color:var(--muted)">Progresses every single day — tap to tick off</div>
+        <div style="font-size:12px;color:var(--muted)">Progresses every single day â tap to tick off</div>
       </div>
     </div>
   </div>
   <div id="challenge-days"></div>
 </div>
 
-<!-- =================== TIMER =================== -->
 <div id="page-timer" class="page">
   <div class="section-title">Rest Timer</div>
   <div class="card">
@@ -626,52 +556,46 @@
   </div>
   <div class="section-title" style="margin-top:18px;">Quick Presets</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-    <div class="card" style="text-align:center;cursor:pointer;padding:14px;" onclick="setPreset(30)">
-      <div style="font-family:'Bebas Neue';font-size:28px;color:var(--gold)">0:30</div>
-      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px">Sprint Rest</div>
-    </div>
-    <div class="card" style="text-align:center;cursor:pointer;padding:14px;" onclick="setPreset(60)">
-      <div style="font-family:'Bebas Neue';font-size:28px;color:var(--gold)">1:00</div>
-      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px">Plyo Rest</div>
-    </div>
-    <div class="card" style="text-align:center;cursor:pointer;padding:14px;" onclick="setPreset(90)">
-      <div style="font-family:'Bebas Neue';font-size:28px;color:var(--gold)">1:30</div>
-      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px">Strength Rest</div>
-    </div>
-    <div class="card" style="text-align:center;cursor:pointer;padding:14px;" onclick="setPreset(120)">
-      <div style="font-family:'Bebas Neue';font-size:28px;color:var(--gold)">2:00</div>
-      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px">Heavy Lift</div>
-    </div>
+    <div class="card" style="text-align:center;cursor:pointer;padding:14px;" onclick="setPreset(30)"><div style="font-family:'Bebas Neue';font-size:28px;color:var(--gold)">0:30</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px">Sprint Rest</div></div>
+    <div class="card" style="text-align:center;cursor:pointer;padding:14px;" onclick="setPreset(60)"><div style="font-family:'Bebas Neue';font-size:28px;color:var(--gold)">1:00</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px">Plyo Rest</div></div>
+    <div class="card" style="text-align:center;cursor:pointer;padding:14px;" onclick="setPreset(90)"><div style="font-family:'Bebas Neue';font-size:28px;color:var(--gold)">1:30</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px">Strength Rest</div></div>
+    <div class="card" style="text-align:center;cursor:pointer;padding:14px;" onclick="setPreset(120)"><div style="font-family:'Bebas Neue';font-size:28px;color:var(--gold)">2:00</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px">Heavy Lift</div></div>
   </div>
 </div>
 
-<div id="toast">Done! 💪</div>
+<div id="toast">Done! ðª</div>
 
 <script>
-// ==================== SUPABASE ====================
 const SUPABASE_URL = 'https://jamdzbqubvqolgkbkpyj.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_Sb_hjJBMjn4h5wJGolq4JQ_sB8vriE-';
 
 async function sbFetch(path, options = {}) {
-  const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
-    ...options,
-    headers: {
-      apikey: SUPABASE_KEY,
-      Authorization: 'Bearer ' + SUPABASE_KEY,
-      'Content-Type': 'application/json',
-      Prefer: options.prefer || 'return=representation',
-      ...(options.headers || {})
-    }
-  });
+  try {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
+      ...options,
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        Prefer: options.prefer || 'return=representation',
+        ...(options.headers || {})
+      }
+    });
 
-  if (!res.ok) {
-    console.error('Supabase error:', await res.text());
-    showToast('Database error');
+    const text = await res.text();
+
+    if (!res.ok) {
+      console.error('Supabase error:', res.status, text);
+      showToast(`Database error ${res.status}`);
+      return null;
+    }
+
+    return text ? JSON.parse(text) : [];
+  } catch (err) {
+    console.error('Network error:', err);
+    showToast('Network/database error');
     return null;
   }
-
-  const text = await res.text();
-  return text ? JSON.parse(text) : [];
 }
 
 async function getSessions() {
@@ -679,10 +603,11 @@ async function getSessions() {
 }
 
 async function insertSession(entry) {
-  return await sbFetch('sessions', {
+  const result = await sbFetch('sessions', {
     method: 'POST',
     body: JSON.stringify(entry)
   });
+  return Array.isArray(result) && result.length > 0 ? result[0] : null;
 }
 
 async function deleteAllSessions() {
@@ -694,14 +619,15 @@ async function deleteAllSessions() {
 
 async function getChallenges() {
   const data = await sbFetch('challenge?select=day_index&order=day_index.asc') || [];
-  return data.map(r => r.day_index);
+  return data.map(r => Number(r.day_index));
 }
 
 async function insertChallenge(dayIndex) {
-  return await sbFetch('challenge', {
+  const result = await sbFetch('challenge', {
     method: 'POST',
     body: JSON.stringify({ day_index: dayIndex })
   });
+  return Array.isArray(result) && result.length > 0 ? result[0] : null;
 }
 
 async function deleteChallenge(dayIndex) {
@@ -711,7 +637,6 @@ async function deleteChallenge(dayIndex) {
   });
 }
 
-// ==================== DATA ====================
 const SPRINT_EXERCISES = [
   { name: 'A-Skips', section: 'Technique' },
   { name: 'B-Skips', section: 'Technique' },
@@ -772,12 +697,12 @@ const CAT_LABELS = {
   'str-bb': 'Back & Biceps'
 };
 
-// ==================== NAV ====================
 function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
-  document.getElementById('page-' + id).classList.add('active');
+  const page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
   if (btn) btn.classList.add('active');
 
   if (id === 'dashboard') renderDashboard();
@@ -785,17 +710,16 @@ function showPage(id, btn) {
   if (id === 'challenge') renderChallenge();
 }
 
-// ==================== CATEGORY SELECT ====================
 function selectCat(cat, btn) {
   document.querySelectorAll('#cat-btns .sub-tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  if (btn) btn.classList.add('active');
 
   ['sprint','plyo','str-cs','str-bb'].forEach(c => {
-    document.getElementById('panel-' + c).style.display = c === cat ? 'block' : 'none';
+    const panel = document.getElementById('panel-' + c);
+    if (panel) panel.style.display = c === cat ? 'block' : 'none';
   });
 }
 
-// ==================== EXERCISE PANELS ====================
 function buildCheckList(exercises, containerId) {
   const container = document.getElementById(containerId);
   let html = '';
@@ -808,7 +732,7 @@ function buildCheckList(exercises, containerId) {
     }
 
     html += `<div class="ex-check-row" id="chk-${containerId}-${i}" onclick="toggleCheck('${containerId}',${i})">
-      <div class="ex-check-box">✓</div>
+      <div class="ex-check-box">â</div>
       <div class="ex-name">${ex.name}</div>
       <div class="ex-sets-badge">3 SETS</div>
     </div>`;
@@ -818,7 +742,8 @@ function buildCheckList(exercises, containerId) {
 }
 
 function toggleCheck(containerId, i) {
-  document.getElementById(`chk-${containerId}-${i}`).classList.toggle('done');
+  const row = document.getElementById(`chk-${containerId}-${i}`);
+  if (row) row.classList.toggle('done');
 }
 
 function getChecked(containerId, exercises) {
@@ -866,9 +791,9 @@ function getStrengthData(exercises, containerId) {
     const s = slugify(ex);
     return {
       name: ex,
-      sets: document.getElementById(`${containerId}-${s}-sets`).value,
-      reps: document.getElementById(`${containerId}-${s}-reps`).value,
-      kg: document.getElementById(`${containerId}-${s}-kg`).value
+      sets: Number(document.getElementById(`${containerId}-${s}-sets`).value || 0),
+      reps: Number(document.getElementById(`${containerId}-${s}-reps`).value || 0),
+      kg: document.getElementById(`${containerId}-${s}-kg`).value || null
     };
   });
 }
@@ -882,18 +807,20 @@ function resetStrengthPanel(exercises, containerId) {
   });
 }
 
-// ==================== LOGGING ====================
 async function logSprint() {
   const checked = getChecked('sprint-exercises', SPRINT_EXERCISES);
   if (!checked.length) return showToast('Tick at least one exercise');
 
-  await insertSession({
+  showToast('Saving...');
+  const saved = await insertSession({
     category: 'sprint',
     exercises: checked,
     sets: 3,
     rpe: Number(document.getElementById('sprint-rpe').value),
     notes: document.getElementById('sprint-notes').value || null
   });
+
+  if (!saved) return;
 
   resetChecks('sprint-exercises', SPRINT_EXERCISES);
   document.getElementById('sprint-notes').value = '';
@@ -905,13 +832,16 @@ async function logPlyo() {
   const checked = getChecked('plyo-exercises', PLYO_EXERCISES);
   if (!checked.length) return showToast('Tick at least one exercise');
 
-  await insertSession({
+  showToast('Saving...');
+  const saved = await insertSession({
     category: 'plyo',
     exercises: checked,
     sets: 3,
     rpe: Number(document.getElementById('plyo-rpe').value),
     notes: document.getElementById('plyo-notes').value || null
   });
+
+  if (!saved) return;
 
   resetChecks('plyo-exercises', PLYO_EXERCISES);
   document.getElementById('plyo-notes').value = '';
@@ -924,12 +854,15 @@ async function logStrength(type) {
   const containerId = type === 'cs' ? 'cs-exercises' : 'bb-exercises';
   const cat = 'str-' + type;
 
-  await insertSession({
+  showToast('Saving...');
+  const saved = await insertSession({
     category: cat,
     exercises: getStrengthData(exercises, containerId),
     rpe: Number(document.getElementById(`${type}-rpe`).value),
     notes: document.getElementById(`${type}-notes`).value || null
   });
+
+  if (!saved) return;
 
   resetStrengthPanel(exercises, containerId);
   document.getElementById(`${type}-notes`).value = '';
@@ -937,60 +870,43 @@ async function logStrength(type) {
   showToast(`${CAT_LABELS[cat]} logged`);
 }
 
-// ==================== DASHBOARD ====================
 async function renderDashboard() {
-  const [log, done] = await Promise.all([
-    getSessions(),
-    getChallenges()
-  ]);
+  const [log, done] = await Promise.all([getSessions(), getChallenges()]);
 
   const weekAgo = new Date();
-  weekAgo.setDate(weekAgo.getDate() - 7);
+  weekAgo.setHours(0,0,0,0);
+  weekAgo.setDate(weekAgo.getDate() - 6);
 
-  const recent = log.filter(e => new Date(e.created_at) >= weekAgo);
+  const recent = log.filter(e => {
+    const value = e.created_at || e.date;
+    return value && new Date(value) >= weekAgo;
+  });
 
-  document.getElementById('stat-sprint').textContent =
-    recent.filter(e => e.category === 'sprint').length;
-
-  document.getElementById('stat-plyo').textContent =
-    recent.filter(e => e.category === 'plyo').length;
-
-  document.getElementById('stat-strength').textContent =
-    recent.filter(e => e.category && e.category.startsWith('str-')).length;
+  document.getElementById('stat-sprint').textContent = recent.filter(e => e.category === 'sprint').length;
+  document.getElementById('stat-plyo').textContent = recent.filter(e => e.category === 'plyo').length;
+  document.getElementById('stat-strength').textContent = recent.filter(e => e.category && e.category.startsWith('str-')).length;
 
   const streak = done.length;
-
   document.getElementById('core-streak-num').textContent = streak;
   document.getElementById('core-prog').style.width = `${Math.min(streak / 28 * 100, 100)}%`;
   document.getElementById('core-prog-label').textContent = `Day ${streak} of 28`;
-  document.getElementById('headerStreak').textContent = `🔥 ${streak} DAYS`;
+  document.getElementById('headerStreak').textContent = `ð¥ ${streak} DAYS`;
 
   const el = document.getElementById('recent-log');
-
   if (!log.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">🏉</div><p>No sessions yet — tap Log to get started!</p></div>';
+    el.innerHTML = '<div class="empty"><div class="empty-icon">ð</div><p>No sessions yet â tap Log to get started!</p></div>';
     return;
   }
 
   el.innerHTML = log.slice(0, 6).map(e => buildLogCard(e)).join('');
 }
 
-// ==================== LOG CARD ====================
 function buildLogCard(e) {
-  const dateValue = e.created_at || e.date;
+  const dateValue = e.created_at || e.date || new Date().toISOString();
   const d = new Date(dateValue);
 
-  const dateStr = d.toLocaleDateString('en-GB', {
-    weekday: 'short',
-    day: 'numeric',
-    month: 'short'
-  });
-
-  const timeStr = d.toLocaleTimeString('en-GB', {
-    hour: '2-digit',
-    minute: '2-digit'
-  });
-
+  const dateStr = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+  const timeStr = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
   const color = CAT_COLORS[e.category] || '#888';
   const label = CAT_LABELS[e.category] || e.category;
 
@@ -1001,7 +917,7 @@ function buildLogCard(e) {
   } else if (e.category && e.category.startsWith('str-')) {
     detail = `<div class="log-meta" style="line-height:1.6">${
       Array.isArray(e.exercises)
-        ? e.exercises.map(ex => `${ex.name}: ${ex.sets}×${ex.reps}${ex.kg ? ` @ ${ex.kg}kg` : ''}`).join(' · ')
+        ? e.exercises.map(ex => `${ex.name}: ${ex.sets}Ã${ex.reps}${ex.kg ? ` @ ${ex.kg}kg` : ''}`).join(' Â· ')
         : ''
     }</div>`;
   }
@@ -1011,29 +927,27 @@ function buildLogCard(e) {
     <div style="flex:1;min-width:0;">
       <div class="log-exercise">${label}</div>
       ${detail}
-      <div class="log-date">${dateStr} at ${timeStr}${e.notes ? ' · ' + e.notes : ''}</div>
+      <div class="log-date">${dateStr} at ${timeStr}${e.notes ? ' Â· ' + e.notes : ''}</div>
     </div>
     <div class="log-rpe">${e.rpe || '-'}<span>RPE</span></div>
   </div>`;
 }
 
-// ==================== HISTORY ====================
 async function renderHistory() {
   const log = await getSessions();
   const cat = document.getElementById('filter-cat').value;
   const logs = cat === 'all' ? log : log.filter(e => e.category === cat);
-
   const el = document.getElementById('history-list');
 
   if (!logs.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><p>No sessions found.</p></div>';
+    el.innerHTML = '<div class="empty"><div class="empty-icon">ð</div><p>No sessions found.</p></div>';
     return;
   }
 
   const groups = {};
-
   logs.forEach(e => {
-    const key = new Date(e.created_at).toLocaleDateString('en-GB', {
+    const dateValue = e.created_at || e.date || new Date().toISOString();
+    const key = new Date(dateValue).toLocaleDateString('en-GB', {
       weekday: 'long',
       day: 'numeric',
       month: 'long',
@@ -1045,7 +959,6 @@ async function renderHistory() {
   });
 
   let html = '';
-
   Object.entries(groups).forEach(([date, entries]) => {
     html += `<div class="hist-date-header">${date}</div>`;
     html += entries.map(e => buildLogCard(e)).join('');
@@ -1056,15 +969,12 @@ async function renderHistory() {
 
 async function clearHistory() {
   if (!confirm('Clear all session history?')) return;
-
   await deleteAllSessions();
   await renderHistory();
   await renderDashboard();
-
   showToast('History cleared');
 }
 
-// ==================== CHALLENGE ====================
 function getChallengeDay(dayIndex) {
   return {
     situps: 5 + dayIndex * 5,
@@ -1076,6 +986,7 @@ function getChallengeDay(dayIndex) {
 
 async function renderChallenge() {
   const done = await getChallenges();
+  const container = document.getElementById('challenge-days');
 
   let html = '';
   let lastWeek = -1;
@@ -1091,8 +1002,8 @@ async function renderChallenge() {
     const { situps, crunches, legRaise, plank } = getChallengeDay(i);
     const isDone = done.includes(i);
 
-    html += `<div class="challenge-day ${isDone ? 'done' : ''}" id="cd-${i}" onclick="toggleChallenge(${i})">
-      <div class="check">✓</div>
+    html += `<div class="challenge-day ${isDone ? 'done' : ''}" data-day="${i}" id="cd-${i}">
+      <div class="check">â</div>
       <div class="challenge-day-label"><strong>Day ${i + 1}</strong></div>
       <div class="challenge-targets">
         ${situps} sit-ups<br>
@@ -1103,16 +1014,31 @@ async function renderChallenge() {
     </div>`;
   }
 
-  document.getElementById('challenge-days').innerHTML = html;
+  container.innerHTML = html;
+
+  container.querySelectorAll('.challenge-day').forEach(row => {
+    row.addEventListener('click', () => {
+      const day = Number(row.dataset.day);
+      toggleChallenge(day);
+    });
+  });
 }
 
 async function toggleChallenge(i) {
+  const row = document.getElementById(`cd-${i}`);
+  if (row) row.classList.add('saving');
+
   const done = await getChallenges();
 
   if (done.includes(i)) {
     await deleteChallenge(i);
+    showToast(`Day ${i + 1} unticked`);
   } else {
-    await insertChallenge(i);
+    const saved = await insertChallenge(i);
+    if (!saved) {
+      if (row) row.classList.remove('saving');
+      return;
+    }
     showToast(`Day ${i + 1} done`);
   }
 
@@ -1120,7 +1046,6 @@ async function toggleChallenge(i) {
   await renderDashboard();
 }
 
-// ==================== TIMER ====================
 let timerInterval = null;
 let timerSeconds = 0;
 let timerRunning = false;
@@ -1134,7 +1059,6 @@ function formatTime(s) {
 
 function startTimer() {
   if (timerRunning) return;
-
   timerRunning = true;
 
   if (timerCountdown > 0) {
@@ -1142,10 +1066,9 @@ function startTimer() {
       timerCountdown--;
       document.getElementById('timer-display').textContent = formatTime(timerCountdown);
       document.getElementById('timer-label').textContent = 'Counting down...';
-
       if (timerCountdown <= 0) {
         stopTimer();
-        showToast('Rest done — GO!');
+        showToast('Rest done â GO!');
       }
     }, 1000);
   } else {
@@ -1176,10 +1099,9 @@ function setPreset(s) {
   timerCountdown = s;
   timerSeconds = 0;
   document.getElementById('timer-display').textContent = formatTime(s);
-  document.getElementById('timer-label').textContent = 'Ready — tap Start';
+  document.getElementById('timer-label').textContent = 'Ready â tap Start';
 }
 
-// ==================== TOAST ====================
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -1187,16 +1109,6 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-// ==================== INIT ====================
-document.addEventListener('DOMContentLoaded', async () => {
-  buildCheckList(SPRINT_EXERCISES, 'sprint-exercises');
-  buildCheckList(PLYO_EXERCISES, 'plyo-exercises');
-  buildStrengthPanel(CS_EXERCISES, 'cs-exercises');
-  buildStrengthPanel(BB_EXERCISES, 'bb-exercises');
-
-  await renderDashboard();
-});
-// Make functions available to HTML onclick buttons
 window.showPage = showPage;
 window.selectCat = selectCat;
 window.toggleCheck = toggleCheck;
@@ -1210,6 +1122,14 @@ window.startTimer = startTimer;
 window.stopTimer = stopTimer;
 window.resetTimer = resetTimer;
 window.setPreset = setPreset;
+
+document.addEventListener('DOMContentLoaded', async () => {
+  buildCheckList(SPRINT_EXERCISES, 'sprint-exercises');
+  buildCheckList(PLYO_EXERCISES, 'plyo-exercises');
+  buildStrengthPanel(CS_EXERCISES, 'cs-exercises');
+  buildStrengthPanel(BB_EXERCISES, 'bb-exercises');
+  await renderDashboard();
+});
 </script>
 </body>
 </html>
