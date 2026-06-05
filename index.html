@@ -648,6 +648,58 @@
 <div id="toast">Done! 💪</div>
 
 <script>
+// ==================== SUPABASE ====================
+const SUPABASE_URL = 'https://jamdzb qubvqolgkbkpyj.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImphbWR6YnF1YnZxb2xna2JrcHlqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2NDE3NjAsImV4cCI6MjA5NjIxNzc2MH0.8OefwA1Jf82pSnnmwUyPZW-MzwsLJmpWLMLZUGG0kHM';
+
+async function sbFetch(path, options = {}) {
+  const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': options.prefer || 'return=representation',
+      ...options.headers
+    },
+    ...options
+  });
+  if (!res.ok) { const err = await res.text(); console.error('Supabase error:', err); return null; }
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
+}
+
+async function getSessions() {
+  const data = await sbFetch('sessions?order=created_at.desc');
+  return data || [];
+}
+
+async function insertSession(entry) {
+  return await sbFetch('sessions', {
+    method: 'POST',
+    body: JSON.stringify(entry)
+  });
+}
+
+async function deleteAllSessions() {
+  return await sbFetch('sessions?id=gt.0', { method: 'DELETE', prefer: 'return=minimal', headers: {} });
+}
+
+async function getChallenges() {
+  const data = await sbFetch('challenge?order=day_index.asc');
+  return (data || []).map(r => r.day_index);
+}
+
+async function insertChallenge(dayIndex) {
+  return await sbFetch('challenge', {
+    method: 'POST',
+    body: JSON.stringify({ day_index: dayIndex })
+  });
+}
+
+async function deleteChallenge(dayIndex) {
+  return await sbFetch(`challenge?day_index=eq.${dayIndex}`, { method: 'DELETE', prefer: 'return=minimal', headers: {} });
+}
+
 // ==================== DATA ====================
 
 const SPRINT_EXERCISES = [
@@ -709,10 +761,7 @@ const CAT_LABELS = {
   'str-bb': 'Back & Biceps'
 };
 
-function getData() {
-  return JSON.parse(localStorage.getItem('joe-rugby2') || '{"log":[],"challenge":[]}');
-}
-function saveData(d) { localStorage.setItem('joe-rugby2', JSON.stringify(d)); }
+// (data stored in Supabase)
 
 // ==================== NAV ====================
 function showPage(id, btn) {
@@ -832,20 +881,17 @@ function resetStrengthPanel(exercises, containerId) {
 
 // ==================== LOG FUNCTIONS ====================
 
-function logSprint() {
+async function logSprint() {
   const checked = getChecked('sprint-exercises', SPRINT_EXERCISES);
   if (!checked.length) { showToast('Tick at least one exercise!'); return; }
-  const d = getData();
-  d.log.unshift({
-    id: Date.now(),
-    date: new Date().toISOString(),
+  showToast('Saving... ⏳');
+  await insertSession({
     category: 'sprint',
     exercises: checked,
     sets: 3,
-    rpe: document.getElementById('sprint-rpe').value,
+    rpe: parseInt(document.getElementById('sprint-rpe').value),
     notes: document.getElementById('sprint-notes').value || null
   });
-  saveData(d);
   resetChecks('sprint-exercises', SPRINT_EXERCISES);
   document.getElementById('sprint-notes').value = '';
   document.getElementById('sprint-rpe').value = 7;
@@ -854,20 +900,17 @@ function logSprint() {
   renderDashboard();
 }
 
-function logPlyo() {
+async function logPlyo() {
   const checked = getChecked('plyo-exercises', PLYO_EXERCISES);
   if (!checked.length) { showToast('Tick at least one exercise!'); return; }
-  const d = getData();
-  d.log.unshift({
-    id: Date.now(),
-    date: new Date().toISOString(),
+  showToast('Saving... ⏳');
+  await insertSession({
     category: 'plyo',
     exercises: checked,
     sets: 3,
-    rpe: document.getElementById('plyo-rpe').value,
+    rpe: parseInt(document.getElementById('plyo-rpe').value),
     notes: document.getElementById('plyo-notes').value || null
   });
-  saveData(d);
   resetChecks('plyo-exercises', PLYO_EXERCISES);
   document.getElementById('plyo-notes').value = '';
   document.getElementById('plyo-rpe').value = 7;
@@ -876,23 +919,15 @@ function logPlyo() {
   renderDashboard();
 }
 
-function logStrength(type) {
+async function logStrength(type) {
   const exercises = type === 'cs' ? CS_EXERCISES : BB_EXERCISES;
   const containerId = type === 'cs' ? 'cs-exercises' : 'bb-exercises';
   const cat = 'str-' + type;
   const data = getStrengthData(exercises, containerId);
-  const rpe = document.getElementById(`${type}-rpe`).value;
+  const rpe = parseInt(document.getElementById(`${type}-rpe`).value);
   const notes = document.getElementById(`${type}-notes`).value || null;
-
-  const d = getData();
-  d.log.unshift({
-    id: Date.now(),
-    date: new Date().toISOString(),
-    category: cat,
-    exercises: data,
-    rpe, notes
-  });
-  saveData(d);
+  showToast('Saving... ⏳');
+  await insertSession({ category: cat, exercises: data, rpe, notes });
   resetStrengthPanel(exercises, containerId);
   document.getElementById(`${type}-notes`).value = '';
   document.getElementById(`${type}-rpe`).value = 7;
@@ -902,16 +937,16 @@ function logStrength(type) {
 }
 
 // ==================== DASHBOARD ====================
-function renderDashboard() {
-  const d = getData();
+async function renderDashboard() {
+  const [log, done] = await Promise.all([getSessions(), getChallenges()]);
+
   const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate()-7);
-  const recent = d.log.filter(e => new Date(e.date) > weekAgo);
+  const recent = log.filter(e => new Date(e.created_at) > weekAgo);
   const count = cat => recent.filter(e => e.category === cat).length;
   document.getElementById('stat-sprint').textContent = count('sprint');
   document.getElementById('stat-plyo').textContent = count('plyo');
-  document.getElementById('stat-strength').textContent = recent.filter(e => e.category.startsWith('str-')).length;
+  document.getElementById('stat-strength').textContent = recent.filter(e => e.category && e.category.startsWith('str-')).length;
 
-  const done = d.challenge || [];
   const streak = done.length;
   document.getElementById('core-streak-num').textContent = streak;
   document.getElementById('core-prog').style.width = (streak/28*100) + '%';
@@ -919,11 +954,11 @@ function renderDashboard() {
   document.getElementById('headerStreak').textContent = `🔥 ${streak} DAYS`;
 
   const el = document.getElementById('recent-log');
-  if (!d.log.length) {
+  if (!log.length) {
     el.innerHTML = '<div class="empty"><div class="empty-icon">🏉</div><p>No sessions yet — tap Log to get started!</p></div>';
     return;
   }
-  el.innerHTML = d.log.slice(0,6).map(e => buildLogCard(e)).join('');
+  el.innerHTML = log.slice(0,6).map(e => buildLogCard(e)).join('');
 }
 
 function buildLogCard(e) {
