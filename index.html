@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Joe's Rugby Tracker</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
     --pitch: #1a3a1a;
@@ -20,45 +21,11 @@
     --muted: #8a9e8a;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--dark);
-    color: var(--text);
-    font-family: 'Barlow', sans-serif;
-    min-height: 100vh;
-    background-image:
-      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(255,255,255,0.02) 60px),
-      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(255,255,255,0.02) 60px);
-  }
-  .header {
-    background: linear-gradient(135deg, var(--pitch) 0%, #0d2010 100%);
-    border-bottom: 3px solid var(--gold);
-    padding: 14px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  }
+  body { background: var(--dark); color: var(--text); font-family: 'Barlow', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, var(--pitch) 0%, #0d2010 100%); border-bottom: 3px solid var(--gold); padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
   .header-left { display: flex; align-items: center; gap: 12px; }
-  .rugby-ball {
-    width: 38px; height: 38px;
-    background: linear-gradient(135deg, #8B4513, #A0522D);
-    border-radius: 50% 10% 50% 10%;
-    transform: rotate(-45deg);
-    position: relative;
-    flex-shrink: 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-  }
-  .rugby-ball::after {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%) rotate(45deg);
-    width: 60%; height: 2px;
-    background: rgba(255,255,255,0.4);
-  }
+  .rugby-ball { width: 38px; height: 38px; background: linear-gradient(135deg, #8B4513, #A0522D); border-radius: 50% 10% 50% 10%; transform: rotate(-45deg); position: relative; flex-shrink: 0; }
+  .rugby-ball::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg); width: 60%; height: 2px; background: rgba(255,255,255,0.4); }
   .header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--chalk); letter-spacing: 2px; line-height: 1; }
   .header h1 span { color: var(--gold); }
   .header-sub { font-size: 10px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
@@ -82,15 +49,16 @@
   .prog-bar { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--gold), var(--amber)); transition: width 0.5s; }
   .form-group { margin-bottom: 12px; }
   .form-group label { display: block; font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
-  .form-group select, .form-group input, .form-group textarea { width: 100%; background: #162016; border: 1px solid var(--border); border-radius: 5px; color: var(--text); padding: 10px 12px; font-family: 'Barlow', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s; }
-  .form-group select:focus, .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); }
+  .form-group input, .form-group textarea { width: 100%; background: #162016; border: 1px solid var(--border); border-radius: 5px; color: var(--text); padding: 10px 12px; font-family: 'Barlow', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s; }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); }
   .form-group textarea { resize: none; height: 66px; }
-  .btn-primary { width: 100%; background: linear-gradient(135deg, var(--gold), var(--amber)); color: var(--dark); border: none; border-radius: 6px; padding: 14px; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; cursor: pointer; transition: transform 0.1s, box-shadow 0.2s; margin-top: 4px; }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(212,160,23,0.3); }
-  .btn-primary:active { transform: translateY(0); }
-  .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .btn-primary { width: 100%; background: linear-gradient(135deg, var(--gold), var(--amber)); color: var(--dark); border: none; border-radius: 6px; padding: 14px; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; cursor: pointer; transition: transform 0.1s; margin-top: 4px; }
+  .btn-primary:hover { transform: translateY(-1px); }
+  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+  .sub-tab { flex: 1; padding: 10px 8px; text-align: center; background: var(--pitch); border: 2px solid var(--border); border-radius: 6px; cursor: pointer; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); transition: all 0.2s; }
+  .sub-tab.active { border-color: var(--gold); color: var(--gold); background: rgba(212,160,23,0.08); }
   .ex-section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); padding: 10px 0 6px; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
-  .ex-check-row { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--pitch); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; cursor: pointer; transition: border-color 0.15s; }
+  .ex-check-row { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--pitch); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; cursor: pointer; transition: border-color 0.15s; user-select: none; }
   .ex-check-row:hover { border-color: var(--gold); }
   .ex-check-row.done { border-color: var(--grass); background: rgba(45,90,39,0.2); }
   .ex-check-box { width: 22px; height: 22px; border: 2px solid var(--muted); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; transition: all 0.15s; color: transparent; }
@@ -101,26 +69,25 @@
   .strength-ex-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; color: var(--chalk); margin-bottom: 10px; }
   .strength-fields { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
   .strength-field label { display: block; font-size: 10px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
-  .strength-field input { width: 100%; background: #162016; border: 1px solid var(--border); border-radius: 4px; color: var(--text); padding: 8px 10px; font-family: 'Barlow', sans-serif; font-size: 14px; outline: none; text-align: center; transition: border-color 0.2s; }
-  .strength-field input:focus { border-color: var(--gold); }
+  .strength-field input { width: 100%; background: #162016; border: 1px solid var(--border); border-radius: 4px; color: var(--text); padding: 8px 10px; font-family: 'Barlow', sans-serif; font-size: 14px; outline: none; text-align: center; }
   .log-entry { background: var(--pitch); border: 1px solid var(--border); border-radius: 6px; padding: 11px 12px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; }
   .log-cat-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
   .log-exercise { font-weight: 600; font-size: 14px; color: var(--chalk); }
-  .log-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .log-meta { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
   .log-date { font-size: 11px; color: var(--muted); opacity: 0.7; margin-top: 2px; }
   .log-rpe { margin-left: auto; font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--amber); flex-shrink: 0; text-align: center; min-width: 36px; }
   .log-rpe span { display: block; font-size: 9px; color: var(--muted); font-family: 'Barlow', sans-serif; font-weight: 400; }
   .hist-date-header { font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 2px; color: var(--muted); padding: 10px 0 6px; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
   .week-title { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 2px; color: var(--amber); margin: 16px 0 8px; }
-  .challenge-day { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--pitch); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; cursor: pointer; transition: all 0.15s; }
+  .challenge-day { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--pitch); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; cursor: pointer; transition: all 0.15s; user-select: none; }
   .challenge-day:hover { border-color: var(--gold); }
   .challenge-day.done { border-color: var(--grass); background: rgba(45,90,39,0.2); }
   .challenge-day.saving { opacity: 0.5; pointer-events: none; }
-  .challenge-day .check { width: 22px; height: 22px; border: 2px solid var(--muted); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; transition: all 0.15s; color: transparent; }
+  .challenge-day .check { width: 22px; height: 22px; border: 2px solid var(--muted); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; color: transparent; }
   .challenge-day.done .check { background: var(--grass); border-color: var(--grass); color: white; }
   .challenge-day-label { font-size: 13px; flex: 1; color: var(--text); }
   .challenge-day-label strong { color: var(--chalk); }
-  .challenge-targets { font-family: 'Bebas Neue', sans-serif; font-size: 12px; color: var(--gold); letter-spacing: 1px; text-align: right; flex-shrink: 0; line-height: 1.5; }
+  .challenge-targets { font-family: 'Bebas Neue', sans-serif; font-size: 12px; color: var(--gold); letter-spacing: 1px; text-align: right; flex-shrink: 0; line-height: 1.6; }
   .timer-display { text-align: center; padding: 22px 0; }
   .timer-time { font-family: 'Bebas Neue', sans-serif; font-size: 70px; color: var(--gold); letter-spacing: 4px; line-height: 1; }
   .timer-label { font-size: 11px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
@@ -134,8 +101,6 @@
   .empty p { font-size: 13px; }
   input[type="range"] { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 3px; background: var(--border); outline: none; }
   input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--gold); cursor: pointer; }
-  .sub-tab { flex: 1; padding: 10px 8px; text-align: center; background: var(--pitch); border: 2px solid var(--border); border-radius: 6px; cursor: pointer; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); transition: all 0.2s; }
-  .sub-tab.active { border-color: var(--gold); color: var(--gold); background: rgba(212,160,23,0.08); }
   #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--grass); color: white; padding: 10px 20px; border-radius: 6px; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; letter-spacing: 1px; z-index: 999; transition: transform 0.3s; white-space: nowrap; }
   #toast.show { transform: translateX(-50%) translateY(0); }
   #toast.error { background: var(--red); }
@@ -166,18 +131,18 @@
 <div id="page-dashboard" class="page active">
   <div class="section-title">This Week</div>
   <div class="stat-row">
-    <div class="stat-item"><div class="stat-num" id="stat-sprint">—</div><div class="stat-label">Sprint</div></div>
-    <div class="stat-item"><div class="stat-num" id="stat-plyo">—</div><div class="stat-label">Plyo</div></div>
-    <div class="stat-item"><div class="stat-num" id="stat-strength">—</div><div class="stat-label">Strength</div></div>
+    <div class="stat-item"><div class="stat-num" id="stat-sprint">0</div><div class="stat-label">Sprint</div></div>
+    <div class="stat-item"><div class="stat-num" id="stat-plyo">0</div><div class="stat-label">Plyo</div></div>
+    <div class="stat-item"><div class="stat-num" id="stat-strength">0</div><div class="stat-label">Strength</div></div>
   </div>
   <div class="section-title">Core Streak</div>
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
       <span style="font-family:'Barlow Condensed';font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;color:var(--chalk)">Daily Ab Challenge</span>
-      <span style="font-family:'Bebas Neue';font-size:26px;color:var(--amber)" id="core-streak-num">—</span>
+      <span style="font-family:'Bebas Neue';font-size:26px;color:var(--amber)" id="core-streak-num">0</span>
     </div>
     <div class="prog-bar-wrap"><div class="prog-bar" id="core-prog" style="width:0%"></div></div>
-    <div style="font-size:11px;color:var(--muted);margin-top:6px" id="core-prog-label">Loading...</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:6px" id="core-prog-label">Day 0 of 28</div>
   </div>
   <div class="section-title">Recent Sessions</div>
   <div id="recent-log"><div class="empty"><div class="empty-icon">⏳</div><p>Loading...</p></div></div>
@@ -295,72 +260,56 @@
   </div>
 </div>
 
-<div id="toast">Done! 💪</div>
+<div id="toast"></div>
 
 <script>
-// ==================== SUPABASE ====================
-// Using the legacy anon JWT key — required for REST API
-const SUPABASE_URL = 'https://jamdzb qubvqolgkbkpyj.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImphbWR6YnF1YnZxb2xna2JrcHlqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2NDE3NjAsImV4cCI6MjA5NjIxNzc2MH0.8OefwA1Jf82pSnnmwUyPZW-MzwsLJmpWLMLZUGG0kHM';
-
-async function sbFetch(path, method = 'GET', body = null, extraHeaders = {}) {
-  const headers = {
-    'apikey': SUPABASE_ANON_KEY,
-    'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-    'Content-Type': 'application/json',
-    'Prefer': method === 'POST' ? 'return=representation' : 'return=minimal',
-    ...extraHeaders
-  };
-
-  const opts = { method, headers };
-  if (body !== null) opts.body = JSON.stringify(body);
-
-  try {
-    const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, opts);
-    const text = await res.text();
-    if (!res.ok) {
-      console.error('Supabase error', res.status, text);
-      showToast('Save failed — check console', true);
-      return null;
-    }
-    return text ? JSON.parse(text) : [];
-  } catch (err) {
-    console.error('Network error', err);
-    showToast('Network error', true);
-    return null;
-  }
-}
+// ============================================================
+//  SUPABASE — using the official JS client loaded via CDN
+// ============================================================
+const { createClient } = supabase;
+const db = createClient(
+  'https://jamdzb qubvqolgkbkpyj.supabase.co'.replace(' ',''),
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImphbWR6YnF1YnZxb2xna2JrcHlqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2NDE3NjAsImV4cCI6MjA5NjIxNzc2MH0.8OefwA1Jf82pSnnmwUyPZW-MzwsLJmpWLMLZUGG0kHM'
+);
 
 async function getSessions() {
-  return await sbFetch('sessions?select=*&order=created_at.desc') || [];
+  const { data, error } = await db.from('sessions').select('*').order('created_at', { ascending: false });
+  if (error) { console.error('getSessions:', error); toast('Load error: ' + error.message, true); return []; }
+  return data || [];
 }
 
 async function insertSession(entry) {
-  const result = await sbFetch('sessions', 'POST', entry);
-  return Array.isArray(result) ? result[0] : result;
+  const { data, error } = await db.from('sessions').insert(entry).select();
+  if (error) { console.error('insertSession:', error); toast('Save error: ' + error.message, true); return null; }
+  return data;
 }
 
 async function deleteAllSessions() {
-  // Delete all rows by matching id > 0
-  return await sbFetch('sessions?id=gt.0', 'DELETE');
+  const { error } = await db.from('sessions').delete().gt('id', 0);
+  if (error) { console.error('deleteAllSessions:', error); toast('Delete error', true); }
 }
 
 async function getChallenges() {
-  const data = await sbFetch('challenge?select=day_index&order=day_index.asc') || [];
-  return data.map(r => Number(r.day_index));
+  const { data, error } = await db.from('challenge').select('day_index').order('day_index');
+  if (error) { console.error('getChallenges:', error); return []; }
+  return (data || []).map(r => Number(r.day_index));
 }
 
-async function insertChallenge(dayIndex) {
-  const result = await sbFetch('challenge', 'POST', { day_index: dayIndex });
-  return Array.isArray(result) ? result[0] : result;
+async function addChallenge(dayIndex) {
+  const { error } = await db.from('challenge').insert({ day_index: dayIndex });
+  if (error) { console.error('addChallenge:', error); toast('Save error', true); return false; }
+  return true;
 }
 
-async function deleteChallenge(dayIndex) {
-  return await sbFetch('challenge?day_index=eq.' + dayIndex, 'DELETE');
+async function delChallenge(dayIndex) {
+  const { error } = await db.from('challenge').delete().eq('day_index', dayIndex);
+  if (error) { console.error('delChallenge:', error); toast('Delete error', true); }
 }
 
-// ==================== EXERCISE DATA ====================
-const SPRINT_EXERCISES = [
+// ============================================================
+//  EXERCISE DATA
+// ============================================================
+const SPRINT = [
   { name: 'A-Skips',           section: 'Technique' },
   { name: 'B-Skips',           section: 'Technique' },
   { name: 'High Knees',        section: 'Technique' },
@@ -376,8 +325,7 @@ const SPRINT_EXERCISES = [
   { name: '15m Falling Start', section: 'Acceleration' },
   { name: '20m Sprint',        section: 'Acceleration' },
 ];
-
-const PLYO_EXERCISES = [
+const PLYO = [
   { name: 'Broad Jump',             section: 'Lower Body Power' },
   { name: 'Standing Long Jump',     section: 'Lower Body Power' },
   { name: 'Triple Broad Jump',      section: 'Lower Body Power' },
@@ -402,14 +350,14 @@ const PLYO_EXERCISES = [
   { name: 'Clap Press Ups',         section: 'Upper Body Power' },
   { name: 'Shoulder Tap Press Ups', section: 'Upper Body Power' },
 ];
+const CS_EX = ['Press Ups','Bench Press (Dumbbells)','Shoulder Press','Fly','Reverse Fly'];
+const BB_EX = ['Bicep Curl','Hammer Curl','Seated Row'];
+const CAT_COLOR = { sprint:'#e84393', plyo:'#9b59b6', 'str-cs':'#2980b9', 'str-bb':'#16a085' };
+const CAT_LABEL = { sprint:'Sprint', plyo:'Plyometrics', 'str-cs':'Chest & Shoulders', 'str-bb':'Back & Biceps' };
 
-const CS_EXERCISES = ['Press Ups', 'Bench Press (Dumbbells)', 'Shoulder Press', 'Fly', 'Reverse Fly'];
-const BB_EXERCISES = ['Bicep Curl', 'Hammer Curl', 'Seated Row'];
-
-const CAT_COLORS  = { sprint: '#e84393', plyo: '#9b59b6', 'str-cs': '#2980b9', 'str-bb': '#16a085' };
-const CAT_LABELS  = { sprint: 'Sprint', plyo: 'Plyometrics', 'str-cs': 'Chest & Shoulders', 'str-bb': 'Back & Biceps' };
-
-// ==================== NAV ====================
+// ============================================================
+//  NAV
+// ============================================================
 function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -423,28 +371,28 @@ function showPage(id, btn) {
 function selectCat(cat, btn) {
   document.querySelectorAll('#cat-btns .sub-tab').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
-  ['sprint','plyo','str-cs','str-bb'].forEach(c => {
-    document.getElementById('panel-' + c).style.display = (c === cat) ? 'block' : 'none';
-  });
+  ['sprint','plyo','str-cs','str-bb'].forEach(c =>
+    document.getElementById('panel-' + c).style.display = c === cat ? 'block' : 'none'
+  );
 }
 
-// ==================== BUILD UI ====================
-function buildCheckList(exercises, containerId) {
-  let html = '', last = '';
+// ============================================================
+//  BUILD PANELS
+// ============================================================
+function buildChecklist(exercises, cid) {
+  let html = '', lastSec = '';
   exercises.forEach((ex, i) => {
-    if (ex.section !== last) { html += `<div class="ex-section-label">${ex.section}</div>`; last = ex.section; }
-    html += `<div class="ex-check-row" id="chk-${containerId}-${i}" onclick="toggleCheck('${containerId}',${i})">
+    if (ex.section !== lastSec) { html += `<div class="ex-section-label">${ex.section}</div>`; lastSec = ex.section; }
+    html += `<div class="ex-check-row" id="chk-${cid}-${i}" onclick="toggleCheck('${cid}',${i})">
       <div class="ex-check-box">✓</div>
       <div class="ex-name">${ex.name}</div>
       <div class="ex-sets-badge">3 SETS</div>
     </div>`;
   });
-  document.getElementById(containerId).innerHTML = html;
+  document.getElementById(cid).innerHTML = html;
 }
 
-function toggleCheck(cid, i) {
-  document.getElementById(`chk-${cid}-${i}`)?.classList.toggle('done');
-}
+function toggleCheck(cid, i) { document.getElementById(`chk-${cid}-${i}`)?.classList.toggle('done'); }
 
 function getChecked(cid, exercises) {
   return exercises.filter((_, i) => document.getElementById(`chk-${cid}-${i}`)?.classList.contains('done')).map(e => e.name);
@@ -454,17 +402,17 @@ function resetChecks(cid, exercises) {
   exercises.forEach((_, i) => document.getElementById(`chk-${cid}-${i}`)?.classList.remove('done'));
 }
 
-function slugify(s) { return s.replace(/[^a-z0-9]/gi, '').toLowerCase(); }
+function slug(s) { return s.replace(/[^a-z0-9]/gi,'').toLowerCase(); }
 
-function buildStrengthPanel(exercises, cid) {
+function buildStrength(exercises, cid) {
   document.getElementById(cid).innerHTML = exercises.map(ex => {
-    const s = slugify(ex);
+    const s = slug(ex);
     return `<div class="strength-ex">
       <div class="strength-ex-name">${ex}</div>
       <div class="strength-fields">
         <div class="strength-field"><label>Sets</label><input type="number" id="${cid}-${s}-sets" value="3" min="1"></div>
         <div class="strength-field"><label>Reps</label><input type="number" id="${cid}-${s}-reps" value="8" min="1"></div>
-        <div class="strength-field"><label>Weight kg</label><input type="number" id="${cid}-${s}-kg" placeholder="kg" step="0.5"></div>
+        <div class="strength-field"><label>Weight kg</label><input type="number" id="${cid}-${s}-kg" placeholder="—" step="0.5"></div>
       </div>
     </div>`;
   }).join('');
@@ -472,7 +420,7 @@ function buildStrengthPanel(exercises, cid) {
 
 function getStrengthData(exercises, cid) {
   return exercises.map(ex => {
-    const s = slugify(ex);
+    const s = slug(ex);
     return {
       name: ex,
       sets: Number(document.getElementById(`${cid}-${s}-sets`)?.value || 3),
@@ -482,92 +430,90 @@ function getStrengthData(exercises, cid) {
   });
 }
 
-function resetStrengthPanel(exercises, cid) {
+function resetStrength(exercises, cid) {
   exercises.forEach(ex => {
-    const s = slugify(ex);
-    const setsEl = document.getElementById(`${cid}-${s}-sets`);
-    const repsEl = document.getElementById(`${cid}-${s}-reps`);
-    const kgEl   = document.getElementById(`${cid}-${s}-kg`);
-    if (setsEl) setsEl.value = 3;
-    if (repsEl) repsEl.value = 8;
-    if (kgEl)   kgEl.value = '';
+    const s = slug(ex);
+    const sEl = document.getElementById(`${cid}-${s}-sets`);
+    const rEl = document.getElementById(`${cid}-${s}-reps`);
+    const kEl = document.getElementById(`${cid}-${s}-kg`);
+    if (sEl) sEl.value = 3;
+    if (rEl) rEl.value = 8;
+    if (kEl) kEl.value = '';
   });
 }
 
-// ==================== LOG ====================
+// ============================================================
+//  LOG
+// ============================================================
+function btnState(id, loading, origText) {
+  const b = document.getElementById(id);
+  if (!b) return;
+  b.disabled = loading;
+  b.textContent = loading ? 'SAVING...' : origText;
+}
+
 async function logSprint() {
-  const checked = getChecked('sprint-exercises', SPRINT_EXERCISES);
-  if (!checked.length) { showToast('Tick at least one exercise'); return; }
-  setBtnLoading('btn-log-sprint', true);
+  const checked = getChecked('sprint-exercises', SPRINT);
+  if (!checked.length) { toast('Tick at least one exercise'); return; }
+  btnState('btn-log-sprint', true);
   const ok = await insertSession({
-    category: 'sprint',
-    exercises: checked,
-    sets: 3,
+    category: 'sprint', exercises: checked, sets: 3,
     rpe: Number(document.getElementById('sprint-rpe').value),
     notes: document.getElementById('sprint-notes').value || null
   });
-  setBtnLoading('btn-log-sprint', false);
+  btnState('btn-log-sprint', false, '✓ LOG SPRINT SESSION');
   if (!ok) return;
-  resetChecks('sprint-exercises', SPRINT_EXERCISES);
+  resetChecks('sprint-exercises', SPRINT);
   document.getElementById('sprint-notes').value = '';
   document.getElementById('sprint-rpe').value = 7;
   document.getElementById('sprint-rpe-val').textContent = '7';
-  showToast('Sprint session logged! 🏃');
+  toast('Sprint session logged! 🏃');
   renderDashboard();
 }
 
 async function logPlyo() {
-  const checked = getChecked('plyo-exercises', PLYO_EXERCISES);
-  if (!checked.length) { showToast('Tick at least one exercise'); return; }
-  setBtnLoading('btn-log-plyo', true);
+  const checked = getChecked('plyo-exercises', PLYO);
+  if (!checked.length) { toast('Tick at least one exercise'); return; }
+  btnState('btn-log-plyo', true);
   const ok = await insertSession({
-    category: 'plyo',
-    exercises: checked,
-    sets: 3,
+    category: 'plyo', exercises: checked, sets: 3,
     rpe: Number(document.getElementById('plyo-rpe').value),
     notes: document.getElementById('plyo-notes').value || null
   });
-  setBtnLoading('btn-log-plyo', false);
+  btnState('btn-log-plyo', false, '✓ LOG PLYO SESSION');
   if (!ok) return;
-  resetChecks('plyo-exercises', PLYO_EXERCISES);
+  resetChecks('plyo-exercises', PLYO);
   document.getElementById('plyo-notes').value = '';
   document.getElementById('plyo-rpe').value = 7;
   document.getElementById('plyo-rpe-val').textContent = '7';
-  showToast('Plyometrics logged! ⚡');
+  toast('Plyometrics logged! ⚡');
   renderDashboard();
 }
 
 async function logStrength(type) {
-  const exercises = type === 'cs' ? CS_EXERCISES : BB_EXERCISES;
+  const exercises = type === 'cs' ? CS_EX : BB_EX;
   const cid = type === 'cs' ? 'cs-exercises' : 'bb-exercises';
   const cat = 'str-' + type;
-  setBtnLoading('btn-log-' + type, true);
+  const label = CAT_LABEL[cat];
+  btnState('btn-log-' + type, true);
   const ok = await insertSession({
-    category: cat,
-    exercises: getStrengthData(exercises, cid),
-    sets: 3,
+    category: cat, exercises: getStrengthData(exercises, cid), sets: 3,
     rpe: Number(document.getElementById(`${type}-rpe`).value),
     notes: document.getElementById(`${type}-notes`).value || null
   });
-  setBtnLoading('btn-log-' + type, false);
+  btnState('btn-log-' + type, false, `✓ LOG ${label.toUpperCase()}`);
   if (!ok) return;
-  resetStrengthPanel(exercises, cid);
+  resetStrength(exercises, cid);
   document.getElementById(`${type}-notes`).value = '';
   document.getElementById(`${type}-rpe`).value = 7;
   document.getElementById(`${type}-rpe-val`).textContent = '7';
-  showToast(`${CAT_LABELS[cat]} logged! 💪`);
+  toast(`${label} logged! 💪`);
   renderDashboard();
 }
 
-function setBtnLoading(id, loading) {
-  const btn = document.getElementById(id);
-  if (!btn) return;
-  btn.disabled = loading;
-  if (loading) { btn.dataset.orig = btn.textContent; btn.textContent = 'SAVING...'; }
-  else btn.textContent = btn.dataset.orig || btn.textContent;
-}
-
-// ==================== DASHBOARD ====================
+// ============================================================
+//  DASHBOARD
+// ============================================================
 async function renderDashboard() {
   const [log, done] = await Promise.all([getSessions(), getChallenges()]);
 
@@ -590,61 +536,49 @@ async function renderDashboard() {
     el.innerHTML = '<div class="empty"><div class="empty-icon">🏉</div><p>No sessions yet — tap Log to get started!</p></div>';
     return;
   }
-  el.innerHTML = log.slice(0, 6).map(buildLogCard).join('');
+  el.innerHTML = log.slice(0, 6).map(logCard).join('');
 }
 
-function buildLogCard(e) {
-  const d     = new Date(e.created_at);
-  const dateStr = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
-  const timeStr = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-  const color = CAT_COLORS[e.category] || '#888';
-  const label = CAT_LABELS[e.category] || e.category;
+function logCard(e) {
+  const d = new Date(e.created_at);
+  const dateStr = d.toLocaleDateString('en-GB', { weekday:'short', day:'numeric', month:'short' });
+  const timeStr = d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+  const color = CAT_COLOR[e.category] || '#888';
+  const label = CAT_LABEL[e.category] || e.category;
   let detail = '';
-
   if (e.category === 'sprint' || e.category === 'plyo') {
     detail = `<div class="log-meta">${Array.isArray(e.exercises) ? e.exercises.join(', ') : ''}</div>`;
   } else if (e.category?.startsWith('str-') && Array.isArray(e.exercises)) {
-    detail = `<div class="log-meta" style="line-height:1.6">${
-      e.exercises.map(ex => `${ex.name}: ${ex.sets}×${ex.reps}${ex.kg ? ` @ ${ex.kg}kg` : ''}`).join(' · ')
-    }</div>`;
+    detail = `<div class="log-meta">${e.exercises.map(ex => `${ex.name}: ${ex.sets}×${ex.reps}${ex.kg ? ` @ ${ex.kg}kg` : ''}`).join(' · ')}</div>`;
   }
-
   return `<div class="log-entry">
     <span class="log-cat-dot" style="background:${color}"></span>
-    <div style="flex:1;min-width:0;">
+    <div style="flex:1;min-width:0">
       <div class="log-exercise">${label}</div>
       ${detail}
       <div class="log-date">${dateStr} at ${timeStr}${e.notes ? ' · ' + e.notes : ''}</div>
     </div>
-    <div class="log-rpe">${e.rpe || '—'}<span>RPE</span></div>
+    <div class="log-rpe">${e.rpe ?? '—'}<span>RPE</span></div>
   </div>`;
 }
 
-// ==================== HISTORY ====================
+// ============================================================
+//  HISTORY
+// ============================================================
 async function renderHistory() {
-  const log = await getSessions();
-  const cat = document.getElementById('filter-cat').value;
-  const logs = cat === 'all' ? log : log.filter(e => e.category === cat);
-  const el = document.getElementById('history-list');
-
-  if (!logs.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><p>No sessions found.</p></div>';
-    return;
-  }
-
+  const log  = await getSessions();
+  const cat  = document.getElementById('filter-cat').value;
+  const list = cat === 'all' ? log : log.filter(e => e.category === cat);
+  const el   = document.getElementById('history-list');
+  if (!list.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><p>No sessions found.</p></div>'; return; }
   const groups = {};
-  logs.forEach(e => {
-    const key = new Date(e.created_at).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-    if (!groups[key]) groups[key] = [];
-    groups[key].push(e);
+  list.forEach(e => {
+    const key = new Date(e.created_at).toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+    (groups[key] = groups[key] || []).push(e);
   });
-
-  let html = '';
-  for (const [date, entries] of Object.entries(groups)) {
-    html += `<div class="hist-date-header">${date}</div>`;
-    html += entries.map(buildLogCard).join('');
-  }
-  el.innerHTML = html;
+  el.innerHTML = Object.entries(groups).map(([date, entries]) =>
+    `<div class="hist-date-header">${date}</div>${entries.map(logCard).join('')}`
+  ).join('');
 }
 
 async function clearHistory() {
@@ -652,31 +586,27 @@ async function clearHistory() {
   await deleteAllSessions();
   renderHistory();
   renderDashboard();
-  showToast('History cleared');
+  toast('History cleared');
 }
 
-// ==================== CHALLENGE ====================
-function getChallengeDay(i) {
-  return {
-    situps:   5 + i * 5,
-    crunches: 3 + i * 2,
-    legRaise: 3 + i * 2,
-    plank:    5 + i * 3
-  };
+// ============================================================
+//  CHALLENGE
+// ============================================================
+function challengeDay(i) {
+  return { situps: 5 + i*5, crunches: 3 + i*2, legRaise: 3 + i*2, plank: 5 + i*3 };
 }
 
 async function renderChallenge() {
   const done = await getChallenges();
   let html = '', lastWeek = -1;
-
   for (let i = 0; i < 28; i++) {
     const week = Math.floor(i / 7) + 1;
     if (week !== lastWeek) { html += `<div class="week-title">WEEK ${week}</div>`; lastWeek = week; }
-    const { situps, crunches, legRaise, plank } = getChallengeDay(i);
+    const { situps, crunches, legRaise, plank } = challengeDay(i);
     const isDone = done.includes(i);
-    html += `<div class="challenge-day ${isDone ? 'done' : ''}" id="cd-${i}" onclick="toggleChallenge(${i})">
+    html += `<div class="challenge-day${isDone ? ' done' : ''}" id="cd-${i}" onclick="toggleChallenge(${i})">
       <div class="check">✓</div>
-      <div class="challenge-day-label"><strong>Day ${i + 1}</strong></div>
+      <div class="challenge-day-label"><strong>Day ${i+1}</strong></div>
       <div class="challenge-targets">${situps} sit-ups<br>${crunches} crunches<br>${legRaise} leg raises<br>${plank}s plank</div>
     </div>`;
   }
@@ -687,60 +617,64 @@ async function toggleChallenge(i) {
   const row = document.getElementById(`cd-${i}`);
   if (!row || row.classList.contains('saving')) return;
   row.classList.add('saving');
-
   const done = await getChallenges();
   if (done.includes(i)) {
-    await deleteChallenge(i);
+    await delChallenge(i);
   } else {
-    await insertChallenge(i);
-    showToast(`Day ${i + 1} done! 🔥`);
+    const ok = await addChallenge(i);
+    if (ok) toast(`Day ${i+1} complete! 🔥`);
   }
-
   await renderChallenge();
   renderDashboard();
 }
 
-// ==================== TIMER ====================
-let timerInterval = null, timerSeconds = 0, timerRunning = false, timerCountdown = 0;
-
-function formatTime(s) { return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); }
+// ============================================================
+//  TIMER
+// ============================================================
+let _ti = null, _ts = 0, _running = false, _cd = 0;
+function fmtTime(s) { return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); }
 function startTimer() {
-  if (timerRunning) return;
-  timerRunning = true;
-  if (timerCountdown > 0) {
-    timerInterval = setInterval(() => {
-      timerCountdown--;
-      document.getElementById('timer-display').textContent = formatTime(timerCountdown);
+  if (_running) return;
+  _running = true;
+  if (_cd > 0) {
+    _ti = setInterval(() => {
+      _cd--;
+      document.getElementById('timer-display').textContent = fmtTime(_cd);
       document.getElementById('timer-label').textContent = 'Counting down...';
-      if (timerCountdown <= 0) { stopTimer(); showToast('Rest done — GO! 🏃'); }
+      if (_cd <= 0) { stopTimer(); toast('Rest done — GO! 🏃'); }
     }, 1000);
   } else {
-    timerInterval = setInterval(() => {
-      timerSeconds++;
-      document.getElementById('timer-display').textContent = formatTime(timerSeconds);
+    _ti = setInterval(() => {
+      _ts++;
+      document.getElementById('timer-display').textContent = fmtTime(_ts);
       document.getElementById('timer-label').textContent = 'Running';
     }, 1000);
   }
 }
-function stopTimer() { clearInterval(timerInterval); timerRunning = false; document.getElementById('timer-label').textContent = 'Stopped'; }
-function resetTimer() { stopTimer(); timerSeconds = 0; timerCountdown = 0; document.getElementById('timer-display').textContent = '00:00'; document.getElementById('timer-label').textContent = 'Ready'; }
-function setPreset(s) { stopTimer(); timerCountdown = s; timerSeconds = 0; document.getElementById('timer-display').textContent = formatTime(s); document.getElementById('timer-label').textContent = 'Ready — tap Start'; }
+function stopTimer() { clearInterval(_ti); _running = false; document.getElementById('timer-label').textContent = 'Stopped'; }
+function resetTimer() { stopTimer(); _ts = 0; _cd = 0; document.getElementById('timer-display').textContent = '00:00'; document.getElementById('timer-label').textContent = 'Ready'; }
+function setPreset(s) { stopTimer(); _cd = s; _ts = 0; document.getElementById('timer-display').textContent = fmtTime(s); document.getElementById('timer-label').textContent = 'Ready — tap Start'; }
 
-// ==================== TOAST ====================
-function showToast(msg, isError = false) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.toggle('error', isError);
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+// ============================================================
+//  TOAST
+// ============================================================
+let _toastTimer;
+function toast(msg, isError = false) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = isError ? 'error show' : 'show';
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => el.className = '', 2500);
 }
 
-// ==================== INIT ====================
+// ============================================================
+//  INIT
+// ============================================================
 document.addEventListener('DOMContentLoaded', () => {
-  buildCheckList(SPRINT_EXERCISES, 'sprint-exercises');
-  buildCheckList(PLYO_EXERCISES, 'plyo-exercises');
-  buildStrengthPanel(CS_EXERCISES, 'cs-exercises');
-  buildStrengthPanel(BB_EXERCISES, 'bb-exercises');
+  buildChecklist(SPRINT, 'sprint-exercises');
+  buildChecklist(PLYO,   'plyo-exercises');
+  buildStrength(CS_EX,   'cs-exercises');
+  buildStrength(BB_EX,   'bb-exercises');
   renderDashboard();
 });
 </script>
