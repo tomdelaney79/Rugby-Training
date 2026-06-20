@@ -926,24 +926,34 @@ function toggleDayExpand(dname) {
   renderPlanDays();
 }
 
+const planDayInFlight = new Set();
+
 async function togglePlanDay(dname, evt) {
   if (evt) evt.stopPropagation();
+  const key = selectedPlanWeek + '-' + dname;
+  if (planDayInFlight.has(key)) return; // already processing this exact tap
+  planDayInFlight.add(key);
+
   const btn = document.getElementById('btn-day-' + dname);
   if (btn) { btn.disabled = true; btn.textContent = 'SAVING...'; }
 
-  const planComp = await getPlanCompletion();
-  const existing = planComp.find(p => p.week_number === selectedPlanWeek && p.day_of_week === dname);
+  try {
+    const planComp = await getPlanCompletion();
+    const existing = planComp.find(p => p.week_number === selectedPlanWeek && p.day_of_week === dname);
 
-  if (existing) {
-    await unmarkPlanDay(selectedPlanWeek, dname);
-    toast(`${dname} unmarked`);
-  } else {
-    const ok = await markPlanDay(selectedPlanWeek, dname);
-    if (ok) toast(`${dname} session complete! 💪`);
+    if (existing) {
+      await unmarkPlanDay(selectedPlanWeek, dname);
+      toast(`${dname} unmarked`);
+    } else {
+      const ok = await markPlanDay(selectedPlanWeek, dname);
+      if (ok) toast(`${dname} session complete! 💪`);
+    }
+
+    await renderPlanDays();
+    renderDashboard();
+  } finally {
+    planDayInFlight.delete(key);
   }
-
-  await renderPlanDays();
-  renderDashboard();
 }
 
 // ============================================================
