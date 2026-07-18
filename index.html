@@ -7,216 +7,199 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --pitch: #1a3a1a;
-    --grass: #2d5a27;
-    --chalk: #f0ede6;
-    --gold: #d4a017;
-    --amber: #e8830a;
-    --red: #c0392b;
-    --dark: #0f1a0f;
-    --card: #1e2e1e;
-    --border: #2a4a2a;
-    --text: #e8e4d9;
-    --muted: #8a9e8a;
+    --pitch: #1a3a1a; --grass: #2d5a27; --chalk: #f0ede6;
+    --gold: #d4a017; --amber: #e8830a; --red: #c0392b;
+    --dark: #0f1a0f; --card: #1e2e1e; --border: #2a4a2a;
+    --text: #e8e4d9; --muted: #8a9e8a;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html { font-family: 'Barlow', system-ui, sans-serif; }
-  body { background: var(--dark); color: var(--text); min-height: 100vh; padding-bottom: 12px; }
+  body { background: var(--dark); color: var(--text); min-height: 100vh; padding-bottom: 16px; }
 
-  .header { background: linear-gradient(135deg, var(--pitch) 0%, #0d2010 100%); border-bottom: 3px solid var(--gold); padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.5); gap: 10px; }
+  /* HEADER */
+  .header { background: linear-gradient(135deg, var(--pitch), #0d2010); border-bottom: 3px solid var(--gold); padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.5); gap: 8px; }
   .header-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
-  .rugby-ball { width: 36px; height: 36px; background: linear-gradient(135deg, #8B4513, #A0522D); border-radius: 50% 10% 50% 10%; transform: rotate(-45deg); position: relative; flex-shrink: 0; }
-  .rugby-ball::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg); width: 60%; height: 2px; background: rgba(255,255,255,0.4); }
-  .header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--chalk); letter-spacing: 1.5px; line-height: 1; white-space: nowrap; }
+  .rugby-ball { width: 34px; height: 34px; background: linear-gradient(135deg, #8B4513, #A0522D); border-radius: 50% 10% 50% 10%; transform: rotate(-45deg); position: relative; flex-shrink: 0; }
+  .rugby-ball::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) rotate(45deg); width: 60%; height: 2px; background: rgba(255,255,255,0.4); }
+  .header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 21px; color: var(--chalk); letter-spacing: 1.5px; line-height: 1; }
   .header h1 span { color: var(--gold); }
-  .header-sub { font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; }
-  .streak-badge { background: var(--amber); color: var(--dark); font-family: 'Bebas Neue', sans-serif; font-size: 12px; padding: 4px 9px; border-radius: 4px; letter-spacing: 1px; flex-shrink: 0; white-space: nowrap; }
+  .header-sub { font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+  .header-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .streak-badge { background: var(--amber); color: var(--dark); font-family: 'Bebas Neue', sans-serif; font-size: 12px; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; white-space: nowrap; }
+  .role-badge { background: var(--pitch); border: 1px solid var(--gold); color: var(--gold); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 3px 7px; border-radius: 4px; }
+  .logout-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-size: 10px; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-family: 'Barlow Condensed', sans-serif; }
 
+  /* NAV */
   .nav { display: flex; background: var(--pitch); border-bottom: 2px solid var(--border); overflow-x: auto; scrollbar-width: none; }
   .nav::-webkit-scrollbar { display: none; }
-  .nav-btn { flex: 1 0 auto; min-width: 64px; padding: 10px 5px; background: none; border: none; color: var(--muted); font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; border-bottom: 3px solid transparent; white-space: nowrap; }
+  .nav-btn { flex: 1 0 auto; min-width: 60px; padding: 10px 4px; background: none; border: none; color: var(--muted); font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; border-bottom: 3px solid transparent; white-space: nowrap; }
   .nav-btn:hover { color: var(--chalk); }
   .nav-btn.active { color: var(--gold); border-bottom-color: var(--gold); background: rgba(212,160,23,0.06); }
-  .nav-btn .nav-icon { font-size: 16px; display: block; margin-bottom: 2px; }
+  .nav-btn .nav-icon { font-size: 15px; display: block; margin-bottom: 2px; }
 
-  .page { display: none; padding: 16px; max-width: 640px; margin: 0 auto; }
+  /* PAGES */
+  .page { display: none; padding: 14px; max-width: 640px; margin: 0 auto; }
   .page.active { display: block; }
 
-  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 19px; letter-spacing: 1.5px; color: var(--gold); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  /* COMMON */
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1.5px; color: var(--gold); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
   .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 12px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 13px; margin-bottom: 11px; }
+  .prog-bar-wrap { background: var(--border); border-radius: 3px; height: 5px; margin-top: 5px; overflow: hidden; }
+  .prog-bar { height: 5px; border-radius: 3px; background: linear-gradient(90deg, var(--gold), var(--amber)); transition: width 0.5s; }
+  .empty { text-align: center; padding: 30px 16px; color: var(--muted); }
+  .empty-icon { font-size: 32px; margin-bottom: 8px; }
+  .empty p { font-size: 12px; }
+  .banner-error { background: rgba(192,57,43,0.15); border: 1px solid var(--red); color: #ff9a8c; border-radius: 6px; padding: 10px 12px; font-size: 12px; margin: 10px 14px 0; display: none; }
+  .banner-error.show { display: block; }
 
   /* DASHBOARD */
-  .week-banner { background: linear-gradient(135deg, var(--pitch), #0d2010); border: 1px solid var(--gold); border-radius: 8px; padding: 14px; margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
-  .week-banner .wk-num { font-family: 'Bebas Neue', sans-serif; font-size: 34px; color: var(--gold); line-height: 1; flex-shrink: 0; }
-  .week-banner .wk-num span { display: block; font-size: 10px; color: var(--muted); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1px; text-transform: uppercase; }
-  .week-banner .wk-info { flex: 1; min-width: 0; }
-  .week-banner .wk-phase { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; color: var(--amber); letter-spacing: 1px; text-transform: uppercase; }
-  .week-banner .wk-next { font-size: 12px; color: var(--text); margin-top: 2px; }
-
-  .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
-  .stat-item { background: var(--pitch); border: 1px solid var(--border); border-radius: 6px; padding: 10px 8px; text-align: center; }
-  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--amber); line-height: 1; }
+  .week-banner { background: linear-gradient(135deg, var(--pitch), #0d2010); border: 1px solid var(--gold); border-radius: 8px; padding: 13px; margin-bottom: 13px; display: flex; align-items: center; gap: 12px; }
+  .wk-num { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--gold); line-height: 1; flex-shrink: 0; }
+  .wk-num span { display: block; font-size: 9px; color: var(--muted); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1px; text-transform: uppercase; }
+  .wk-phase { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; color: var(--amber); letter-spacing: 1px; text-transform: uppercase; }
+  .wk-next { font-size: 12px; color: var(--text); margin-top: 3px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; margin-bottom: 13px; }
+  .stat-item { background: var(--pitch); border: 1px solid var(--border); border-radius: 6px; padding: 10px 6px; text-align: center; }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--amber); line-height: 1; }
   .stat-label { font-size: 9px; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; margin-top: 3px; line-height: 1.3; }
 
-  .prog-bar-wrap { background: var(--border); border-radius: 3px; height: 6px; margin-top: 6px; overflow: hidden; }
-  .prog-bar { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--gold), var(--amber)); transition: width 0.5s; }
-
-  /* FORM ELEMENTS */
-  .form-group { margin-bottom: 12px; }
-  .form-group label { display: block; font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
-  .form-group input, .form-group textarea, .form-group select { width: 100%; background: #162016; border: 1px solid var(--border); border-radius: 5px; color: var(--text); padding: 10px 12px; font-family: 'Barlow', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s; }
-  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--gold); }
-  .form-group textarea { resize: none; height: 64px; }
-
-  .btn-primary { width: 100%; background: linear-gradient(135deg, var(--gold), var(--amber)); color: var(--dark); border: none; border-radius: 6px; padding: 14px 10px; font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 1.5px; cursor: pointer; transition: transform 0.1s; margin-top: 4px; min-height: 50px; line-height: 1.3; word-wrap: break-word; }
-  .btn-primary:hover { transform: translateY(-1px); }
-  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
-
-  .sub-tab { padding: 9px 6px; text-align: center; background: var(--pitch); border: 2px solid var(--border); border-radius: 6px; cursor: pointer; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--muted); transition: all 0.2s; min-height: 44px; display: flex; align-items: center; justify-content: center; line-height: 1.2; }
-  .sub-tab.active { border-color: var(--gold); color: var(--gold); background: rgba(212,160,23,0.08); }
-
-  /* PLAN WEEK VIEW */
-  .week-picker { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 14px; scrollbar-width: none; }
+  /* PLAN PAGE */
+  .week-picker { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 12px; scrollbar-width: none; }
   .week-picker::-webkit-scrollbar { display: none; }
-  .week-chip { flex-shrink: 0; min-width: 44px; height: 44px; border-radius: 8px; background: var(--pitch); border: 2px solid var(--border); color: var(--muted); font-family: 'Bebas Neue', sans-serif; font-size: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; }
+  .week-chip { flex-shrink: 0; min-width: 48px; height: 48px; border-radius: 8px; background: var(--pitch); border: 2px solid var(--border); color: var(--muted); font-family: 'Bebas Neue', sans-serif; font-size: 16px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; flex-direction: column; gap: 1px; }
+  .week-chip .chip-label { font-size: 8px; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.5px; text-transform: uppercase; }
   .week-chip.active { border-color: var(--gold); color: var(--gold); background: rgba(212,160,23,0.1); }
-  .week-chip.done-day { position: relative; }
+  .phase-banner { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--amber); text-align: center; margin-bottom: 12px; padding: 7px; background: rgba(232,131,10,0.08); border-radius: 5px; }
 
-  .phase-banner { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--amber); text-align: center; margin-bottom: 12px; }
-
-  .day-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
+  /* DAY CARDS */
+  .day-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 9px; overflow: hidden; }
   .day-card.completed { border-color: var(--grass); }
-  .day-card-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; cursor: pointer; gap: 10px; }
-  .day-card-header:hover { background: rgba(255,255,255,0.02); }
-  .day-name-block { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
-  .day-cat-icon { font-size: 20px; flex-shrink: 0; }
-  .day-name-text { min-width: 0; }
+  .day-card-header { display: flex; align-items: center; gap: 10px; padding: 11px 13px; cursor: pointer; }
+  .day-card-header:active { background: rgba(255,255,255,0.02); }
+  .day-cat-icon { font-size: 18px; flex-shrink: 0; }
   .day-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; color: var(--chalk); letter-spacing: 0.5px; }
-  .day-focus { font-size: 12px; color: var(--muted); margin-top: 1px; }
-  .day-check-badge { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--muted); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: transparent; font-size: 14px; transition: all 0.15s; }
+  .day-focus { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .day-duration { font-size: 10px; color: var(--gold); margin-top: 1px; font-family: 'Barlow Condensed', sans-serif; }
+  .day-check-badge { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--muted); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: transparent; font-size: 13px; margin-left: auto; transition: all 0.15s; }
   .day-card.completed .day-check-badge { background: var(--grass); border-color: var(--grass); color: white; }
-  .day-chevron { color: var(--muted); font-size: 12px; transition: transform 0.2s; flex-shrink: 0; }
+  .day-chevron { color: var(--muted); font-size: 11px; flex-shrink: 0; transition: transform 0.2s; }
   .day-card.expanded .day-chevron { transform: rotate(180deg); }
+  .day-body { display: none; padding: 0 13px 13px; }
+  .day-card.expanded .day-body { display: block; padding-top: 0; border-top: 1px solid var(--border); }
 
-  .day-body { display: none; padding: 0 14px 14px; border-top: 1px solid var(--border); }
-  .day-card.expanded .day-body { display: block; padding-top: 12px; }
-
-  .ex-list { list-style: none; margin-bottom: 10px; }
-  .ex-list li { font-size: 13px; color: var(--text); padding: 6px 0 6px 18px; position: relative; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  /* SESSION SECTIONS */
+  .session-section { margin-top: 11px; }
+  .session-section-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid var(--border); }
+  .ex-list { list-style: none; }
+  .ex-list li { font-size: 13px; color: var(--text); padding: 5px 0 5px 16px; position: relative; border-bottom: 1px solid rgba(255,255,255,0.03); line-height: 1.4; }
   .ex-list li:last-child { border-bottom: none; }
-  .ex-list li::before { content: '▸'; position: absolute; left: 0; color: var(--amber); }
+  .ex-list li::before { content: '▸'; position: absolute; left: 0; color: var(--amber); font-size: 10px; top: 7px; }
 
-  .equip-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
-  .equip-tag { background: var(--pitch); border: 1px solid var(--border); border-radius: 4px; padding: 4px 8px; font-size: 11px; color: var(--muted); }
+  .equip-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+  .equip-tag { background: var(--pitch); border: 1px solid var(--border); border-radius: 4px; padding: 3px 8px; font-size: 10px; color: var(--muted); }
+  .day-notes-block { font-size: 11px; color: var(--muted); font-style: italic; margin-top: 10px; line-height: 1.5; padding: 8px 10px; background: rgba(255,255,255,0.02); border-radius: 5px; border-left: 2px solid var(--amber); }
 
-  .day-notes { font-size: 12px; color: var(--muted); font-style: italic; margin-bottom: 12px; line-height: 1.5; }
-
-  .day-log-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-  .day-complete-btn { width: 100%; padding: 11px; border-radius: 6px; border: none; font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 1px; cursor: pointer; background: var(--grass); color: white; min-height: 44px; }
+  .day-complete-btn { width: 100%; padding: 11px; border-radius: 6px; border: none; font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 1px; cursor: pointer; background: var(--grass); color: white; min-height: 44px; margin-top: 12px; }
   .day-complete-btn.undo { background: var(--pitch); color: var(--muted); border: 1px solid var(--border); }
-  .day-complete-btn:disabled { opacity: 0.55; }
+  .day-complete-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  /* SPRINT/PLYO CHECKLIST (Log page - free logging) */
-  .ex-section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); padding: 8px 0 6px; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
-  .ex-check-row { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--pitch); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; cursor: pointer; transition: border-color 0.15s; user-select: none; }
-  .ex-check-row:hover { border-color: var(--gold); }
+  /* LOG PAGE */
+  .form-group { margin-bottom: 11px; }
+  .form-group label { display: block; font-size: 10px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .form-group input, .form-group textarea, .form-group select { width: 100%; background: #162016; border: 1px solid var(--border); border-radius: 5px; color: var(--text); padding: 9px 11px; font-family: 'Barlow', sans-serif; font-size: 13px; outline: none; transition: border-color 0.2s; }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--gold); }
+  .form-group textarea { resize: none; height: 62px; }
+  .btn-primary { width: 100%; background: linear-gradient(135deg, var(--gold), var(--amber)); color: var(--dark); border: none; border-radius: 6px; padding: 13px 10px; font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 1.5px; cursor: pointer; transition: transform 0.1s; margin-top: 4px; min-height: 48px; }
+  .btn-primary:hover { transform: translateY(-1px); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 12px; }
+  .sub-tab { padding: 9px 6px; text-align: center; background: var(--pitch); border: 2px solid var(--border); border-radius: 6px; cursor: pointer; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--muted); transition: all 0.2s; min-height: 42px; display: flex; align-items: center; justify-content: center; }
+  .sub-tab.active { border-color: var(--gold); color: var(--gold); background: rgba(212,160,23,0.08); }
+  .ex-check-row { display: flex; align-items: center; gap: 10px; padding: 9px 11px; background: var(--pitch); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 5px; cursor: pointer; user-select: none; }
   .ex-check-row.done { border-color: var(--grass); background: rgba(45,90,39,0.2); }
-  .ex-check-box { width: 22px; height: 22px; border: 2px solid var(--muted); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; transition: all 0.15s; color: transparent; }
+  .ex-check-box { width: 20px; height: 20px; border: 2px solid var(--muted); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; color: transparent; }
   .ex-check-row.done .ex-check-box { background: var(--grass); border-color: var(--grass); color: white; }
   .ex-name { font-size: 13px; flex: 1; color: var(--chalk); }
 
-  /* LOG ENTRIES (history/dashboard) */
-  .log-entry { background: var(--pitch); border: 1px solid var(--border); border-radius: 6px; padding: 11px 12px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; }
-  .log-cat-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  /* HISTORY */
+  .log-entry { background: var(--pitch); border: 1px solid var(--border); border-radius: 6px; padding: 10px 11px; margin-bottom: 7px; display: flex; align-items: flex-start; gap: 9px; }
+  .log-cat-dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
   .log-exercise { font-weight: 600; font-size: 13px; color: var(--chalk); }
-  .log-meta { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.5; word-break: break-word; }
+  .log-meta { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
   .log-date { font-size: 10px; color: var(--muted); opacity: 0.7; margin-top: 2px; }
-  .log-rpe { margin-left: auto; font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--amber); flex-shrink: 0; text-align: center; min-width: 32px; }
-  .log-rpe span { display: block; font-size: 8px; color: var(--muted); font-family: 'Barlow', sans-serif; font-weight: 400; }
+  .log-rpe { margin-left: auto; font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--amber); flex-shrink: 0; text-align: center; min-width: 30px; }
+  .log-rpe span { display: block; font-size: 8px; color: var(--muted); font-family: 'Barlow', sans-serif; }
+  .hist-date-header { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 1.5px; color: var(--muted); padding: 9px 0 5px; border-bottom: 1px solid var(--border); margin-bottom: 7px; }
 
-  .hist-date-header { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 1.5px; color: var(--muted); padding: 10px 0 6px; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
-
-  /* CHALLENGE */
-  .week-title { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 1.5px; color: var(--amber); margin: 14px 0 8px; }
-  .challenge-day { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--pitch); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; cursor: pointer; transition: all 0.15s; user-select: none; }
+  /* AB CHALLENGE */
+  .week-title { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 1.5px; color: var(--amber); margin: 13px 0 7px; }
+  .challenge-day { display: flex; align-items: center; gap: 10px; padding: 9px 11px; background: var(--pitch); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 5px; cursor: pointer; user-select: none; transition: all 0.15s; }
   .challenge-day:hover { border-color: var(--gold); }
   .challenge-day.done { border-color: var(--grass); background: rgba(45,90,39,0.2); }
   .challenge-day.saving { opacity: 0.5; pointer-events: none; }
-  .challenge-day .check { width: 22px; height: 22px; border: 2px solid var(--muted); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; color: transparent; }
+  .challenge-day .check { width: 20px; height: 20px; border: 2px solid var(--muted); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; color: transparent; }
   .challenge-day.done .check { background: var(--grass); border-color: var(--grass); color: white; }
-  .challenge-day-label { font-size: 12px; flex: 1; color: var(--text); min-width: 0; }
+  .challenge-day-label { font-size: 12px; flex: 1; color: var(--text); }
   .challenge-day-label strong { color: var(--chalk); display: block; }
-  .challenge-targets { font-family: 'Bebas Neue', sans-serif; font-size: 11px; color: var(--gold); letter-spacing: 0.5px; text-align: right; flex-shrink: 0; line-height: 1.6; }
+  .challenge-targets { font-family: 'Bebas Neue', sans-serif; font-size: 11px; color: var(--gold); text-align: right; flex-shrink: 0; line-height: 1.6; }
+
+  /* TRAINER */
+  .trainer-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+  .trainer-row:last-child { border-bottom: none; }
+  .trainer-row .label { color: var(--muted); }
+  .trainer-row .value { font-family: 'Bebas Neue', sans-serif; font-size: 17px; color: var(--gold); }
 
   /* TIMER */
   .timer-display { text-align: center; padding: 20px 0; }
-  .timer-time { font-family: 'Bebas Neue', sans-serif; font-size: 62px; color: var(--gold); letter-spacing: 3px; line-height: 1; }
+  .timer-time { font-family: 'Bebas Neue', sans-serif; font-size: 60px; color: var(--gold); letter-spacing: 3px; line-height: 1; }
   .timer-label { font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
-  .timer-btns { display: flex; gap: 8px; margin-top: 14px; }
-  .btn-timer { flex: 1; padding: 12px 6px; border: none; border-radius: 6px; font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 1px; cursor: pointer; min-height: 44px; }
+  .timer-btns { display: flex; gap: 8px; margin-top: 13px; }
+  .btn-timer { flex: 1; padding: 11px 5px; border: none; border-radius: 6px; font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 1px; cursor: pointer; min-height: 44px; }
   .btn-start { background: var(--grass); color: white; }
   .btn-stop { background: var(--red); color: white; }
   .btn-reset { background: var(--pitch); color: var(--muted); border: 1px solid var(--border); }
 
-  .empty { text-align: center; padding: 32px 16px; color: var(--muted); }
-  .empty-icon { font-size: 34px; margin-bottom: 8px; }
-  .empty p { font-size: 12px; }
-
-  input[type="range"] { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 3px; background: var(--border); outline: none; }
+  /* RPE SLIDER */
+  input[type="range"] { -webkit-appearance: none; width: 100%; height: 5px; border-radius: 3px; background: var(--border); outline: none; }
   input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--gold); cursor: pointer; }
 
-  #toast { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--grass); color: white; padding: 10px 18px; border-radius: 6px; font-family: 'Barlow Condensed', sans-serif; font-size: 14px; letter-spacing: 0.5px; z-index: 999; transition: transform 0.3s; max-width: 90vw; text-align: center; }
+  /* LOGIN */
+  #login-screen { position: fixed; inset: 0; background: var(--dark); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  #login-screen.hidden { display: none; }
+  .login-box { width: 100%; max-width: 320px; text-align: center; }
+  .login-ball { width: 58px; height: 58px; background: linear-gradient(135deg, #8B4513, #A0522D); border-radius: 50% 10% 50% 10%; transform: rotate(-45deg); margin: 0 auto 16px; position: relative; }
+  .login-ball::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) rotate(45deg); width: 60%; height: 3px; background: rgba(255,255,255,0.4); }
+  .login-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--chalk); letter-spacing: 1.5px; margin-bottom: 4px; }
+  .login-title span { color: var(--gold); }
+  .login-sub { font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 24px; }
+  .pin-display { display: flex; gap: 12px; justify-content: center; margin-bottom: 20px; }
+  .pin-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--border); background: transparent; transition: all 0.15s; }
+  .pin-dot.filled { background: var(--gold); border-color: var(--gold); }
+  .pin-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-bottom: 14px; }
+  .pin-key { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 0; font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--chalk); cursor: pointer; transition: all 0.1s; min-height: 54px; }
+  .pin-key:active { background: var(--pitch); border-color: var(--gold); transform: scale(0.96); }
+  .pin-key.wide { font-size: 12px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 1px; color: var(--muted); }
+  .login-error { color: #ff9a8c; font-size: 12px; margin-top: 4px; min-height: 16px; }
+  .login-hint { font-size: 10px; color: var(--muted); margin-top: 16px; }
+
+  /* TOAST */
+  #toast { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--grass); color: white; padding: 10px 18px; border-radius: 6px; font-family: 'Barlow Condensed', sans-serif; font-size: 14px; letter-spacing: 0.5px; z-index: 999; transition: transform 0.3s; max-width: 88vw; text-align: center; }
   #toast.show { transform: translateX(-50%) translateY(0); }
   #toast.error { background: var(--red); }
-
-  .banner-error { background: rgba(192,57,43,0.15); border: 1px solid var(--red); color: #ff9a8c; border-radius: 6px; padding: 10px 12px; font-size: 12px; margin-bottom: 12px; display: none; }
-  .banner-error.show { display: block; }
-
-  /* LOGIN SCREEN */
-  #login-screen { position: fixed; inset: 0; background: var(--dark); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 24px; }
-  #login-screen.hidden { display: none; }
-  .login-box { width: 100%; max-width: 340px; text-align: center; }
-  .login-ball { width: 64px; height: 64px; background: linear-gradient(135deg, #8B4513, #A0522D); border-radius: 50% 10% 50% 10%; transform: rotate(-45deg); margin: 0 auto 18px; position: relative; }
-  .login-ball::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg); width: 60%; height: 3px; background: rgba(255,255,255,0.4); }
-  .login-title { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: var(--chalk); letter-spacing: 1.5px; margin-bottom: 4px; }
-  .login-title span { color: var(--gold); }
-  .login-sub { font-size: 12px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 28px; }
-  .pin-display { display: flex; gap: 10px; justify-content: center; margin-bottom: 22px; }
-  .pin-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border); background: transparent; transition: all 0.15s; }
-  .pin-dot.filled { background: var(--gold); border-color: var(--gold); }
-  .pin-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
-  .pin-key { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px 0; font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--chalk); cursor: pointer; transition: all 0.1s; min-height: 56px; }
-  .pin-key:active { background: var(--pitch); border-color: var(--gold); }
-  .pin-key.wide { grid-column: span 1; font-size: 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 1px; color: var(--muted); }
-  .login-error { color: #ff9a8c; font-size: 12px; margin-top: 6px; min-height: 16px; }
-  .login-hint { font-size: 11px; color: var(--muted); margin-top: 18px; }
-
-  /* TRAINER VIEW */
-  .role-badge { background: var(--pitch); border: 1px solid var(--gold); color: var(--gold); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; }
-  .logout-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-size: 11px; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-family: 'Barlow Condensed', sans-serif; }
-  .trainer-summary-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
-  .trainer-summary-row:last-child { border-bottom: none; }
-  .trainer-summary-row .label { color: var(--muted); }
-  .trainer-summary-row .value { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--gold); }
-
-  @media (max-width: 380px) {
-    .stat-grid { grid-template-columns: 1fr 1fr; }
-    .header h1 { font-size: 19px; }
-  }
 </style>
 </head>
 <body>
 
-<!-- ============ LOGIN SCREEN ============ -->
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
     <div class="login-ball"></div>
     <div class="login-title">Joe's <span>Rugby</span> Tracker</div>
     <div class="login-sub">Enter your PIN</div>
     <div class="pin-display" id="pin-display">
-      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+      <div class="pin-dot"></div><div class="pin-dot"></div>
+      <div class="pin-dot"></div><div class="pin-dot"></div>
     </div>
     <div class="pin-pad">
       <button class="pin-key" onclick="pinPress('1')">1</button>
@@ -237,17 +220,18 @@
   </div>
 </div>
 
-<div id="app-root" style="display:none;">
+<!-- APP -->
+<div id="app-root" style="display:none">
 
 <div class="header">
   <div class="header-left">
     <div class="rugby-ball"></div>
     <div>
       <h1>Joe's <span>Rugby</span> Tracker</h1>
-      <div class="header-sub">12-Week Off-Season Programme</div>
+      <div class="header-sub">6-Week Speed Programme</div>
     </div>
   </div>
-  <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+  <div class="header-right">
     <span class="role-badge" id="roleBadge">JOE</span>
     <div class="streak-badge" id="headerStreak">🔥 0</div>
     <button class="logout-btn" onclick="logout()">Switch</button>
@@ -261,92 +245,85 @@
   <button class="nav-btn" onclick="showPage('history',this)"><span class="nav-icon">📋</span>History</button>
   <button class="nav-btn" onclick="showPage('challenge',this)"><span class="nav-icon">🏆</span>Abs</button>
   <button class="nav-btn" onclick="showPage('timer',this)"><span class="nav-icon">⏱️</span>Timer</button>
-  <button class="nav-btn" id="nav-trainer" onclick="showPage('trainer',this)" style="display:none;"><span class="nav-icon">🧑‍🏫</span>Trainer</button>
+  <button class="nav-btn" id="nav-trainer" style="display:none" onclick="showPage('trainer',this)"><span class="nav-icon">🧑‍🏫</span>Trainer</button>
 </nav>
 
-<div id="banner-error" class="banner-error" style="margin: 12px 16px 0;"></div>
+<div id="banner-error" class="banner-error"></div>
 
-<!-- ============ DASHBOARD ============ -->
+<!-- DASHBOARD -->
 <div id="page-dashboard" class="page active">
   <div class="week-banner">
-    <div class="wk-num" id="db-week-num">1<span>WEEK</span></div>
-    <div class="wk-info">
-      <div class="wk-phase" id="db-week-phase">Foundation</div>
-      <div class="wk-next" id="db-next-session">Loading next session...</div>
+    <div><div class="wk-num" id="db-week-num">1<span>WEEK</span></div></div>
+    <div style="flex:1;min-width:0">
+      <div class="wk-phase" id="db-week-phase">Learn Technique</div>
+      <div class="wk-next" id="db-next-session">Loading...</div>
     </div>
   </div>
-
   <div class="section-title">This Week</div>
   <div class="stat-grid">
     <div class="stat-item"><div class="stat-num" id="stat-planned">0/7</div><div class="stat-label">Sessions Done</div></div>
     <div class="stat-item"><div class="stat-num" id="stat-speed">0</div><div class="stat-label">Speed Sessions</div></div>
-    <div class="stat-item"><div class="stat-num" id="stat-strength">0</div><div class="stat-label">Strength Sessions</div></div>
-    <div class="stat-item"><div class="stat-num" id="stat-contact">0</div><div class="stat-label">Rugby / Contact</div></div>
+    <div class="stat-item"><div class="stat-num" id="stat-strength">0</div><div class="stat-label">Rugby / Football</div></div>
+    <div class="stat-item"><div class="stat-num" id="stat-extra">0</div><div class="stat-label">Extra Sessions</div></div>
   </div>
-
-  <div class="section-title">Core Streak</div>
+  <div class="section-title">Ab Challenge</div>
   <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
       <span style="font-family:'Barlow Condensed';font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--chalk)">Daily Ab Challenge</span>
-      <span style="font-family:'Bebas Neue';font-size:24px;color:var(--amber)" id="core-streak-num">0</span>
+      <span style="font-family:'Bebas Neue';font-size:22px;color:var(--amber)" id="core-streak-num">0</span>
     </div>
     <div class="prog-bar-wrap"><div class="prog-bar" id="core-prog" style="width:0%"></div></div>
-    <div style="font-size:10px;color:var(--muted);margin-top:6px" id="core-prog-label">Day 0 of 28</div>
+    <div style="font-size:10px;color:var(--muted);margin-top:5px" id="core-prog-label">Day 0 of 28</div>
   </div>
-
   <div class="section-title">Recent Sessions</div>
   <div id="recent-log"><div class="empty"><div class="empty-icon">⏳</div><p>Loading...</p></div></div>
 </div>
 
-<!-- ============ 12-WEEK PLAN ============ -->
+<!-- PLAN -->
 <div id="page-plan" class="page">
-  <div class="section-title">12-Week Plan</div>
+  <div class="section-title">6-Week Plan</div>
   <div class="week-picker" id="week-picker"></div>
-  <div class="phase-banner" id="phase-banner">FOUNDATION PHASE</div>
+  <div class="phase-banner" id="phase-banner"></div>
   <div id="plan-days"></div>
 </div>
 
-<!-- ============ LOG ============ -->
+<!-- LOG -->
 <div id="page-log" class="page">
   <div class="section-title">Log Extra Session</div>
-  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Use this for extra work outside the plan. To tick off a planned day, go to the <strong style="color:var(--gold)">Plan</strong> tab instead.</p>
-
-  <div class="card" style="padding:12px;">
-    <div style="font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">Select Category</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;" id="cat-btns"></div>
+  <p style="font-size:11px;color:var(--muted);margin-bottom:12px;">For extra work outside the plan. To complete a planned day, use the <strong style="color:var(--gold)">Plan</strong> tab.</p>
+  <div class="card" style="padding:12px">
+    <div style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:9px">Category</div>
+    <div class="cat-grid" id="cat-btns"></div>
   </div>
-
   <div id="log-panel" class="card"></div>
 </div>
 
-<!-- ============ HISTORY ============ -->
+<!-- HISTORY -->
 <div id="page-history" class="page">
-  <div class="section-title">Session History</div>
-  <div style="display:flex;gap:8px;margin-bottom:14px;">
-    <select id="filter-cat" onchange="renderHistory()" style="flex:1;background:#162016;border:1px solid var(--border);border-radius:5px;color:var(--text);padding:8px 10px;font-family:Barlow,sans-serif;font-size:13px;outline:none;">
-      <option value="all">All Categories</option>
-    </select>
-    <button onclick="clearHistory()" style="background:var(--red);color:white;border:none;border-radius:5px;padding:8px 12px;font-size:12px;cursor:pointer;font-family:Barlow,sans-serif;flex-shrink:0;">Clear All</button>
+  <div class="section-title">History</div>
+  <div style="display:flex;gap:8px;margin-bottom:12px">
+    <select id="filter-cat" onchange="renderHistory()" style="flex:1;background:#162016;border:1px solid var(--border);border-radius:5px;color:var(--text);padding:8px 10px;font-family:Barlow,sans-serif;font-size:12px;outline:none"></select>
+    <button onclick="clearHistory()" style="background:var(--red);color:white;border:none;border-radius:5px;padding:8px 10px;font-size:11px;cursor:pointer;font-family:Barlow,sans-serif;flex-shrink:0">Clear All</button>
   </div>
   <div id="history-list"><div class="empty"><div class="empty-icon">⏳</div><p>Loading...</p></div></div>
 </div>
 
-<!-- ============ AB CHALLENGE ============ -->
+<!-- ABS -->
 <div id="page-challenge" class="page">
   <div class="section-title">Daily Ab Challenge</div>
-  <div class="card" style="background:linear-gradient(135deg,#1a3a1a,#0d2010);border-color:var(--gold);margin-bottom:16px;">
-    <div style="display:flex;align-items:center;gap:12px;">
-      <div style="font-size:32px">🏆</div>
+  <div class="card" style="background:linear-gradient(135deg,#1a3a1a,#0d2010);border-color:var(--gold);margin-bottom:14px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="font-size:30px">🏆</div>
       <div>
-        <div style="font-family:'Bebas Neue';font-size:18px;color:var(--gold);letter-spacing:1.5px">28-DAY CORE PROGRAMME</div>
-        <div style="font-size:11px;color:var(--muted)">Progresses every single day — tap to tick off</div>
+        <div style="font-family:'Bebas Neue';font-size:17px;color:var(--gold);letter-spacing:1.5px">28-DAY CORE PROGRAMME</div>
+        <div style="font-size:11px;color:var(--muted)">Progresses every day — tap to tick off</div>
       </div>
     </div>
   </div>
   <div id="challenge-days"><div class="empty"><div class="empty-icon">⏳</div><p>Loading...</p></div></div>
 </div>
 
-<!-- ============ TIMER ============ -->
+<!-- TIMER -->
 <div id="page-timer" class="page">
   <div class="section-title">Rest Timer</div>
   <div class="card">
@@ -360,84 +337,68 @@
       <button class="btn-timer btn-reset" onclick="resetTimer()">RESET</button>
     </div>
   </div>
-  <div class="section-title" style="margin-top:18px;">Quick Presets</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-    <div class="card" style="text-align:center;cursor:pointer;padding:14px;" onclick="setPreset(30)"><div style="font-family:'Bebas Neue';font-size:26px;color:var(--gold)">0:30</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;">Sprint Rest</div></div>
-    <div class="card" style="text-align:center;cursor:pointer;padding:14px;" onclick="setPreset(60)"><div style="font-family:'Bebas Neue';font-size:26px;color:var(--gold)">1:00</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;">Plyo Rest</div></div>
-    <div class="card" style="text-align:center;cursor:pointer;padding:14px;" onclick="setPreset(90)"><div style="font-family:'Bebas Neue';font-size:26px;color:var(--gold)">1:30</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;">Strength Rest</div></div>
-    <div class="card" style="text-align:center;cursor:pointer;padding:14px;" onclick="setPreset(120)"><div style="font-family:'Bebas Neue';font-size:26px;color:var(--gold)">2:00</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;">Heavy Lift</div></div>
+  <div class="section-title" style="margin-top:16px">Quick Presets</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+    <div class="card" style="text-align:center;cursor:pointer;padding:13px" onclick="setPreset(60)"><div style="font-family:'Bebas Neue';font-size:24px;color:var(--gold)">1:00</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase">Sprint Rest</div></div>
+    <div class="card" style="text-align:center;cursor:pointer;padding:13px" onclick="setPreset(90)"><div style="font-family:'Bebas Neue';font-size:24px;color:var(--gold)">1:30</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase">Between Sets</div></div>
+    <div class="card" style="text-align:center;cursor:pointer;padding:13px" onclick="setPreset(120)"><div style="font-family:'Bebas Neue';font-size:24px;color:var(--gold)">2:00</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase">Power Rest</div></div>
+    <div class="card" style="text-align:center;cursor:pointer;padding:13px" onclick="setPreset(180)"><div style="font-family:'Bebas Neue';font-size:24px;color:var(--gold)">3:00</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase">30m Sprint Rest</div></div>
   </div>
 </div>
 
-<div id="toast"></div>
-
-<!-- ============ TRAINER SUMMARY (trainer role only) ============ -->
+<!-- TRAINER -->
 <div id="page-trainer" class="page">
   <div class="section-title">Trainer Summary</div>
   <div class="card">
-    <div class="trainer-summary-row"><span class="label">Current programme week</span><span class="value" id="t-week">—</span></div>
-    <div class="trainer-summary-row"><span class="label">Current phase</span><span class="value" id="t-phase">—</span></div>
-    <div class="trainer-summary-row"><span class="label">Plan days completed (total)</span><span class="value" id="t-plan-total">—</span></div>
-    <div class="trainer-summary-row"><span class="label">Extra sessions logged</span><span class="value" id="t-extra-total">—</span></div>
-    <div class="trainer-summary-row"><span class="label">Ab Challenge streak</span><span class="value" id="t-ab-streak">—</span></div>
-    <div class="trainer-summary-row"><span class="label">Average RPE (last 10)</span><span class="value" id="t-avg-rpe">—</span></div>
+    <div class="trainer-row"><span class="label">Current week</span><span class="value" id="t-week">—</span></div>
+    <div class="trainer-row"><span class="label">Phase</span><span class="value" id="t-phase">—</span></div>
+    <div class="trainer-row"><span class="label">Plan days completed</span><span class="value" id="t-plan-total">—</span></div>
+    <div class="trainer-row"><span class="label">Extra sessions logged</span><span class="value" id="t-extra-total">—</span></div>
+    <div class="trainer-row"><span class="label">Ab challenge streak</span><span class="value" id="t-ab-streak">—</span></div>
+    <div class="trainer-row"><span class="label">Avg RPE (last 10)</span><span class="value" id="t-avg-rpe">—</span></div>
   </div>
-
-  <div class="section-title">Sessions by Category</div>
-  <div class="card" id="t-category-breakdown"></div>
-
-  <div class="section-title">Export Data</div>
+  <div class="section-title">Category Breakdown</div>
+  <div class="card" id="t-cat-breakdown"></div>
+  <div class="section-title">Data</div>
   <div class="card">
-    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">All data lives in your Google Sheet already — open it directly to view, filter, or export to CSV/Excel.</p>
-    <button class="btn-primary" onclick="toast('Open your Google Sheet directly to export — data updates there in real time.')">📄 DATA IS IN YOUR GOOGLE SHEET</button>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:10px">All data saves to your Google Sheet in real time — open it to view, filter or export.</p>
+    <button class="btn-primary" onclick="toast('Open your Google Sheet directly to view and export data 📊')">📄 DATA IS IN YOUR GOOGLE SHEET</button>
   </div>
 </div>
 
 </div><!-- /app-root -->
+<div id="toast"></div>
 
 <script>
 // ============================================================
-//  AUTH / LOGIN
+//  AUTH
 // ============================================================
-let currentRole = null; // 'joe' | 'trainer'
+let currentRole = null;
 let pinBuffer = '';
+const planDayInFlight = new Set();
 
-function pinPress(digit) {
+function pinPress(d) {
   if (pinBuffer.length >= 4) return;
-  pinBuffer += digit;
-  updatePinDisplay();
-  if (pinBuffer.length === 4) attemptLogin();
+  pinBuffer += d;
+  updatePinDots();
+  if (pinBuffer.length === 4) setTimeout(attemptLogin, 60);
 }
-
-function pinBackspace() {
-  pinBuffer = pinBuffer.slice(0, -1);
-  updatePinDisplay();
-  document.getElementById('login-error').textContent = '';
-}
-
-function pinClear() {
-  pinBuffer = '';
-  updatePinDisplay();
-  document.getElementById('login-error').textContent = '';
-}
-
-function updatePinDisplay() {
-  const dots = document.querySelectorAll('.pin-dot');
-  dots.forEach((d, i) => d.classList.toggle('filled', i < pinBuffer.length));
+function pinBackspace() { pinBuffer = pinBuffer.slice(0,-1); updatePinDots(); document.getElementById('login-error').textContent = ''; }
+function pinClear() { pinBuffer = ''; updatePinDots(); document.getElementById('login-error').textContent = ''; }
+function updatePinDots() {
+  document.querySelectorAll('.pin-dot').forEach((d,i) => d.classList.toggle('filled', i < pinBuffer.length));
 }
 
 async function attemptLogin() {
   const errEl = document.getElementById('login-error');
   errEl.textContent = 'Checking...';
-  const result = await loginWithPin(pinBuffer);
+  const result = await gasPost({ action: 'login', pin: pinBuffer });
   if (!result || !result.ok) {
-    errEl.textContent = 'Incorrect PIN — try again';
-    pinBuffer = '';
-    updatePinDisplay();
-    return;
+    errEl.textContent = result?.error === 'Incorrect PIN' ? 'Incorrect PIN — try again' : 'Connection error — check internet';
+    pinBuffer = ''; updatePinDots(); return;
   }
   currentRole = result.role;
-  sessionStorage.setItem('rugbyTrackerRole', currentRole);
+  sessionStorage.setItem('rugbyRole', currentRole);
   enterApp();
 }
 
@@ -446,309 +407,196 @@ function enterApp() {
   document.getElementById('app-root').style.display = 'block';
   document.getElementById('roleBadge').textContent = currentRole === 'trainer' ? 'TRAINER' : 'JOE';
   document.getElementById('nav-trainer').style.display = currentRole === 'trainer' ? '' : 'none';
-  buildLogCategoryButtons();
+  buildLogCats();
   renderLogPanel();
   buildHistoryFilter();
   renderDashboard();
 }
 
 function logout() {
-  currentRole = null;
-  pinBuffer = '';
-  sessionStorage.removeItem('rugbyTrackerRole');
-  updatePinDisplay();
+  currentRole = null; pinBuffer = '';
+  sessionStorage.removeItem('rugbyRole');
+  updatePinDots();
   document.getElementById('login-error').textContent = '';
   document.getElementById('app-root').style.display = 'none';
   document.getElementById('login-screen').classList.remove('hidden');
 }
 
-// Auto-login if role already verified this session
-function checkExistingSession() {
-  const saved = sessionStorage.getItem('rugbyTrackerRole');
-  if (saved === 'joe' || saved === 'trainer') {
-    currentRole = saved;
-    enterApp();
-  }
+function checkSession() {
+  const saved = sessionStorage.getItem('rugbyRole');
+  if (saved === 'joe' || saved === 'trainer') { currentRole = saved; enterApp(); }
 }
 
 // ============================================================
-//  GOOGLE APPS SCRIPT BACKEND
+//  GOOGLE APPS SCRIPT
 // ============================================================
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbxa2QnTjcyMEAnCRse_C6eue5GpUUbkBAdvdFAUVB2ZQ9YTDw-l5C5wjTHjxfkFw4E/exec';
 
-let backendReady = true; // optimistic; flips false on first failure
-
-function showBannerError(msg) {
-  const el = document.getElementById('banner-error');
-  el.textContent = '⚠️ ' + msg;
-  el.classList.add('show');
-}
-function clearBannerError() {
-  document.getElementById('banner-error').classList.remove('show');
-}
+function showBannerError(msg) { const e = document.getElementById('banner-error'); e.textContent = '⚠️ ' + msg; e.classList.add('show'); }
+function clearBannerError() { document.getElementById('banner-error').classList.remove('show'); }
 
 async function gasGet(action) {
   try {
-    const res = await fetch(`${GAS_URL}?action=${encodeURIComponent(action)}`);
+    const res = await fetch(`${GAS_URL}?action=${action}`);
     const json = await res.json();
-    if (!json.ok) {
-      console.error('GAS error:', json.error);
-      toast('Load error: ' + json.error, true);
-      return null;
-    }
+    if (!json.ok) { toast('Error: ' + json.error, true); return null; }
     clearBannerError();
     return json.data;
-  } catch (e) {
-    console.error('Network error:', e);
-    showBannerError('Connection lost — check your internet and refresh.');
-    return null;
-  }
+  } catch(e) { showBannerError('Connection lost — check internet and refresh.'); return null; }
 }
 
 async function gasPost(body) {
   try {
     const res = await fetch(GAS_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // avoids CORS preflight on Apps Script
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(body)
     });
     const json = await res.json();
-    if (!json.ok) {
-      console.error('GAS error:', json.error);
-      toast('Save error: ' + json.error, true);
-      return null;
-    }
+    if (!json.ok && body.action !== 'login') toast('Save error: ' + json.error, true);
     clearBannerError();
     return json;
-  } catch (e) {
-    console.error('Network error:', e);
-    showBannerError('Connection lost — check your internet and try again.');
-    return null;
-  }
+  } catch(e) { showBannerError('Connection lost — check internet.'); return null; }
 }
 
-async function loginWithPin(pin) {
-  const result = await gasPost({ action: 'login', pin: pin });
-  return result; // { ok, role } or null
-}
-
-async function getSessions() {
-  const data = await gasGet('sessions');
-  if (!data) return [];
-  return data.map(row => ({
-    ...row,
-    exercises: safeParseJSON(row.exercises, [])
-  }));
-}
-
-function safeParseJSON(str, fallback) {
+function safeJSON(str, fallback) {
   if (Array.isArray(str)) return str;
-  try { return JSON.parse(str); } catch (e) { return fallback; }
+  try { return JSON.parse(str); } catch(e) { return fallback; }
 }
 
-async function insertSession(entry) {
-  const result = await gasPost({ action: 'addSession', ...entry });
-  return result;
-}
-
-async function deleteAllSessions() {
-  await gasPost({ action: 'deleteAllSessions' });
-}
-
-async function getChallenges() {
-  const data = await gasGet('challenge');
-  if (!data) return [];
-  return data.map(r => Number(r.day_index));
-}
-
-async function addChallenge(i) {
-  const result = await gasPost({ action: 'addChallengeDay', day_index: i });
-  return !!result;
-}
-
-async function delChallenge(i) {
-  await gasPost({ action: 'removeChallengeDay', day_index: i });
-}
-
-async function getPlanCompletion() {
-  const data = await gasGet('planCompletion');
-  return data || [];
-}
-
-async function markPlanDay(weekNumber, dayOfWeek) {
-  const result = await gasPost({ action: 'markPlanDay', week_number: weekNumber, day_of_week: dayOfWeek });
-  return !!result;
-}
-
-async function unmarkPlanDay(weekNumber, dayOfWeek) {
-  await gasPost({ action: 'unmarkPlanDay', week_number: weekNumber, day_of_week: dayOfWeek });
-}
+async function getSessions()    { const d = await gasGet('sessions'); return (d||[]).map(r=>({...r, exercises:safeJSON(r.exercises,[])})); }
+async function insertSession(e) { return await gasPost({ action:'addSession', ...e }); }
+async function deleteAllSessions() { await gasPost({ action:'deleteAllSessions' }); }
+async function getChallenges()  { const d = await gasGet('challenge'); return (d||[]).map(r=>Number(r.day_index)); }
+async function addChallenge(i)  { const r = await gasPost({ action:'addChallengeDay', day_index:i }); return !!r?.ok; }
+async function delChallenge(i)  { await gasPost({ action:'removeChallengeDay', day_index:i }); }
+async function getPlanCompletion() { const d = await gasGet('planCompletion'); return d||[]; }
+async function markPlanDay(w,d)   { const r = await gasPost({ action:'markPlanDay', week_number:w, day_of_week:d }); return !!r?.ok; }
+async function unmarkPlanDay(w,d) { await gasPost({ action:'unmarkPlanDay', week_number:w, day_of_week:d }); }
 
 // ============================================================
-//  STATIC DATA — CATEGORIES, TRAITS
+//  6-WEEK PROGRESSIVE PLAN DATA
 // ============================================================
-const CATEGORIES = {
-  speed:        { label: 'Speed & Acceleration', icon: '🏃', color: '#e84393' },
-  plyo:         { label: 'Plyometrics',           icon: '⚡', color: '#9b59b6' },
-  strength:     { label: 'Strength & Power',      icon: '💪', color: '#2980b9' },
-  rugbySkill:   { label: 'Rugby Skills',          icon: '🏉', color: '#16a085' },
-  tackle:       { label: 'Tackle / Counter-Ruck', icon: '🛡️', color: '#c0392b' },
-  ballSkill:    { label: 'Ball Skills',           icon: '🤾', color: '#e8830a' },
-  conditioning: { label: 'Conditioning',          icon: '🫁', color: '#d4a017' },
-  recovery:     { label: 'Recovery',              icon: '🧘', color: '#7f8c8d' },
-  football:     { label: 'Football Training',     icon: '⚽', color: '#27ae60' }
-};
-
-const SCOUT_TRAITS = {
-  attacker: { label: 'Creative Attacker',  icon: '🎯' },
-  defender: { label: 'Defensive Warrior',  icon: '🛡️' },
-  athlete:  { label: 'Relentless Athlete', icon: '🔥' },
-  teammate: { label: 'Best Teammate',      icon: '🤝' }
-};
-
+const PHASES = ['Learn Technique','Learn Technique','Build Volume','Build Volume','Peak Intensity','Peak Intensity'];
 const DAY_ORDER = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 
-// ============================================================
-//  12-WEEK PROGRESSIVE PLAN
-// ============================================================
-function day(focus, category, exercises, equipment, traits, notes) {
-  return { focus, category, exercises, equipment, traits, notes: notes || '' };
-}
-function progressPhase(w) {
-  return ['Foundation','Foundation','Foundation','Build','Build','Build','Intensify','Intensify','Intensify','Peak','Peak','Peak'][w-1];
-}
-
-const WEEKS = [];
-for (let w = 1; w <= 12; w++) {
-  const phase = progressPhase(w);
-  let wk;
-
-  if (phase === 'Foundation') {
-    const sprintDist = w === 1 ? '10m' : w === 2 ? '10m' : '15m';
-    const sets = 3 + Math.floor((w-1)/2);
-    wk = { week: w, phase, days: {
-      Monday: day('Recovery / Mobility', 'recovery',
-        ['Light jog 5 min','Dynamic stretching routine','Hip mobility flow','Foam roll / self massage'],
-        [], ['teammate'], 'Keep heart rate low — this is about moving well, not hard'),
-      Tuesday: day('Speed, Acceleration & Plyometrics', 'speed',
-        [`Knee drives 3x10s`, `Falling starts ${sets}x${sprintDist}`, `Belly starts ${sets}x${sprintDist}`, `Broad jumps ${sets}x3`, `Single hurdle jumps ${sets}x5`],
-        ['1 hurdle','2.5kg dumbbells'], ['attacker','athlete'], 'Focus on clean technique over speed this early'),
-      Wednesday: day('Strength & Power', 'strength',
-        [`Goblet squat (2.5kg) ${sets}x10`, `Dumbbell row (2.5kg) ${sets}x10 each arm`, `Press ups ${sets}x8`, `Plank ${sets}x20s`, `Dead bug ${sets}x8 each side`],
-        ['2.5kg dumbbells'], ['athlete'], 'Bodyweight + light load — bullet-proof the basics'),
-      Thursday: day('Football Training', 'football',
-        ['Standard football session — agility, touches, small-sided games'],
-        [], ['attacker','teammate'], 'External session — log RPE and how legs felt'),
-      Friday: day('Rest / Recovery', 'recovery',
-        ['Full rest or light walk','Stretch if needed'],
-        [], ['teammate'], 'Stay off feet where possible — let the week land'),
-      Saturday: day('Rugby Performance Day', 'rugbySkill',
-        ['Pick and go x6','Ball presentation drills x8','Catch-turn-pass x10','Carry into tackle bag x6 (light)'],
-        ['Tackle bag','1 rugby ball'], ['attacker','defender'], 'Match day or training — adjust intensity if playing'),
-      Sunday: day('Strength, Ball Skills & Conditioning', 'ballSkill',
-        ['Spin pass left x10','Spin pass right x10','Pop pass x10','Ground ball pick-up x8',`Farmer carries (5kg) ${sets}x20m`],
-        ['5kg dumbbells','1 rugby ball'], ['attacker','athlete'], 'Finish the week sharp, not exhausted')
-    }};
-  } else if (phase === 'Build') {
-    const wIdx = w - 4;
-    const sprintDist = wIdx === 0 ? '15m' : '20m';
-    const sets = 3 + wIdx;
-    const dbWeight = wIdx < 2 ? '5kg' : '7kg';
-    wk = { week: w, phase, days: {
-      Monday: day('Recovery / Mobility', 'recovery',
-        ['Light jog 8 min','Dynamic stretching routine','Hip + ankle mobility flow','Foam roll'],
-        [], ['teammate'], 'Same purpose, slightly longer — body is absorbing more load now'),
-      Tuesday: day('Speed, Acceleration & Plyometrics', 'speed',
-        [`Lunge starts ${sets}x${sprintDist}`, `10m sprint ${sets}x`, `${sprintDist} sprint ${sets}x`, `Box jumps ${sets}x5`, `Mini hurdle pogos ${sets}x10`, `Lateral bounds ${sets}x6 each side`],
-        ['1 hurdle','2 mini hurdles','Box jump'], ['attacker','athlete'], 'Add bungee resistance work if feeling strong'),
-      Wednesday: day('Strength & Power', 'strength',
-        [`Goblet squat (${dbWeight}) ${sets}x10`, `Dumbbell Romanian deadlift (${dbWeight}) ${sets}x10`, `Dumbbell press (${dbWeight}) ${sets}x8`, `Walking lunges ${sets}x10 each leg`, `Farmer carries (${dbWeight}) ${sets}x25m`, `Side plank ${sets}x25s each side`],
-        [`${dbWeight} dumbbells`], ['athlete'], 'Loads increasing — control the eccentric (lowering) phase'),
-      Thursday: day('Football Training', 'football',
-        ['Standard football session — sharper agility and reactive work'],
-        [], ['attacker','teammate'], 'Log how sprint speed felt vs last week'),
-      Friday: day('Rest / Recovery', 'recovery',
-        ['Full rest or light walk','Extra stretch if tight from Wed strength session'],
-        [], ['teammate'], ''),
-      Saturday: day('Rugby Performance Day', 'rugbySkill',
-        ['Pick and go x8','Late footwork into contact x6','Support line run x8','Carry into tackle bag x8','Catch-turn-pass x12'],
-        ['Tackle bag','1 rugby ball'], ['attacker','defender'], 'Contact intent increasing — stay technically tight'),
-      Sunday: day('Strength, Ball Skills & Conditioning', 'ballSkill',
-        ['Spin pass left x12','Spin pass right x12','Ball transfer x10',`Farmer carries (${dbWeight}) ${sets}x25m`, `Rugby circuit ${sets} rounds`],
-        [`${dbWeight} dumbbells`,'1 rugby ball'], ['attacker','athlete'], 'Circuit should leave legs heavy but technique clean')
-    }};
-  } else if (phase === 'Intensify') {
-    const wIdx = w - 7;
-    const sets = 4 + wIdx;
-    const dbWeight = '7kg';
-    wk = { week: w, phase, days: {
-      Monday: day('Recovery / Mobility', 'recovery',
-        ['Light jog 10 min','Full dynamic stretch routine','Mobility flow','Foam roll + light ball handling'],
-        ['1 rugby ball'], ['teammate'], 'Active recovery — touch the ball lightly, no intensity'),
-      Tuesday: day('Speed, Acceleration & Plyometrics', 'speed',
-        [`Bungee resisted march ${sets}x15m`, `Bungee resisted sprint ${sets}x10m`, `20m sprint ${sets}x`, `Squat jumps ${sets}x8`, `Box jumps ${sets}x6`, `Mini hurdle pogos ${sets}x12`],
-        ['Bungee rope','Box jump','2 mini hurdles'], ['attacker','athlete'], 'Bungee work is the focus this phase — quality over volume'),
-      Wednesday: day('Strength & Power', 'strength',
-        [`Goblet squat (${dbWeight}) ${sets}x10`, `Dumbbell Romanian deadlift (${dbWeight}) ${sets}x10`, `Dumbbell press (${dbWeight}) ${sets}x10`, `Dumbbell row (${dbWeight}) ${sets}x10 each arm`, `Walking lunges (${dbWeight} each hand) ${sets}x10 each leg`, `Farmer carries (${dbWeight}) ${sets}x30m`, `Plank ${sets}x40s`],
-        [`${dbWeight} dumbbells`], ['athlete'], 'Heaviest available load — this is peak strength stimulus'),
-      Thursday: day('Football Training', 'football',
-        ['Standard football session — high intensity, reactive decision-making'],
-        [], ['attacker','teammate'], ''),
-      Friday: day('Rest / Recovery', 'recovery',
-        ['Full rest','Stretch + sleep priority — this is a heavy week'],
-        [], ['teammate'], 'Recovery matters more than ever at this intensity'),
-      Saturday: day('Rugby Performance Day', 'rugbySkill',
-        ['Pick and go x10','Left shoulder tackle x6','Right shoulder tackle x6','Counter-ruck drive x6','Bag bear-hug carry x6','Support line run x10'],
-        ['Tackle bag','1 rugby ball'], ['attacker','defender'], 'Full contact intent — this is game-speed work'),
-      Sunday: day('Strength, Ball Skills & Conditioning', 'ballSkill',
-        ['Spin pass left x15','Spin pass right x15','Catch-pass x15',`Get-up-and-reload sprint ${sets}x`, `Sprint-return-sprint ${sets}x`],
-        ['1 rugby ball'], ['attacker','athlete'], 'High volume ball work paired with conditioning')
-    }};
-  } else {
-    const wIdx = w - 10;
-    const sets = wIdx === 2 ? 3 : 4;
-    const dbWeight = '7kg';
-    wk = { week: w, phase, days: {
-      Monday: day('Recovery / Mobility', 'recovery',
-        ['Light jog 8 min','Dynamic stretch routine','Mobility flow'],
-        [], ['teammate'], 'Tapering — keep movement quality high, reduce overall fatigue'),
-      Tuesday: day('Speed, Acceleration & Plyometrics', 'speed',
-        [`Bungee resisted sprint ${sets}x10m`, `20m sprint ${sets}x — max effort`, `Squat jumps ${sets}x6`, `Single hurdle jumps ${sets}x6`, `Lateral bounds ${sets}x6 each side`],
-        ['Bungee rope','1 hurdle'], ['attacker','athlete'], 'Sharpen, don\u2019t grind — full recovery between reps'),
-      Wednesday: day('Strength & Power', 'strength',
-        [`Goblet squat (${dbWeight}) ${sets}x8`, `Dumbbell Romanian deadlift (${dbWeight}) ${sets}x8`, `Dumbbell press (${dbWeight}) ${sets}x8`, `Farmer carries (${dbWeight}) ${sets}x30m`, `Plank ${sets}x45s`],
-        [`${dbWeight} dumbbells`], ['athlete'], wIdx === 2 ? 'Final week — volume drops, stay sharp for season' : 'Maintain strength, reduce junk volume'),
-      Thursday: day('Football Training', 'football',
-        ['Standard football session'],
-        [], ['attacker','teammate'], ''),
-      Friday: day('Rest / Recovery', 'recovery',
-        ['Full rest','Stretch + prepare for Saturday'],
-        [], ['teammate'], ''),
-      Saturday: day('Rugby Performance Day', 'rugbySkill',
-        ['Pick and go x10','Left shoulder tackle x8','Right shoulder tackle x8','Counter-ruck drive x8','Support line run x10','Catch-turn-pass x12'],
-        ['Tackle bag','1 rugby ball'], ['attacker','defender'], 'Game-ready intensity'),
-      Sunday: day('Strength, Ball Skills & Conditioning', 'ballSkill',
-        ['Spin pass left x15','Spin pass right x15','Ball transfer x12',`Drop-get-up-sprint ${sets}x`, `Rugby circuit ${sets} rounds`],
-        ['1 rugby ball'], ['attacker','athlete'], wIdx === 2 ? 'Last session of the programme — finish strong' : '')
-    }};
-  }
-  WEEKS.push(wk);
-}
-
-// ============================================================
-//  FREE-LOG EXERCISE LISTS (Log page — extra sessions)
-// ============================================================
-const LOG_CATEGORIES = {
-  speed: { label: 'Speed & Accel', exercises: ['Knee drives','Falling starts','Belly starts','Lunge starts','10m sprint','20m sprint','Bungee resisted march','Bungee resisted sprint'] },
-  plyo: { label: 'Plyometrics', exercises: ['Broad jumps','Box jumps','Single hurdle jumps','Mini hurdle pogos','Lateral bounds','Squat jumps'] },
-  strength: { label: 'Strength & Power', exercises: ['Goblet squat (7kg)','Dumbbell Romanian deadlift','Dumbbell press','Dumbbell row','Walking lunges','Press ups','Farmer carries','Plank','Side plank','Dead bug'] },
-  rugbySkill: { label: 'Rugby Skills', exercises: ['Pick and go','Ball presentation','Carry into tackle bag','Late footwork into contact','Support line run','Catch-turn-pass'] },
-  tackle: { label: 'Tackle / Ruck', exercises: ['Tackle bag hit','Left shoulder tackle','Right shoulder tackle','Counter-ruck drive','Bag bear-hug carry','Get-up-and-reload sprint'] },
-  ballSkill: { label: 'Ball Skills', exercises: ['Spin pass left','Spin pass right','Pop pass','Catch-pass','Ball transfer','Ground ball pick-up'] },
-  conditioning: { label: 'Conditioning', exercises: ['Drop-get-up-sprint','Rugby circuit','Sprint-return-sprint','Football training entry'] },
-  recovery: { label: 'Recovery', exercises: ['Stretching','Mobility','Walk','Light ball handling'] },
-  football: { label: 'Football Training', exercises: ['Football session'] }
+const CATEGORIES = {
+  speed:    { label:'Speed & Acceleration', icon:'🏃', color:'#e84393' },
+  plyo:     { label:'Plyometrics',          icon:'⚡', color:'#9b59b6' },
+  strength: { label:'Strength & Power',     icon:'💪', color:'#2980b9' },
+  rugby:    { label:'Rugby Skills',         icon:'🏉', color:'#16a085' },
+  football: { label:'Football Training',    icon:'⚽', color:'#27ae60' },
+  conditioning:{ label:'Conditioning',      icon:'🫁', color:'#d4a017' },
+  recovery: { label:'Recovery',             icon:'🧘', color:'#7f8c8d' }
 };
+
+function sr(base, week) { // sprint reps progression
+  if (week <= 2) return base;
+  if (week <= 4) return base + 1;
+  return base; // week 5-6: same reps but max effort
+}
+function jr(base, week) { // jump reps progression
+  if (week <= 2) return base;
+  if (week <= 4) return base + 1;
+  return base;
+}
+
+function buildWeek(w) {
+  const phase = PHASES[w-1];
+  const intensityNote = w <= 2
+    ? '⚠️ Technique focus — full recovery between every rep. Do not chase times yet.'
+    : w <= 4
+    ? '📈 Add one rep to every sprint/jump drill. Increase jump height where it feels safe.'
+    : '🔥 Maximum effort every sprint. Reduce volume slightly, increase intensity. Explosive starts from varied positions.';
+
+  const startPositionNote = w >= 5
+    ? 'Every sprint from a different start position: lying down, kneeling, sideways, rugby stance.'
+    : 'Start from standing — nail the technique before adding varied positions.';
+
+  const restNote = w >= 5
+    ? 'Rest: 60–90 sec after 10–20m sprints. 2–3 minutes after 30m efforts. Stop if technique drops.'
+    : 'Rest: 60–90 sec between sprint reps. Full recovery before next set.';
+
+  return {
+    week: w, phase,
+    days: {
+
+      Monday: {
+        focus: 'Touch Rugby', category: 'rugby', duration: null,
+        sections: [{ title: 'Session', exercises: ['Touch rugby game / training session — full enjoyment, no pressure'] }],
+        equipment: ['Rugby ball'],
+        notes: 'Log RPE after — note how legs and body felt compared to last week.'
+      },
+
+      Tuesday: {
+        focus: 'Acceleration & Power', category: 'speed', duration: '45 mins',
+        sections: [
+          { title: '🔥 Warm-Up (10 mins)', exercises: ['5 min light jog or skipping','Leg swings x10 each leg','Walking lunges x10','High knees x20m','Butt kicks x20m','A-skips x20m'] },
+          { title: '💥 Power', exercises: [`Box jumps — 3 x ${jr(5,w)}`, `Standing broad jumps — 3 x ${jr(5,w)}`] },
+          { title: '🏃 Speed', exercises: [`Bungee resisted sprint — ${sr(6,w)} x 10m`, `Free sprint immediately afterwards — ${sr(6,w)} x 10m`] },
+          { title: '🏁 Hurdles', exercises: [`Mini hurdles quick feet — ${sr(4,w)} runs`, `Large hurdle single explosive bound — 3 x 5 each leg`] },
+          { title: '💪 Strength', exercises: ['Single-leg calf raises — 3 x 12', 'Walking lunges — 3 x 10 each leg'] },
+          { title: '🔩 Core', exercises: ['Plank — 3 x 45 sec'] }
+        ],
+        equipment: ['Box jump','Bungee rope','2 mini hurdles','1 large hurdle'],
+        notes: intensityNote + '\n' + restNote
+      },
+
+      Wednesday: {
+        focus: 'Sprint Mechanics & Plyometrics', category: 'plyo', duration: '35–40 mins',
+        sections: [
+          { title: '🔥 Warm-Up', exercises: ['Light jog + dynamic stretches'] },
+          { title: '⚙️ Technique', exercises: [`A-skips — 3 x 20m`, `Fast marching — 2 x 20m`, `Straight-leg bounds — 2 x 20m`] },
+          { title: '⚡ Reactive Work', exercises: [`Mini hurdle hops — ${sr(5,w)} runs`, `Single-leg hops — 2 x 10 each leg`, `Lateral hurdle jumps — 3 x 8`] },
+          { title: '🏃 Flying Sprints', exercises: [`20m build-up then 20m maximum speed — ${sr(6,w)} reps`, startPositionNote] },
+          { title: '💪 Strength', exercises: [`Bulgarian split squats — 3 x ${w >= 5 ? 10 : 8}`, `Calf raises — 3 x ${w >= 3 ? 15 : 12}`] },
+          { title: '🧘 Finish', exercises: ['Full stretch — hold each for 30 sec'] }
+        ],
+        equipment: ['2 mini hurdles','1 large hurdle'],
+        notes: intensityNote + '\n' + restNote
+      },
+
+      Thursday: {
+        focus: 'Football Training', category: 'football', duration: null,
+        sections: [{ title: 'Session', exercises: ['Football training session'] }],
+        equipment: [],
+        notes: 'Football only — log RPE after.'
+      },
+
+      Friday: {
+        focus: 'Rugby Training', category: 'rugby', duration: null,
+        sections: [{ title: 'Session', exercises: ['Rugby training or match session'] }],
+        equipment: ['Rugby ball','Tackle bag'],
+        notes: 'Rugby only — log RPE and any niggles.'
+      },
+
+      Saturday: {
+        focus: 'Speed Day', category: 'speed', duration: '45–50 mins',
+        sections: [
+          { title: '🔥 Warm-Up', exercises: ['Light jog + dynamic stretches'] },
+          { title: '💥 Power', exercises: [`Box jumps — 4 x ${jr(4,w)}`, `Broad jumps — 4 x ${jr(4,w)}`] },
+          { title: '🏃 Acceleration', exercises: [`10m sprint x${sr(4,w)}`, `20m sprint x${sr(4,w)}`, `30m sprint x${sr(4,w)}`] },
+          { title: '🔗 Resisted', exercises: [`Bungee sprints x${sr(4,w)}`] },
+          { title: '👁️ Reaction', exercises: ['Trainer points left or right — react and sprint', '8 reps'] },
+          { title: '🫁 Conditioning', exercises: [`Shuttle sprint 10m–20m–10m — ${w >= 3 ? 6 : 5} reps`] },
+          { title: '💪 Strength', exercises: [`Single-leg calf raises — 3 x ${w >= 3 ? 15 : 12}`, 'Dumbbell squats — 3 x 10'] },
+          { title: '🔩 Core', exercises: ['Side plank — 3 x 30 sec each side', 'Dead bugs — 3 x 10 each side'] }
+        ],
+        equipment: ['Box jump','Bungee rope','5kg or 7kg dumbbells'],
+        notes: intensityNote + '\n' + startPositionNote + '\n' + restNote + '\nKeep session under 50 minutes total.'
+      },
+
+      Sunday: {
+        focus: 'Rest & Recovery', category: 'recovery', duration: null,
+        sections: [{ title: 'Recovery', exercises: ['Full rest','Light stretching if needed','Sleep and nutrition priority — eat well today'] }],
+        equipment: [],
+        notes: 'No training. Let the week land.'
+      }
+    }
+  };
+}
+
+const WEEKS = Array.from({ length: 6 }, (_, i) => buildWeek(i + 1));
 
 // ============================================================
 //  NAV
@@ -759,161 +607,151 @@ function showPage(id, btn) {
   document.getElementById('page-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
   if (id === 'dashboard') renderDashboard();
-  if (id === 'plan') renderPlanPage();
-  if (id === 'history') renderHistory();
+  if (id === 'plan')      renderPlanPage();
+  if (id === 'history')   renderHistory();
   if (id === 'challenge') renderChallenge();
-  if (id === 'trainer') renderTrainerSummary();
+  if (id === 'trainer')   renderTrainerSummary();
 }
 
 // ============================================================
-//  CURRENT WEEK CALC (based on first plan completion or session date)
+//  WEEK CALC
 // ============================================================
-function getProgrammeStartDate() {
-  let start = localStorage.getItem('programmeStart');
-  if (!start) {
-    start = new Date().toISOString();
-    localStorage.setItem('programmeStart', start);
-  }
-  return new Date(start);
+function getProgrammeStart() {
+  let s = localStorage.getItem('programmeStart');
+  if (!s) { s = new Date().toISOString(); localStorage.setItem('programmeStart', s); }
+  return new Date(s);
 }
-
-function getCurrentWeekNumber() {
-  const start = getProgrammeStartDate();
-  const now = new Date();
-  const diffDays = Math.floor((now - start) / (1000 * 60 * 60 * 24));
-  const wk = Math.floor(diffDays / 7) + 1;
-  return Math.min(Math.max(wk, 1), 12);
+function getCurrentWeek() {
+  const diff = Math.floor((Date.now() - getProgrammeStart()) / (1000*60*60*24));
+  return Math.min(Math.max(Math.floor(diff/7)+1, 1), 6);
 }
-
-let selectedPlanWeek = getCurrentWeekNumber();
 
 // ============================================================
 //  DASHBOARD
 // ============================================================
 async function renderDashboard() {
   const [sessions, ab, planComp] = await Promise.all([getSessions(), getChallenges(), getPlanCompletion()]);
+  const curWeek = getCurrentWeek();
+  const wkData = WEEKS[curWeek-1];
 
-  const curWeek = getCurrentWeekNumber();
   document.getElementById('db-week-num').innerHTML = curWeek + '<span>WEEK</span>';
-  document.getElementById('db-week-phase').textContent = progressPhase(curWeek) + ' Phase';
+  document.getElementById('db-week-phase').textContent = PHASES[curWeek-1];
 
-  // Next planned session = first day in current week not yet completed
-  const wkData = WEEKS[curWeek - 1];
-  const completedDays = planComp.filter(p => p.week_number === curWeek).map(p => p.day_of_week);
-  const todayName = DAY_ORDER[(new Date().getDay() + 6) % 7]; // Mon=0
-  let nextDay = DAY_ORDER.find(d => !completedDays.includes(d));
-  if (nextDay) {
-    const nd = wkData.days[nextDay];
-    document.getElementById('db-next-session').textContent = `Next: ${nextDay} — ${nd.focus}`;
-  } else {
-    document.getElementById('db-next-session').textContent = 'All sessions complete this week! 🎉';
-  }
+  const completedDays = planComp.filter(p => Number(p.week_number) === curWeek).map(p => p.day_of_week);
+  const nextDay = DAY_ORDER.find(d => !completedDays.includes(d));
+  document.getElementById('db-next-session').textContent = nextDay
+    ? `Next: ${nextDay} — ${wkData.days[nextDay].focus}`
+    : '🎉 All sessions done this week!';
 
   document.getElementById('stat-planned').textContent = `${completedDays.length}/7`;
 
-  // Category counts this week from sessions table (extra logged sessions) + plan completion
-  const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
-  const recentSessions = sessions.filter(s => new Date(s.created_at) >= weekAgo);
+  const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate()-7);
+  const recent = sessions.filter(s => new Date(s.created_at) >= weekAgo);
+  const speedDays = completedDays.filter(d => wkData.days[d]?.category === 'speed').length;
+  const rugbyFootballDays = completedDays.filter(d => ['rugby','football'].includes(wkData.days[d]?.category)).length;
 
-  const speedCount = completedDays.filter(d => wkData.days[d]?.category === 'speed').length
-    + recentSessions.filter(s => s.category === 'speed').length;
-  const strengthCount = completedDays.filter(d => wkData.days[d]?.category === 'strength').length
-    + recentSessions.filter(s => s.category === 'strength').length;
-  const contactCount = completedDays.filter(d => ['rugbySkill','tackle'].includes(wkData.days[d]?.category)).length
-    + recentSessions.filter(s => ['rugbySkill','tackle'].includes(s.category)).length;
+  document.getElementById('stat-speed').textContent = speedDays + recent.filter(s=>s.category==='speed').length;
+  document.getElementById('stat-strength').textContent = rugbyFootballDays + recent.filter(s=>['rugby','football'].includes(s.category)).length;
+  document.getElementById('stat-extra').textContent = recent.length;
 
-  document.getElementById('stat-speed').textContent = speedCount;
-  document.getElementById('stat-strength').textContent = strengthCount;
-  document.getElementById('stat-contact').textContent = contactCount;
-
-  // Ab streak
   const streak = ab.length;
   document.getElementById('core-streak-num').textContent = streak;
-  document.getElementById('core-prog').style.width = Math.min(streak / 28 * 100, 100) + '%';
+  document.getElementById('core-prog').style.width = Math.min(streak/28*100,100)+'%';
   document.getElementById('core-prog-label').textContent = `Day ${streak} of 28`;
   document.getElementById('headerStreak').textContent = `🔥 ${streak}`;
 
-  // Recent sessions list — merge plan completions + extra logs, sort by date
-  const recentItems = [];
-  recentSessions.slice(0, 6).forEach(s => recentItems.push({ type: 'session', data: s, date: s.created_at }));
-  planComp.slice(-6).forEach(p => recentItems.push({ type: 'plan', data: p, date: p.created_at }));
-  recentItems.sort((a, b) => new Date(b.date) - new Date(a.date));
-
   const el = document.getElementById('recent-log');
-  if (!recentItems.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">🏉</div><p>No sessions yet — head to the Plan tab to tick off today\'s session!</p></div>';
+  const planItems = planComp.slice(-4).map(p=>({ type:'plan', data:p, date:p.created_at }));
+  const sessionItems = sessions.slice(0,4).map(s=>({ type:'session', data:s, date:s.created_at }));
+  const all = [...planItems,...sessionItems].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,6);
+
+  if (!all.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">🏉</div><p>No sessions yet — head to the Plan tab to start Week 1!</p></div>';
   } else {
-    el.innerHTML = recentItems.slice(0, 6).map(item => {
-      if (item.type === 'plan') return planLogCard(item.data);
-      return logCard(item.data);
-    }).join('');
+    el.innerHTML = all.map(item => item.type === 'plan' ? planLogCard(item.data) : logCard(item.data)).join('');
   }
 }
 
 function planLogCard(p) {
   const d = new Date(p.created_at);
-  const dateStr = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
-  const wk = WEEKS[p.week_number - 1];
+  const dateStr = d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
+  const wk = WEEKS[Number(p.week_number)-1];
   const dayInfo = wk?.days[p.day_of_week];
-  const cat = CATEGORIES[dayInfo?.category] || { color: '#888', icon: '✓' };
+  const cat = CATEGORIES[dayInfo?.category] || { color:'#888', icon:'✓' };
   return `<div class="log-entry">
     <span class="log-cat-dot" style="background:${cat.color}"></span>
     <div style="flex:1;min-width:0">
-      <div class="log-exercise">${cat.icon} ${dayInfo?.focus || p.day_of_week} <span style="color:var(--muted);font-weight:400;">(Week ${p.week_number})</span></div>
-      <div class="log-date">${p.day_of_week} · ${dateStr}</div>
+      <div class="log-exercise">${cat.icon} ${dayInfo?.focus || p.day_of_week}</div>
+      <div class="log-date">Week ${p.week_number} · ${p.day_of_week} · ${dateStr}</div>
     </div>
+    <div style="font-size:10px;color:var(--grass);font-family:'Bebas Neue';letter-spacing:1px">DONE ✓</div>
   </div>`;
 }
 
 // ============================================================
 //  PLAN PAGE
 // ============================================================
+let selectedWeek = getCurrentWeek();
+let expandedDay = null;
+
 function renderPlanPage() {
   const picker = document.getElementById('week-picker');
   picker.innerHTML = WEEKS.map(w =>
-    `<div class="week-chip${w.week === selectedPlanWeek ? ' active' : ''}" onclick="selectPlanWeek(${w.week})">${w.week}</div>`
+    `<div class="week-chip${w.week===selectedWeek?' active':''}" onclick="selectPlanWeek(${w.week})">
+      ${w.week}<div class="chip-label">WK</div>
+    </div>`
   ).join('');
-
-  document.getElementById('phase-banner').textContent = progressPhase(selectedPlanWeek).toUpperCase() + ' PHASE';
-
+  document.getElementById('phase-banner').textContent = PHASES[selectedWeek-1].toUpperCase() + ' PHASE';
   renderPlanDays();
 }
 
 async function selectPlanWeek(w) {
-  selectedPlanWeek = w;
+  selectedWeek = w;
+  expandedDay = null;
   renderPlanPage();
 }
 
-let expandedDay = null;
-
 async function renderPlanDays() {
-  const wk = WEEKS[selectedPlanWeek - 1];
+  const wk = WEEKS[selectedWeek-1];
   const planComp = await getPlanCompletion();
-  const completedSet = new Set(planComp.filter(p => p.week_number === selectedPlanWeek).map(p => p.day_of_week));
-
+  const done = new Set(planComp.filter(p=>Number(p.week_number)===selectedWeek).map(p=>p.day_of_week));
   const container = document.getElementById('plan-days');
+
   container.innerHTML = DAY_ORDER.map(dname => {
     const d = wk.days[dname];
     const cat = CATEGORIES[d.category];
-    const isDone = completedSet.has(dname);
+    const isDone = done.has(dname);
     const isExpanded = expandedDay === dname;
-    return `<div class="day-card${isDone ? ' completed' : ''}${isExpanded ? ' expanded' : ''}" id="daycard-${dname}">
+
+    const sectionsHTML = d.sections.map(s => `
+      <div class="session-section">
+        <div class="session-section-title">${s.title}</div>
+        <ul class="ex-list">${s.exercises.map(e=>`<li>${e}</li>`).join('')}</ul>
+      </div>`).join('');
+
+    const equipHTML = d.equipment.length
+      ? `<div class="equip-tags">${d.equipment.map(eq=>`<span class="equip-tag">🔧 ${eq}</span>`).join('')}</div>` : '';
+
+    const notesLines = d.notes.split('\n').filter(Boolean);
+    const notesHTML = notesLines.length
+      ? `<div class="day-notes-block">${notesLines.map(n=>`<div>${n}</div>`).join('')}</div>` : '';
+
+    return `<div class="day-card${isDone?' completed':''}${isExpanded?' expanded':''}" id="daycard-${dname}">
       <div class="day-card-header" onclick="toggleDayExpand('${dname}')">
-        <div class="day-name-block">
-          <div class="day-cat-icon">${cat.icon}</div>
-          <div class="day-name-text">
-            <div class="day-name">${dname}</div>
-            <div class="day-focus">${d.focus}</div>
-          </div>
+        <div class="day-cat-icon">${cat.icon}</div>
+        <div style="flex:1;min-width:0">
+          <div class="day-name">${dname}</div>
+          <div class="day-focus">${d.focus}</div>
+          ${d.duration ? `<div class="day-duration">⏱ ${d.duration}</div>` : ''}
         </div>
         <div class="day-check-badge">✓</div>
         <div class="day-chevron">▼</div>
       </div>
       <div class="day-body">
-        <ul class="ex-list">${d.exercises.map(e => `<li>${e}</li>`).join('')}</ul>
-        ${d.equipment.length ? `<div class="equip-tags">${d.equipment.map(eq => `<span class="equip-tag">🔧 ${eq}</span>`).join('')}</div>` : ''}
-        ${d.notes ? `<div class="day-notes">💬 ${d.notes}</div>` : ''}
-        <button class="day-complete-btn${isDone ? ' undo' : ''}" id="btn-day-${dname}" onclick="togglePlanDay('${dname}', event)">
+        ${sectionsHTML}
+        ${equipHTML}
+        ${notesHTML}
+        <button class="day-complete-btn${isDone?' undo':''}" id="btn-day-${dname}" onclick="togglePlanDay('${dname}',event)">
           ${isDone ? '↺ MARK AS NOT DONE' : '✓ MARK SESSION COMPLETE'}
         </button>
       </div>
@@ -926,12 +764,10 @@ function toggleDayExpand(dname) {
   renderPlanDays();
 }
 
-const planDayInFlight = new Set();
-
 async function togglePlanDay(dname, evt) {
   if (evt) evt.stopPropagation();
-  const key = selectedPlanWeek + '-' + dname;
-  if (planDayInFlight.has(key)) return; // already processing this exact tap
+  const key = selectedWeek + '-' + dname;
+  if (planDayInFlight.has(key)) return;
   planDayInFlight.add(key);
 
   const btn = document.getElementById('btn-day-' + dname);
@@ -939,16 +775,14 @@ async function togglePlanDay(dname, evt) {
 
   try {
     const planComp = await getPlanCompletion();
-    const existing = planComp.find(p => p.week_number === selectedPlanWeek && p.day_of_week === dname);
-
-    if (existing) {
-      await unmarkPlanDay(selectedPlanWeek, dname);
+    const exists = planComp.find(p => Number(p.week_number)===selectedWeek && p.day_of_week===dname);
+    if (exists) {
+      await unmarkPlanDay(selectedWeek, dname);
       toast(`${dname} unmarked`);
     } else {
-      const ok = await markPlanDay(selectedPlanWeek, dname);
-      if (ok) toast(`${dname} session complete! 💪`);
+      const ok = await markPlanDay(selectedWeek, dname);
+      if (ok) toast(`${dname} complete! 💪`);
     }
-
     await renderPlanDays();
     renderDashboard();
   } finally {
@@ -957,79 +791,66 @@ async function togglePlanDay(dname, evt) {
 }
 
 // ============================================================
-//  LOG PAGE (extra sessions)
+//  LOG PAGE
 // ============================================================
+const LOG_EX = {
+  speed:    ['Bungee resisted sprint','Free sprint 10m','Free sprint 20m','Free sprint 30m','A-skips','High knees','Butt kicks','Falling starts'],
+  plyo:     ['Box jumps','Broad jumps','Mini hurdle hops','Large hurdle bounds','Lateral hurdle jumps','Single-leg hops','Squat jumps','Straight-leg bounds'],
+  strength: ['Goblet squat','Dumbbell squats','Bulgarian split squats','Walking lunges','Single-leg calf raises','Calf raises','Plank','Side plank','Dead bugs'],
+  rugby:    ['Touch rugby','Tackle bag work','Ball presentation','Pick and go','Catch-turn-pass','Support line run'],
+  football: ['Football session'],
+  conditioning: ['Shuttle sprint 10–20–10m','Drop-get-up sprint','Rugby circuit'],
+  recovery: ['Stretching','Mobility work','Light walk','Light ball handling']
+};
+
 let currentLogCat = 'speed';
 
-function buildLogCategoryButtons() {
-  const el = document.getElementById('cat-btns');
-  el.innerHTML = Object.entries(CATEGORIES).map(([key, c]) =>
-    `<button class="sub-tab${key === currentLogCat ? ' active' : ''}" onclick="selectLogCat('${key}', this)">${c.icon} ${c.label}</button>`
+function buildLogCats() {
+  document.getElementById('cat-btns').innerHTML = Object.entries(CATEGORIES).map(([k,c]) =>
+    `<button class="sub-tab${k===currentLogCat?' active':''}" onclick="selectLogCat('${k}',this)">${c.icon} ${c.label}</button>`
   ).join('');
 }
 
 function selectLogCat(cat, btn) {
   currentLogCat = cat;
-  document.querySelectorAll('#cat-btns .sub-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#cat-btns .sub-tab').forEach(b=>b.classList.remove('active'));
   if (btn) btn.classList.add('active');
   renderLogPanel();
 }
 
 function renderLogPanel() {
-  const catInfo = CATEGORIES[currentLogCat];
-  const exList = LOG_CATEGORIES[currentLogCat]?.exercises || [];
-  const panel = document.getElementById('log-panel');
-  panel.innerHTML = `
-    <div style="font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">Tick off what you did</div>
-    <div id="log-exercises"></div>
-    <div class="form-group" style="margin-top:12px;">
+  const exList = LOG_EX[currentLogCat] || [];
+  document.getElementById('log-panel').innerHTML = `
+    <div style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:9px">Tick what you did</div>
+    <div id="log-exercises">${exList.map((ex,i)=>`
+      <div class="ex-check-row" id="logchk-${i}" onclick="this.classList.toggle('done');document.getElementById('logchk-box-${i}').style.color=this.classList.contains('done')?'white':'transparent';this.querySelector('.ex-check-box').style.background=this.classList.contains('done')?'var(--grass)':'';this.querySelector('.ex-check-box').style.borderColor=this.classList.contains('done')?'var(--grass)':'var(--muted)'">
+        <div class="ex-check-box"><span id="logchk-box-${i}" style="color:transparent">✓</span></div>
+        <div class="ex-name">${ex}</div>
+      </div>`).join('')}
+    </div>
+    <div class="form-group" style="margin-top:12px">
       <label>Effort (RPE): <span id="log-rpe-val">7</span>/10</label>
       <input type="range" id="log-rpe" min="1" max="10" value="7" oninput="document.getElementById('log-rpe-val').textContent=this.value">
     </div>
     <div class="form-group"><label>Notes</label><textarea id="log-notes" placeholder="How did it feel?"></textarea></div>
-    <button class="btn-primary" id="btn-log-extra" onclick="logExtraSession()">✓ LOG ${catInfo.label.toUpperCase()} SESSION</button>
-  `;
-  const exContainer = document.getElementById('log-exercises');
-  exContainer.innerHTML = exList.map((ex, i) =>
-    `<div class="ex-check-row" id="logchk-${i}" onclick="toggleLogCheck(${i})">
-      <div class="ex-check-box">✓</div>
-      <div class="ex-name">${ex}</div>
-    </div>`
-  ).join('');
-}
-
-function toggleLogCheck(i) {
-  document.getElementById(`logchk-${i}`)?.classList.toggle('done');
+    <button class="btn-primary" id="btn-log-extra" onclick="logExtraSession()">✓ LOG ${CATEGORIES[currentLogCat].label.toUpperCase()}</button>`;
 }
 
 async function logExtraSession() {
-  const exList = LOG_CATEGORIES[currentLogCat]?.exercises || [];
-  const checked = exList.filter((_, i) => document.getElementById(`logchk-${i}`)?.classList.contains('done'));
+  const exList = LOG_EX[currentLogCat] || [];
+  const checked = exList.filter((_,i) => document.getElementById(`logchk-${i}`)?.classList.contains('done'));
   if (!checked.length) { toast('Tick at least one exercise'); return; }
-
   const btn = document.getElementById('btn-log-extra');
-  btn.disabled = true;
-  const origText = btn.textContent;
-  btn.textContent = 'SAVING...';
-
+  const orig = btn.textContent;
+  btn.disabled = true; btn.textContent = 'SAVING...';
   const ok = await insertSession({
-    category: currentLogCat,
-    exercises: checked,
-    sets: null,
+    category: currentLogCat, exercises: checked,
     rpe: Number(document.getElementById('log-rpe').value),
-    notes: document.getElementById('log-notes').value || null,
-    is_planned: false
+    notes: document.getElementById('log-notes').value || null, is_planned: false
   });
-
-  btn.disabled = false;
-  btn.textContent = origText;
-
+  btn.disabled = false; btn.textContent = orig;
   if (!ok) return;
-
-  exList.forEach((_, i) => document.getElementById(`logchk-${i}`)?.classList.remove('done'));
-  document.getElementById('log-notes').value = '';
-  document.getElementById('log-rpe').value = 7;
-  document.getElementById('log-rpe-val').textContent = '7';
+  renderLogPanel();
   toast('Session logged! 💪');
   renderDashboard();
 }
@@ -1038,74 +859,67 @@ async function logExtraSession() {
 //  HISTORY
 // ============================================================
 function buildHistoryFilter() {
-  const sel = document.getElementById('filter-cat');
-  sel.innerHTML = '<option value="all">All Categories</option>' +
-    Object.entries(CATEGORIES).map(([k, c]) => `<option value="${k}">${c.icon} ${c.label}</option>`).join('');
+  document.getElementById('filter-cat').innerHTML =
+    '<option value="all">All Categories</option>' +
+    Object.entries(CATEGORIES).map(([k,c])=>`<option value="${k}">${c.icon} ${c.label}</option>`).join('');
 }
 
 function logCard(e) {
   const d = new Date(e.created_at);
-  const dateStr = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
-  const timeStr = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-  const cat = CATEGORIES[e.category] || { color: '#888', label: e.category, icon: '•' };
-  const exList = Array.isArray(e.exercises) ? e.exercises.join(', ') : '';
+  const dateStr = d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
+  const timeStr = d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  const cat = CATEGORIES[e.category] || { color:'#888', icon:'•', label: e.category };
+  const exStr = Array.isArray(e.exercises) ? e.exercises.join(', ') : '';
   return `<div class="log-entry">
     <span class="log-cat-dot" style="background:${cat.color}"></span>
-    <div style="flex:1;min-width:0;">
+    <div style="flex:1;min-width:0">
       <div class="log-exercise">${cat.icon} ${cat.label}</div>
-      <div class="log-meta">${exList}</div>
-      <div class="log-date">${dateStr} at ${timeStr}${e.notes ? ' · ' + e.notes : ''}</div>
+      <div class="log-meta">${exStr}</div>
+      <div class="log-date">${dateStr} at ${timeStr}${e.notes?' · '+e.notes:''}</div>
     </div>
-    <div class="log-rpe">${e.rpe ?? '—'}<span>RPE</span></div>
+    <div class="log-rpe">${e.rpe??'—'}<span>RPE</span></div>
   </div>`;
 }
 
 async function renderHistory() {
   const sessions = await getSessions();
   const cat = document.getElementById('filter-cat').value;
-  const list = cat === 'all' ? sessions : sessions.filter(e => e.category === cat);
+  const list = cat==='all' ? sessions : sessions.filter(s=>s.category===cat);
   const el = document.getElementById('history-list');
-
-  if (!list.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><p>No sessions found.</p></div>';
-    return;
-  }
-
+  if (!list.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><p>No sessions found.</p></div>'; return; }
   const groups = {};
-  list.forEach(e => {
-    const key = new Date(e.created_at).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-    (groups[key] = groups[key] || []).push(e);
+  list.forEach(s => {
+    const key = new Date(s.created_at).toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+    (groups[key]=groups[key]||[]).push(s);
   });
-
-  el.innerHTML = Object.entries(groups).map(([date, entries]) =>
+  el.innerHTML = Object.entries(groups).map(([date,entries])=>
     `<div class="hist-date-header">${date}</div>${entries.map(logCard).join('')}`
   ).join('');
 }
 
 async function clearHistory() {
-  if (!confirm('Clear all extra session history? This does not affect the plan or ab challenge.')) return;
+  if (!confirm('Clear all extra session history?')) return;
   await deleteAllSessions();
-  renderHistory();
-  renderDashboard();
+  renderHistory(); renderDashboard();
   toast('History cleared');
 }
 
 // ============================================================
 //  AB CHALLENGE
 // ============================================================
-function challengeDay(i) {
-  return { situps: 5 + i*5, crunches: 3 + i*2, legRaise: 3 + i*2, plank: 5 + i*3 };
+function abDay(i) {
+  return { situps:5+i*5, crunches:3+i*2, legRaise:3+i*2, plank:5+i*3 };
 }
 
 async function renderChallenge() {
   const done = await getChallenges();
-  let html = '', lastWeek = -1;
-  for (let i = 0; i < 28; i++) {
-    const week = Math.floor(i / 7) + 1;
-    if (week !== lastWeek) { html += `<div class="week-title">WEEK ${week}</div>`; lastWeek = week; }
-    const { situps, crunches, legRaise, plank } = challengeDay(i);
+  let html='', lastWeek=-1;
+  for (let i=0; i<28; i++) {
+    const week = Math.floor(i/7)+1;
+    if (week!==lastWeek) { html+=`<div class="week-title">WEEK ${week}</div>`; lastWeek=week; }
+    const {situps,crunches,legRaise,plank} = abDay(i);
     const isDone = done.includes(i);
-    html += `<div class="challenge-day${isDone ? ' done' : ''}" id="cd-${i}" onclick="toggleChallenge(${i})">
+    html+=`<div class="challenge-day${isDone?' done':''}" id="cd-${i}" onclick="toggleChallenge(${i})">
       <div class="check">✓</div>
       <div class="challenge-day-label"><strong>Day ${i+1}</strong></div>
       <div class="challenge-targets">${situps} sit-ups<br>${crunches} crunches<br>${legRaise} leg raises<br>${plank}s plank</div>
@@ -1116,15 +930,11 @@ async function renderChallenge() {
 
 async function toggleChallenge(i) {
   const row = document.getElementById(`cd-${i}`);
-  if (!row || row.classList.contains('saving')) return;
+  if (!row||row.classList.contains('saving')) return;
   row.classList.add('saving');
   const done = await getChallenges();
-  if (done.includes(i)) {
-    await delChallenge(i);
-  } else {
-    const ok = await addChallenge(i);
-    if (ok) toast(`Day ${i+1} complete! 🔥`);
-  }
+  if (done.includes(i)) { await delChallenge(i); }
+  else { const ok = await addChallenge(i); if (ok) toast(`Day ${i+1} complete! 🔥`); }
   await renderChallenge();
   renderDashboard();
 }
@@ -1134,38 +944,28 @@ async function toggleChallenge(i) {
 // ============================================================
 async function renderTrainerSummary() {
   const [sessions, planComp, ab] = await Promise.all([getSessions(), getPlanCompletion(), getChallenges()]);
-
-  const curWeek = getCurrentWeekNumber();
-  document.getElementById('t-week').textContent = curWeek + ' / 12';
-  document.getElementById('t-phase').textContent = progressPhase(curWeek);
+  const curWeek = getCurrentWeek();
+  document.getElementById('t-week').textContent = curWeek + ' / 6';
+  document.getElementById('t-phase').textContent = PHASES[curWeek-1];
   document.getElementById('t-plan-total').textContent = planComp.length;
   document.getElementById('t-extra-total').textContent = sessions.length;
   document.getElementById('t-ab-streak').textContent = ab.length + ' / 28';
+  const rpeVals = sessions.slice(0,10).map(s=>Number(s.rpe)).filter(n=>!isNaN(n)&&n>0);
+  document.getElementById('t-avg-rpe').textContent = rpeVals.length ? (rpeVals.reduce((a,b)=>a+b,0)/rpeVals.length).toFixed(1) : '—';
 
-  const rpeVals = sessions.slice(0, 10).map(s => Number(s.rpe)).filter(n => !isNaN(n));
-  const avgRpe = rpeVals.length ? (rpeVals.reduce((a,b) => a+b, 0) / rpeVals.length).toFixed(1) : '—';
-  document.getElementById('t-avg-rpe').textContent = avgRpe;
-
-  // Category breakdown across both planned completions and extra sessions
   const counts = {};
-  Object.keys(CATEGORIES).forEach(k => counts[k] = 0);
+  Object.keys(CATEGORIES).forEach(k=>counts[k]=0);
+  planComp.forEach(p => { const cat = WEEKS[Number(p.week_number)-1]?.days[p.day_of_week]?.category; if(cat&&counts[cat]!==undefined) counts[cat]++; });
+  sessions.forEach(s => { if(counts[s.category]!==undefined) counts[s.category]++; });
+  const maxCount = Math.max(1,...Object.values(counts));
 
-  planComp.forEach(p => {
-    const wk = WEEKS[p.week_number - 1];
-    const cat = wk?.days[p.day_of_week]?.category;
-    if (cat && counts[cat] !== undefined) counts[cat]++;
-  });
-  sessions.forEach(s => { if (counts[s.category] !== undefined) counts[s.category]++; });
-
-  const maxCount = Math.max(1, ...Object.values(counts));
-  const el = document.getElementById('t-category-breakdown');
-  el.innerHTML = Object.entries(CATEGORIES).map(([key, c]) => {
-    const count = counts[key];
-    const pct = Math.round(count / maxCount * 100);
-    return `<div style="margin-bottom:10px;">
-      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
+  document.getElementById('t-cat-breakdown').innerHTML = Object.entries(CATEGORIES).map(([k,c])=>{
+    const count = counts[k];
+    const pct = Math.round(count/maxCount*100);
+    return `<div style="margin-bottom:9px">
+      <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">
         <span style="color:var(--text)">${c.icon} ${c.label}</span>
-        <span style="color:var(--gold);font-family:'Bebas Neue';font-size:15px;">${count}</span>
+        <span style="color:var(--gold);font-family:'Bebas Neue';font-size:14px">${count}</span>
       </div>
       <div class="prog-bar-wrap"><div class="prog-bar" style="width:${pct}%;background:${c.color}"></div></div>
     </div>`;
@@ -1175,48 +975,29 @@ async function renderTrainerSummary() {
 // ============================================================
 //  TIMER
 // ============================================================
-let _ti = null, _ts = 0, _running = false, _cd = 0;
-function fmtTime(s) { return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); }
-function startTimer() {
-  if (_running) return;
-  _running = true;
-  if (_cd > 0) {
-    _ti = setInterval(() => {
-      _cd--;
-      document.getElementById('timer-display').textContent = fmtTime(_cd);
-      document.getElementById('timer-label').textContent = 'Counting down...';
-      if (_cd <= 0) { stopTimer(); toast('Rest done — GO! 🏃'); }
-    }, 1000);
-  } else {
-    _ti = setInterval(() => {
-      _ts++;
-      document.getElementById('timer-display').textContent = fmtTime(_ts);
-      document.getElementById('timer-label').textContent = 'Running';
-    }, 1000);
-  }
+let _ti=null,_ts=0,_running=false,_cd=0;
+function fmtTime(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function startTimer(){
+  if(_running)return; _running=true;
+  if(_cd>0){_ti=setInterval(()=>{_cd--;document.getElementById('timer-display').textContent=fmtTime(_cd);document.getElementById('timer-label').textContent='Counting down...';if(_cd<=0){stopTimer();toast('Rest done — GO! 🏃');}},1000);}
+  else{_ti=setInterval(()=>{_ts++;document.getElementById('timer-display').textContent=fmtTime(_ts);document.getElementById('timer-label').textContent='Running';},1000);}
 }
-function stopTimer() { clearInterval(_ti); _running = false; document.getElementById('timer-label').textContent = 'Stopped'; }
-function resetTimer() { stopTimer(); _ts = 0; _cd = 0; document.getElementById('timer-display').textContent = '00:00'; document.getElementById('timer-label').textContent = 'Ready'; }
-function setPreset(s) { stopTimer(); _cd = s; _ts = 0; document.getElementById('timer-display').textContent = fmtTime(s); document.getElementById('timer-label').textContent = 'Ready — tap Start'; }
+function stopTimer(){clearInterval(_ti);_running=false;document.getElementById('timer-label').textContent='Stopped';}
+function resetTimer(){stopTimer();_ts=0;_cd=0;document.getElementById('timer-display').textContent='00:00';document.getElementById('timer-label').textContent='Ready';}
+function setPreset(s){stopTimer();_cd=s;_ts=0;document.getElementById('timer-display').textContent=fmtTime(s);document.getElementById('timer-label').textContent='Ready — tap Start';}
 
 // ============================================================
 //  TOAST
 // ============================================================
-let _toastTimer;
-function toast(msg, isError = false) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className = isError ? 'error show' : 'show';
-  clearTimeout(_toastTimer);
-  _toastTimer = setTimeout(() => el.className = '', 2500);
+let _tt;
+function toast(msg,isError=false){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.className=isError?'error show':'show';
+  clearTimeout(_tt); _tt=setTimeout(()=>el.className='',2500);
 }
 
 // ============================================================
 //  INIT
 // ============================================================
-document.addEventListener('DOMContentLoaded', () => {
-  checkExistingSession();
-});
+document.addEventListener('DOMContentLoaded', checkSession);
 </script>
-</body>
-</html>
